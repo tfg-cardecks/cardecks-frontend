@@ -1,0 +1,52 @@
+.animated-image {
+  position: absolute;
+  transform: translateX(-50%);
+  width: 3vw; /* Ajusta el tamaño al doble */
+  max-width: 30px; /* Tamaño máximo al doble */
+  height: auto; /* Mantiene la proporción */
+  animation: moveDown 40s linear infinite, rotate 20s linear infinite, fadeIn 2s ease-in-out; /* Velocidad más lenta */
+  opacity: 0; /* Empieza con la imagen oculta */
+  animation-fill-mode: forwards; /* Mantiene el estado final de la animación */
+  z-index: -1; /* Asegura que las cartas estén por debajo de los elementos de la vista */
+}
+
+.view-element {
+  position: relative;
+  z-index: 10; /* Asegura que los elementos de la vista estén por encima de las cartas */
+}
+
+@keyframes moveDown {
+  0% {
+    top: 0px; /* Empieza justo en el borde inferior del Header */
+  }
+  100% {
+    top: 200%; /* Termina en el borde inferior de la ventana */
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
