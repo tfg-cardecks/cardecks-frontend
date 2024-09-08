@@ -100,7 +100,7 @@ export default function Register() {
     }
     if (!form.location) {
       errors.location = 'Location is required'
-    } 
+    }
     if (!form.role) {
       errors.role = 'Role is required'
     }
@@ -153,7 +153,7 @@ export default function Register() {
   return (
     <div
       className='h-screen flex flex-col justify-center bg-fixed home-container'>
-      <AnimatedCards initialCount={5} interval={3000} minDistance={20} maxCount={15} />
+      <AnimatedCards pageClass="register-page" animationClass="register-animation" />
       <div
         style={{
           width: '50%',
@@ -309,7 +309,7 @@ export default function Register() {
           <div className='flex-row space-x-24 m-auto mt-4'>
             <div
               className='flex items-center justify-center h-full'
-              >
+            >
               <p className='text-md text-white mb-1 mr-2 text-center'>
                 Already have an account?{' '}
                 <Link
@@ -320,7 +320,7 @@ export default function Register() {
                 </Link>
               </p>
             </div>
-            <div className='flex justify-center' style={{ marginLeft: '10px', marginTop:'5%' }}>
+            <div className='flex justify-center' style={{ marginLeft: '10px', marginTop: '5%' }}>
               {MainButton('Register', '/', handleSubmit)}
               {SecondaryButton('Cancel', '/')}
             </div>

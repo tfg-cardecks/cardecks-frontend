@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import carta from "../images/carta.png";
-import '../styles/FondoCartas.css'; 
+import '../styles/FondoCartas.css';
 
 const images = [carta];
 
@@ -18,17 +18,15 @@ const getRandomImage = () => {
   return images[randomIndex];
 };
 
-const AnimatedCards = ({ initialCount = 6, interval = 3000, maxCount = 30 }) => {
+const AnimatedCards = ({ initialCount = 6, interval = 10000, maxCount = 30, pageClass, animationClass }) => {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-
     const initialCards = Array.from({ length: initialCount }, (_, index) => ({
       image: getRandomImage(),
       position: fixedPositions[index % fixedPositions.length]
     }));
     setCards(initialCards);
-
 
     const intervalId = setInterval(() => {
       setCards((prevCards) => {
@@ -48,17 +46,17 @@ const AnimatedCards = ({ initialCount = 6, interval = 3000, maxCount = 30 }) => 
   }, [initialCount, interval, maxCount]);
 
   return (
-    <>
+    <div className={pageClass}>
       {cards.map((card, index) => (
         <img
           key={index}
           src={card.image}
           alt="Carta"
-          className="animated-image"
+          className={`animated-image ${animationClass}`}
           style={{ top: '0%', left: card.position.left }}
         />
       ))}
-    </>
+    </div>
   );
 };
 

@@ -34,7 +34,7 @@ export default function UserDetail() {
     console.log('User:', user)
     return (
         <div className='user-detail'>
-            <AnimatedCards initialCount={5} interval={3000} minDistance={20} maxCount={15} />
+            <AnimatedCards pageClass="home-page" animationClass="home-animation" />
             <h2>User Details</h2>
             <p><strong>Name:</strong> {user.name}</p>
             <p><strong>Last Name:</strong> {user.lastName}</p>

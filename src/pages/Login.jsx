@@ -56,7 +56,7 @@ export default function Login() {
             timer: 1000,
           }).then(() => {
 
-            login(data.token, data.role , data.id)
+            login(data.token, data.role, data.id)
             navigate('/user/details')
           })
           break
@@ -90,7 +90,7 @@ export default function Login() {
 
     <div
       className=' flex flex-col justify-center bg-fixed home-container'>
-      <AnimatedCards initialCount={5} interval={3000} minDistance={20} maxCount={15} />
+      <AnimatedCards pageClass="register-page" animationClass="register-animation" />
       <div
         style={{
           width: '50%',
