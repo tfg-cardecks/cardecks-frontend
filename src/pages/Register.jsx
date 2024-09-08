@@ -33,6 +33,13 @@ const roles = [
   "customer",
 ];
 
+const typesOfUser = [
+  "Student",
+  "Teacher",
+  "Other",
+];
+
+
 export default function Register() {
 
   const [form, setForm] = useState({
@@ -44,6 +51,7 @@ export default function Register() {
     password2: '',
     location: '',
     role: '',
+    typeOfUser: '',
   })
 
   const [errors, setErrors] = useState({})
@@ -56,6 +64,7 @@ export default function Register() {
     password2,
     location,
     role,
+    typeOfUser,
   } = form
 
   let navigate = useNavigate()
@@ -276,6 +285,26 @@ export default function Register() {
               </select>
               {errors.role && <p className='text-yellow-200 text-xs italic'>{errors.role}</p>}
             </div>
+            <div className='mb-4'>
+              <label htmlFor='Role' className='block text-white text-sm font-bold mb-2'>
+                Type Of User
+              </label>
+              <select
+                name='typeOfUser'
+                value={typeOfUser}
+                onChange={(e) => onInputChange(e)}
+                className='block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+              >
+                <option value=''>Select your type of User</option>
+                {typesOfUser.map((typeUser) => (
+                  <option key={typeUser} value={typeUser}>
+                    {typeUser}
+                  </option>
+                ))}
+              </select>
+              {errors.typeOfUser && <p className='text-yellow-200 text-xs italic'>{errors.typeOfUser}</p>}
+            </div>
+
           </div>
           <div className='flex-row space-x-24 m-auto mt-4'>
             <div

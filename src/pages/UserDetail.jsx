@@ -3,6 +3,7 @@ import { useAuthContext } from '../context/authContext'
 import { API_URL } from '../config'
 import axios from 'axios'
 import '../styles/FondoCartas.css';
+import AnimatedCards from "../components/AnimatedCards";
 
 export default function UserDetail() {
     const { authenticated } = useAuthContext()
@@ -33,6 +34,7 @@ export default function UserDetail() {
     console.log('User:', user)
     return (
         <div className='user-detail'>
+            <AnimatedCards initialCount={5} interval={3000} minDistance={20} maxCount={15} />
             <h2>User Details</h2>
             <p><strong>Name:</strong> {user.name}</p>
             <p><strong>Last Name:</strong> {user.lastName}</p>
@@ -40,6 +42,7 @@ export default function UserDetail() {
             <p><strong>Username:</strong> {user.username}</p>
             <p><strong>Location:</strong> {user.location}</p>
             <p><strong>Role:</strong> {user.role}</p>
+            <p><strong>TypeOfUser:</strong> {user.typeOfUser}</p>
             <p><strong>Games Completed By Type:</strong> {JSON.stringify(user.gamesCompletedByType)}</p>
             <p><strong>Cards:</strong> {user.cards && user.cards.length}</p>
             <p><strong>Desks:</strong> {user.desks && user.desks.length}</p>

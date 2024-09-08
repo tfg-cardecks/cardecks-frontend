@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import carta from "../images/carta.png";
-import '../styles/FondoCartas.css'; // Importa el archivo CSS
+import '../styles/FondoCartas.css'; 
 
 const images = [carta];
 
-// Define las seis posiciones fijas para las columnas
 const fixedPositions = [
   { left: '10%' },
   { left: '25%' },
@@ -23,14 +22,14 @@ const AnimatedCards = ({ initialCount = 6, interval = 3000, maxCount = 30 }) => 
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    // Inicializa las cartas
+
     const initialCards = Array.from({ length: initialCount }, (_, index) => ({
       image: getRandomImage(),
       position: fixedPositions[index % fixedPositions.length]
     }));
     setCards(initialCards);
 
-    // Genera nuevas cartas en intervalos regulares
+
     const intervalId = setInterval(() => {
       setCards((prevCards) => {
         if (prevCards.length >= maxCount) {
