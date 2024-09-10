@@ -27,6 +27,7 @@ export function AuthContextProvider({ children }) {
 
     const [role, setRole] = useState(getInitialRole);
     const { authenticated: isAuth, isCustomer, isAdmin } = role;
+    const [userId, setUserId] = useState(localStorage.getItem('userId'));
 
     const login = useCallback(
         function (token, userType, userId) {
@@ -41,6 +42,7 @@ export function AuthContextProvider({ children }) {
             localStorage.setItem('userId', userId);
             setAuthenticated(true);
             setRole(role);
+            setUserId(userId);
         },
         []
     );
@@ -51,6 +53,7 @@ export function AuthContextProvider({ children }) {
         localStorage.removeItem('userId');
         setAuthenticated(false);
         setRole({ authenticated: false, isCustomer: false, isAdmin: false, role: 'anonymous' });
+        setUserId(null);
     }, []);
 
     const verifyTokenUser = useCallback(async () => {
@@ -88,8 +91,9 @@ export function AuthContextProvider({ children }) {
             isAuth,
             isCustomer,
             isAdmin,
+            userId,
         }),
-        [authenticated, login, logout, isAuth, isCustomer, isAdmin]
+        [authenticated, login, logout, isAuth, isCustomer, isAdmin, userId]
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

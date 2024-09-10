@@ -54,24 +54,22 @@ export default function Home() {
         <div>
           {authenticated ? (
             <h2 className="text-4xl">
-              Welcome <span className="font-bold">{userName}</span>!
+              ¡Bienvenido <span className="font-bold">{userName}</span>!
             </h2>
           ) : null}
         </div>
-        <div className="mt-12 p-6 bg-white border border-black rounded-lg shadow-lg" style={{ marginBottom: '10%', width: '85%', marginTop: '6%' }}>
+        <div className="mt-12 p-6 bg-white border border-black rounded-lg shadow-lg" style={{ marginBottom: '10%', width: '90%', marginTop: '6%' }}>
           <Slider {...settings}>
             <div className="flex flex-col items-start justify-between">
               <div className="flex flex-row w-full p-4">
                 <div className="w-1/2 p-2">
+                  <h3 className="text-4xl font-bold">¡Crea tus propias FlashCards y toma el control de tu aprendizaje!</h3>
                   <br />
-                  <br />
-                  <h3 className="text-4xl font-bold">Create Your Own FlashCards and Take Control of Your Learning!</h3>
-                  <br />
-                  <p className="text-lg">With Cardecks, you can design custom study flaschcards to make learning more engaging and effective. Tailor your study sessions to suit your personal needs and goals!</p>
-                  <p className="text-lg">Remember, it's your study, your style!</p>
+                  <p className="text-lg">Con Cardecks, puedes diseñar tarjetas de estudio personalizadas para hacer que el aprendizaje sea más atractivo y efectivo. ¡Adapta tus sesiones de estudio a tus necesidades y objetivos personales!</p>
+                  <p className="text-lg">¡Recuerda, es tu estudio, tu estilo!</p>
                 </div>
                 <div className="w-1/2 p-2">
-                  <img src={imagen1} alt="Feature 1" className="w-full h-max" />
+                  <img src={imagen1} alt="Característica 1" className="w-full h-max" />
                 </div>
               </div>
             </div>
@@ -79,16 +77,13 @@ export default function Home() {
             <div className="flex flex-col items-start justify-between">
               <div className="flex flex-row w-full p-4">
                 <div className="w-1/2 p-2">
+                  <h3 className="text-4xl font-bold">¡Aprende inglés mientras te diviertes!</h3>
                   <br />
-                  <br />
-                  <br />
-                  <h3 className="text-4xl font-bold">Learn English while having fun!</h3>
-                  <br />
-                  <p className="text-lg">Discover a different way to learn English with interactive and challenging games. Improve your vocabulary, grammar and comprehension without realizing it while you immerse yourself in a fun and educational experience.</p>
-                  <p className="text-lg">Learning has never been so entertaining!</p>
+                  <p className="text-lg">Descubre una forma diferente de aprender inglés con juegos interactivos y desafiantes. Mejora tu vocabulario, gramática y comprensión sin darte cuenta mientras te sumerges en una experiencia divertida y educativa.</p>
+                  <p className="text-lg">¡Aprender nunca ha sido tan entretenido!</p>
                 </div>
                 <div className="w-1/2 p-2">
-                  <img src={imagen2} alt="Feature 2" className="w-full h-max" />
+                  <img src={imagen2} alt="Característica 2" className="w-full h-max" />
                 </div>
               </div>
             </div>
@@ -96,14 +91,13 @@ export default function Home() {
             <div className="flex flex-col items-start justify-between">
               <div className="flex flex-row w-full p-4">
                 <div className="w-1/2 p-2">
+                  <h3 className="text-4xl font-bold">Convierte el estudio en un juego: ¡Descarga nuestros manuales y empieza ahora!</h3>
                   <br />
-                  <h3 className="text-4xl font-bold">Turn studying into a game: Download our manuals and start now!</h3>
-                  <br />
-                  <p className="text-lg">Access a collection of workbooks designed to make learning more fun and effective. With our interactive guides, you'll learn at your own pace while enjoying every step of the way</p>
-                  <p className="text-lg">It's time to turn studying into an adventure you won't want to leave!</p>
+                  <p className="text-lg">Accede a una colección de cuadernos diseñados para hacer que el aprendizaje sea más divertido y efectivo. Con nuestras guías interactivas, aprenderás a tu propio ritmo mientras disfrutas de cada paso del camino.</p>
+                  <p className="text-lg">¡Es hora de convertir el estudio en una aventura que no querrás dejar!</p>
                 </div>
                 <div className="w-1/2 p-2">
-                  <img src={imagen3} alt="Feature 3" className="w-full h-max" />
+                  <img src={imagen3} alt="Característica 3" className="w-full h-max" />
                 </div>
               </div>
             </div>
@@ -112,44 +106,44 @@ export default function Home() {
         <div className="flex flex-row w-11/12 p-4">
           <div className="w-1/2 p-2">
             <br />
-            <h3 className="text-4xl font-bold">What is a Flashcard?</h3>
+            <h3 className="text-4xl font-bold">¿Qué es una Flashcard?</h3>
             <br />
-            <p className="text-lg">Flashcards are study cards that have a question or concept on one side and the answer or explanation on the other.</p>
+            <p className="text-lg">Las flashcards son tarjetas de estudio que tienen una pregunta o concepto en un lado y la respuesta o explicación en el otro.</p>
             <br />
-            <p className="text-lg">These flashcards allow you to practice what you know and review what you need to improve. By reviewing the flashcards multiple times and at different times, your brain remembers the information better. It's like having a fun and organized way of studying, which helps you learn faster and remember what you've studied for longer.</p>
+            <p className="text-lg">Estas tarjetas te permiten practicar lo que sabes y repasar lo que necesitas mejorar. Al revisar las tarjetas varias veces y en diferentes momentos, tu cerebro recuerda mejor la información. Es como tener una forma divertida y organizada de estudiar, lo que te ayuda a aprender más rápido y recordar lo que has estudiado por más tiempo.</p>
           </div>
           <div className="w-1/2 p-2 flex flex-row justify-center items-center">
-            <img src={carta} alt="Feature 3" className="max-w-72 min-h-px mr-2" />
-            <img src={carta1} alt="Feature 4" className="max-w-72 min-h-px ml-2" />
+            <img src={carta} alt="Característica 3" className="max-w-72 min-h-px mr-2" />
+            <img src={carta1} alt="Característica 4" className="max-w-72 min-h-px ml-2" />
           </div>
         </div>
 
         <div className="flex flex-row w-11/12 p-4">
           <div className="w-1/2 p-2 flex flex-row justify-center items-center">
-            <img src={juego} alt="Feature 3" className="w-full h-auto mr-2" style={{ maxWidth: '1000px', maxHeight: '1000px' }} />
+            <img src={juego} alt="Característica 3" className="w-full h-auto mr-2" style={{ maxWidth: '1000px', maxHeight: '1000px' }} />
           </div>
 
           <div className="w-1/2 p-2">
             <br />
-            <h3 className="text-4xl font-bold">What is an Educational Game?</h3>
+            <h3 className="text-4xl font-bold">¿Qué es un Juego Educativo?</h3>
             <br />
-            <p className="text-lg">The educational games in our app are designed to make learning a more fun and interactive experience. Instead of studying in a traditional way, users can learn by playing, which helps them stay motivated and retain information more effectively.</p>
+            <p className="text-lg">Los juegos educativos en nuestra aplicación están diseñados para hacer que el aprendizaje sea una experiencia más divertida e interactiva. En lugar de estudiar de manera tradicional, los usuarios pueden aprender jugando, lo que les ayuda a mantenerse motivados y retener la información de manera más efectiva.</p>
             <br />
-            <p className="text-lg">Our games allow users to practice vocabulary, grammar, and other topics in an entertaining way. Learning through play helps users enjoy the process more and incorporate it into their daily study routine without feeling overwhelmed.</p>
+            <p className="text-lg">Nuestros juegos permiten a los usuarios practicar vocabulario, gramática y otros temas de una manera entretenida. Aprender jugando ayuda a los usuarios a disfrutar más del proceso e incorporarlo en su rutina diaria de estudio sin sentirse abrumados.</p>
           </div>
         </div>
 
         <div className="flex flex-row w-11/12 p-4">
           <div className="w-1/2 p-2">
             <br />
-            <h3 className="text-4xl font-bold">Manuals</h3>
+            <h3 className="text-4xl font-bold">Manuales</h3>
             <br />
-            <p className="text-lg">In our app, you have access to a variety of manuals designed to help you get the most out of your card games. These manuals will guide you in creating and customizing your own games using the decks and cards.</p>
+            <p className="text-lg">En nuestra aplicación, tienes acceso a una variedad de manuales diseñados para ayudarte a sacar el máximo provecho de tus juegos de cartas. Estos manuales te guiarán en la creación y personalización de tus propios juegos utilizando las barajas y cartas.</p>
             <br />
-            <p className="text-lg">They will teach you how to set up your games, how to apply the rules, and how to enjoy a complete and personalized gaming experience. With our manuals, you can design and play with rules that suit your preferences, ensuring that every game session is fun and tailored to your needs.</p>
+            <p className="text-lg">Te enseñarán cómo configurar tus juegos, cómo aplicar las reglas y cómo disfrutar de una experiencia de juego completa y personalizada. Con nuestros manuales, puedes diseñar y jugar con reglas que se adapten a tus preferencias, asegurando que cada sesión de juego sea divertida y acorde a tus necesidades.</p>
           </div>
           <div className="w-1/2 p-2 flex flex-row justify-center items-center">
-            <img src={manual} alt="Feature 3" className="w-full min-h-px mr-2" />
+            <img src={manual} alt="Característica 3" className="w-full min-h-px mr-2" />
           </div>
         </div>
 

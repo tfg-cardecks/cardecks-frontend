@@ -49,9 +49,7 @@ export default function Register() {
     username: '',
     password: '',
     password2: '',
-    location: '',
     role: '',
-    typeOfUser: '',
   })
 
   const [errors, setErrors] = useState({})
@@ -62,9 +60,7 @@ export default function Register() {
     username,
     password,
     password2,
-    location,
     role,
-    typeOfUser,
   } = form
 
   let navigate = useNavigate()
@@ -78,31 +74,28 @@ export default function Register() {
   function validateForm() {
     const errors = {}
     if (!form.name) {
-      errors.name = 'Name is required'
+      errors.name = 'El nombre es obligatorio'
     }
     if (!form.lastName) {
-      errors.lastName = 'LastName is required'
+      errors.lastName = 'Los apellidos son obligatorios'
     }
     if (!form.email) {
-      errors.email = 'Email is required'
+      errors.email = 'El email es obligatorio'
     }
     if (!form.username) {
-      errors.username = 'Username is required'
+      errors.username = 'El nombre de usuario es obligatorio'
     }
     if (!form.password) {
-      errors.password = 'Password is required'
+      errors.password = 'La contraseña es obligatoria'
     }
     if (!form.password2) {
-      errors.password2 = 'Password confirmation is required'
+      errors.password2 = 'La confirmación de la contraseña es obligatoria'
     }
     if (form.password !== form.password2) {
-      errors.password2 = 'Passwords do not match'
-    }
-    if (!form.location) {
-      errors.location = 'Location is required'
+      errors.password2 = 'Las contraseñas no coinciden'
     }
     if (!form.role) {
-      errors.role = 'Role is required'
+      errors.role = 'El rol es obligatorio'
     }
     return errors
   }
@@ -130,10 +123,10 @@ export default function Register() {
       switch (response.status) {
         case 201:
           Swal.fire({
-            title: 'Success!',
-            text: 'User registered successfully',
+            title: '¡Éxito!',
+            text: 'Usuario registrado con éxito',
             icon: 'success',
-            confirmButtonText: 'Log in',
+            confirmButtonText: 'Iniciar sesión',
           }).then(() => {
             navigate('/login')
           })
@@ -174,7 +167,7 @@ export default function Register() {
         <h2
           className='text-4xl font-bold text-center mb-4 text-white'
           style={{ marginTop: '0px', marginBottom: '13px' }}>
-          Register
+          Registro
         </h2>
         {errors.message && (
           <p className='text-yellow-200'>{errors.message}</p>
@@ -183,8 +176,8 @@ export default function Register() {
           <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
             <FormTextInput
               labelFor='Name'
-              labelText='Name'
-              placeholder='Enter your Name'
+              labelText='Nombre'
+              placeholder='Introduce tu nombre'
               name='name'
               value={name}
               onChange={(e) => onInputChange(e)}
@@ -194,8 +187,8 @@ export default function Register() {
 
             <FormTextInput
               labelFor='LastName'
-              labelText='LastName'
-              placeholder='Enter your LastName'
+              labelText='Apellidos'
+              placeholder='Introduce tus apellidos'
               name='lastName'
               value={lastName}
               onChange={(e) => onInputChange(e)}
@@ -204,8 +197,8 @@ export default function Register() {
             />
             <FormTextInput
               labelFor='Username'
-              labelText='Username'
-              placeholder='Enter your Username'
+              labelText='Nombre de Usuario'
+              placeholder='Introduce tu nombre de usuario'
               name='username'
               value={username}
               onChange={(e) => onInputChange(e)}
@@ -214,8 +207,8 @@ export default function Register() {
             />
             <FormTextInput
               labelFor='Password'
-              labelText='Password'
-              placeholder='Enter your Password'
+              labelText='Contraseña'
+              placeholder='Introduce tu contraseña'
               name='password'
               value={password}
               onChange={(e) => onInputChange(e)}
@@ -225,8 +218,8 @@ export default function Register() {
             />
             <FormTextInput
               labelFor='Password2'
-              labelText='Repeat Password'
-              placeholder='Enter your Password again'
+              labelText='Repite la Contraseña'
+              placeholder='Introduce tu contraseña de nuevo'
               name='password2'
               value={password2}
               onChange={(e) => onInputChange(e)}
@@ -239,7 +232,7 @@ export default function Register() {
             <FormTextInput
               labelFor='Email'
               labelText='Email'
-              placeholder='Enter your Email'
+              placeholder='Introduce tu email'
               name='email'
               value={email}
               onChange={(e) => onInputChange(e)}
@@ -248,27 +241,8 @@ export default function Register() {
               isMandatory
             />
             <div className='mb-4'>
-              <label htmlFor='Location' className='block text-white text-sm font-bold mb-2'>
-                Location *
-              </label>
-              <select
-                name='location'
-                value={location}
-                onChange={(e) => onInputChange(e)}
-                className='block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-              >
-                <option value=''>Select your country</option>
-                {countries.map((country) => (
-                  <option key={country} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </select>
-              {errors.location && <p className='text-yellow-200 text-xs italic'>{errors.location}</p>}
-            </div>
-            <div className='mb-4'>
               <label htmlFor='Role' className='block text-white text-sm font-bold mb-2'>
-                Role *
+                Rol *
               </label>
               <select
                 name='role'
@@ -276,7 +250,7 @@ export default function Register() {
                 onChange={(e) => onInputChange(e)}
                 className='block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
               >
-                <option value=''>Select your role</option>
+                <option value=''>Selecciona tu rol</option>
                 {roles.map((rol) => (
                   <option key={rol} value={rol}>
                     {rol}
@@ -285,44 +259,24 @@ export default function Register() {
               </select>
               {errors.role && <p className='text-yellow-200 text-xs italic'>{errors.role}</p>}
             </div>
-            <div className='mb-4'>
-              <label htmlFor='Role' className='block text-white text-sm font-bold mb-2'>
-                Type Of User
-              </label>
-              <select
-                name='typeOfUser'
-                value={typeOfUser}
-                onChange={(e) => onInputChange(e)}
-                className='block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-              >
-                <option value=''>Select your type of User</option>
-                {typesOfUser.map((typeUser) => (
-                  <option key={typeUser} value={typeUser}>
-                    {typeUser}
-                  </option>
-                ))}
-              </select>
-              {errors.typeOfUser && <p className='text-yellow-200 text-xs italic'>{errors.typeOfUser}</p>}
-            </div>
-
           </div>
           <div className='flex-row space-x-24 m-auto mt-4'>
             <div
               className='flex items-center justify-center h-full'
             >
               <p className='text-md text-white mb-1 mr-2 text-center'>
-                Already have an account?{' '}
+                ¿Ya tienes una cuenta?{' '}
                 <Link
                   to='/login'
                   className='text-green-400 hover:text-green-200'
                   style={{ marginRight: '2rem' }}>
-                  Log in now
+                  Inicia sesión ahora
                 </Link>
               </p>
             </div>
             <div className='flex justify-center' style={{ marginLeft: '10px', marginTop: '5%' }}>
-              {MainButton('Register', '/', handleSubmit)}
-              {SecondaryButton('Cancel', '/')}
+              {MainButton('Registrar', '/', handleSubmit)}
+              {SecondaryButton('Cancelar', '/')}
             </div>
           </div>
         </form>

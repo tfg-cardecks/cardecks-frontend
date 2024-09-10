@@ -19,83 +19,83 @@ export default function Footer() {
             <span className="ml-3 text-xl">Tailwind Snippets</span>
           </a>
           <p className="mt-2 text-sm text-gray-500">
-            Air plant banjo lyft occupy retro adaptogen indego
+            Planta de aire banjo lyft ocupa retro adaptógeno índigo
           </p>
         </div>
         <div className="flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first">
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
             <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-              CATEGORIES
+              CATEGORÍAS
             </h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-600 hover:text-gray-800">First Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Primer Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Second Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Segundo Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Third Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Tercer Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Fourth Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Cuarto Enlace</a>
               </li>
             </nav>
           </div>
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
             <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-              CATEGORIES
+              CATEGORÍAS
             </h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-600 hover:text-gray-800">First Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Primer Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Second Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Segundo Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Third Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Tercer Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Fourth Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Cuarto Enlace</a>
               </li>
             </nav>
           </div>
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
             <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-              CATEGORIES
+              CATEGORÍAS
             </h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-600 hover:text-gray-800">First Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Primer Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Second Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Segundo Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Third Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Tercer Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Fourth Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Cuarto Enlace</a>
               </li>
             </nav>
           </div>
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
             <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-              CATEGORIES
+              CATEGORÍAS
             </h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-600 hover:text-gray-800">First Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Primer Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Second Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Segundo Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Third Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Tercer Enlace</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Fourth Link</a>
+                <a className="text-gray-600 hover:text-gray-800">Cuarto Enlace</a>
               </li>
             </nav>
           </div>

@@ -46,8 +46,8 @@ export default function Login() {
         case 200:
           Swal.fire({
             icon: 'info',
-            title: 'Please wait',
-            text: 'Logging in progress. This might take some time.',
+            title: 'Por favor espera',
+            text: 'Iniciando sesión. Esto puede tardar un poco.',
             showConfirmButton: true,
             confirmButtonColor: 'black',
             allowOutsideClick: false,
@@ -68,7 +68,6 @@ export default function Login() {
         default:
           break
       }
-
     } catch (error) {
       console.error(error);
     }
@@ -78,10 +77,10 @@ export default function Login() {
     let errors = {}
 
     if (!form.username) {
-      errors.username = 'Username is required'
+      errors.username = 'El nombre de usuario es obligatorio'
     }
     if (!form.password) {
-      errors.password = 'Password is required'
+      errors.password = 'La contraseña es obligatoria'
     }
     return errors
   }
@@ -114,7 +113,7 @@ export default function Login() {
         <h2
           className='text-4xl font-bold text-center mb-4 text-white'
           style={{ marginTop: '0px', marginBottom: '15px', marginRight: '5%' }}>
-          Log in
+          Iniciar sesión
         </h2>
 
         {errors.message && (
@@ -125,12 +124,12 @@ export default function Login() {
           className='flex items-center justify-center h-full'
         >
           <p className='text-md text-white mb-1 mr-2 text-center'>
-            Don't have an account?{' '}
+            ¿No tienes una cuenta?{' '}
             <Link
               to='/register'
               className='text-green-400 hover:text-green-200'
               style={{ marginRight: '2rem' }}>
-              Register now
+              Regístrate ahora
             </Link>
           </p>
         </div>
@@ -138,32 +137,32 @@ export default function Login() {
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className='flex' style={{ marginBottom: '1rem', marginTop: '3%' }}>
             <label htmlFor='Username' className='block text-lg font-bold text-white self-center text-center' style={{ marginBottom: '1rem', marginRight: '2rem', marginLeft: '4rem' }}>
-              Username
+              Nombre de usuario
               <br></br>
-              or email
+              o email
             </label>
             <div className='flex-grow' style={{ marginRight: '8rem' }}>
-              <input type='text' className='leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline' style={{ width: '100%', padding: '0.5rem 0.75rem' }} placeholder='Write your username' name='username' value={username} onChange={(e) => onInputChange(e)} />
+              <input type='text' className='leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline' style={{ width: '100%', padding: '0.5rem 0.75rem' }} placeholder='Escribe tu nombre de usuario' name='username' value={username} onChange={(e) => onInputChange(e)} />
               {errors.username && <p className='text-yellow-200 text-xs italic'>{errors.username}</p>}
             </div>
           </div>
           <div className='flex' style={{ marginBottom: '1rem' }}>
             <label htmlFor='Password' className='block text-lg font-bold text-white self-center' style={{ marginRight: '2rem', marginLeft: '4rem' }}>
-              Password
+              Contraseña
             </label>
             <div className='flex-grow' style={{ marginRight: '8rem', marginLeft: '0.25rem' }}>
-              <input type='password' className='leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline' style={{ width: '100%', padding: '0.5rem 0.75rem' }} placeholder='Enter your password' name='password' value={password} onChange={(e) => onInputChange(e)} />
+              <input type='password' className='leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline' style={{ width: '100%', padding: '0.5rem 0.75rem' }} placeholder='Introduce tu contraseña' name='password' value={password} onChange={(e) => onInputChange(e)} />
               {errors.password && <p className='text-yellow-200 text-xs italic'>{errors.password}</p>}
             </div>
           </div>
           {errors.errors && errors.errors[0] && errors.errors[0].detail && <p className='text-yellow-200'>{errors.errors[0].detail}</p>}
           <div className="flex justify-center">
             <div className="flex justify-center" style={{ marginLeft: '20%' }}>
-              {MainButton('Log in', '/', handleSubmit)}
+              {MainButton('Iniciar sesión', '/', handleSubmit)}
             </div>
             <div className='flex items-center justify-center h-full'>
               <Link to='/' className='text-blue-300 hover:text-blue-700'>
-                ¿Forgot your password?
+                ¿Olvidaste tu contraseña?
               </Link>
             </div>
           </div>
