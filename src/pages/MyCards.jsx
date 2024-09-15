@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { API_URL } from '../config';
 import { useAuthContext } from '../context/authContext';
 
@@ -12,6 +12,7 @@ export default function MyCards() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const { id } = useParams();
+  const navigate = useNavigate();
 
   async function fetchCards() {
     try {
@@ -25,7 +26,20 @@ export default function MyCards() {
           },
         });
         const data = await response.json();
-        setCards(data);
+        switch (response.status) {
+          case 200:
+            setCards(data);
+            break;
+          case 401:
+            setError(data);
+            break;
+          case 404:
+            setError(data);
+            break;
+          default:
+            break;
+        }
+  
       } else {
         setError({ message: 'No estás autenticado. Por favor, inicia sesión.' });
       }
@@ -33,7 +47,6 @@ export default function MyCards() {
       setError(err.message);
     }
   };
-
 
   useEffect(() => {
     fetchCards();
@@ -47,8 +60,12 @@ export default function MyCards() {
     return matchesTitle && matchesTheme && matchesStartDate && matchesEndDate;
   });
 
+  async function handleImportCard() {
+    console.log('Importar carta');
+  }
+
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 w-4/5">
       <h1 className="text-3xl font-bold mb-4">
         Mis Cartas ({filteredCards.length})
       </h1>
@@ -123,12 +140,24 @@ export default function MyCards() {
           </button>
         </div>
       </div>
+      <div className="flex space-x-4 mb-4">
+        <button
+          onClick={handleImportCard}
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          Importar Carta
+        </button>
+      </div>
       {filteredCards.length === 0 && !error && (
         <p className="text-gray-500">No hay cartas disponibles.</p>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredCards.map((card) => (
-          <div key={card._id} className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div
+            key={card._id}
+            className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+            onClick={() => navigate(`/card/${card._id}`)}
+          >
             <h2 className="text-xl font-bold mb-2">{card.title}</h2>
             <p className="mb-2">{card.description}</p>
             <p className="text-gray-500">Tema: {card.theme}</p>

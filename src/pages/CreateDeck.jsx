@@ -5,6 +5,7 @@ import SecondaryButton from "../components/secondaryButton.jsx";
 import FormTextInputCreate from "../components/FormTextInputCreate.jsx";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
+import CardSelector from '../components/CardSelector';
 
 export default function CreateDeck() {
   const [form, setForm] = useState({
@@ -36,7 +37,17 @@ export default function CreateDeck() {
           },
         });
         const data = await response.json();
-        setUserCards(data);
+        switch (response.status) {
+          case 200:
+              setUserCards(data);
+              return;
+            case 404:
+              setErrors(data);
+              return;
+            default:
+              return;
+  
+        }
       } else {
         setErrors({ message: 'No estás autenticado. Por favor, inicia sesión.' });
       }
@@ -55,12 +66,11 @@ export default function CreateDeck() {
     setErrors({});
   }
 
-  function onCardSelect(e, cardId) {
-    const { checked } = e.target;
+  function onCardSelect(cardId) {
     setForm((prevForm) => {
-      const updatedCards = checked
-        ? [...prevForm.cards, cardId]
-        : prevForm.cards.filter(id => id !== cardId);
+      const updatedCards = prevForm.cards.includes(cardId)
+        ? prevForm.cards.filter(id => id !== cardId)
+        : [...prevForm.cards, cardId];
       return { ...prevForm, cards: updatedCards };
     });
   }
@@ -224,27 +234,11 @@ export default function CreateDeck() {
             <p className="text-gray-500">No hay cartas disponibles.</p>
           )}
           <div className="h-96 overflow-y-auto border p-4 rounded-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {filteredCards.map((card) => (
-                <div key={card._id} className="border p-4 rounded-lg shadow-lg mb-4">
-                  <h3 className="text-lg font-bold mb-2">{card.title}</h3>
-                  <p className="mb-2">{card.description}</p>
-                  <p className="text-gray-500">Tema: {card.theme}</p>
-                  <p className="text-gray-500">Fecha de creación: {new Date(card.createdAt).toLocaleDateString()}</p>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={`card-${card._id}`}
-                      name="cards"
-                      value={card._id}
-                      onChange={(e) => onCardSelect(e, card._id)}
-                      checked={cards.includes(card._id)}
-                    />
-                    <label htmlFor={`card-${card._id}`} className="ml-2">Seleccionar</label>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <CardSelector
+              allCards={filteredCards}
+              selectedCards={cards}
+              onCardSelection={onCardSelect}
+            />
           </div>
         </div>
       </div>

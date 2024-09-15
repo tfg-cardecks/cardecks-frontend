@@ -25,7 +25,10 @@ export default function MyDecks() {
         },
       });
       const data = await response.json();
-      if (response.status === 404) {
+      if (response.status === 401) {
+        setError(data);
+        return;
+      } else if (response.status === 404) {
         setError(data);
         return;
       } else {
@@ -49,8 +52,12 @@ export default function MyDecks() {
     return matchesName && matchesTheme && matchesStartDate && matchesEndDate;
   });
 
+  async function handleImport() {
+    console.log('Importar mazos');
+  }
+
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 w-4/5">
       <h1 className="text-3xl font-bold mb-4">
         Mis Mazos ({filteredDecks.length})
       </h1>
@@ -124,6 +131,14 @@ export default function MyDecks() {
             Limpiar
           </button>
         </div>
+      </div>
+      <div className="flex space-x-4 mb-4">
+        <button
+          onClick={handleImport}
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          Importar Mazos
+        </button>
       </div>
       {filteredDecks.length === 0 && !error && (
         <p className="text-gray-500">No hay mazos disponibles.</p>
