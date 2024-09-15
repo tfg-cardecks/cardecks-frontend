@@ -8,6 +8,9 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import UserDetail from "./pages/UserDetail";
 import MyCards from "./pages/MyCards";
+import MyDecks from "./pages/MyDecks";
+import CreateDeck from "./pages/CreateDeck";
+import DeckDetails from "./pages/DeckDetails";
 
 export default function App() {
   return (
@@ -32,6 +35,19 @@ export default function App() {
               <MyCards />
             }
           />
+          <Route
+            path='/user/:id/my-decks'
+            element={
+              <MyDecks />
+            }
+          />
+          <Route
+            path='/user/:id/create-deck'
+            element={
+              <CreateDeck />
+            }
+          />
+          <Route path="/deck/:id" element={<DeckDetails />} />
 
         </Routes>
         <Footer />

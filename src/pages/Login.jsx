@@ -137,7 +137,7 @@ export default function Login() {
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className='flex' style={{ marginBottom: '1rem', marginTop: '3%' }}>
             <label htmlFor='Username' className='block text-lg font-bold text-white self-center text-center' style={{ marginBottom: '1rem', marginRight: '2rem', marginLeft: '4rem' }}>
-              Nombre de usuario
+              Usuario
               <br></br>
               o email
             </label>

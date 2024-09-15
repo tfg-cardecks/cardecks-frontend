@@ -139,23 +139,23 @@ export default function Header() {
               onClick={handleDecksClick}
               className="mr-5 hover:text-gray-900"
             >
-              Barajas
+              Mazos
             </button>
             {authenticated && isDecksDropdownOpen && (
               <div className="absolute left-0 mt-2 w-48 bg-white border rounded shadow-lg">
                 <Link
-                  to="/user/create-deck"
+                  to={`/user/${userId}/create-deck`}
                   className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                   onClick={handleOptionClick}
                 >
-                  Crear baraja
+                  Crear Mazo
                 </Link>
                 <Link
-                  to="/user/my-decks"
+                  to={`/user/${userId}/my-decks`}
                   className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                   onClick={handleOptionClick}
                 >
-                  Mis barajas
+                  Mis Mazos
                 </Link>
               </div>
             )}

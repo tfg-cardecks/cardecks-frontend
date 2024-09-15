@@ -21,19 +21,20 @@ export default function Home() {
   const { authenticated } = useAuthContext();
   const [userName, setUserName] = useState(null);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        if (authenticated) {
-          const currentUserId = localStorage.getItem("userId");
-          const response = await axios.get(`${API_URL}/api/users`);
-          const user = response.data.find(user => user._id === currentUserId);
-          setUserName(user.username);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
+  async function fetchUserData() {
+    try {
+      if (authenticated) {
+        const currentUserId = localStorage.getItem("userId");
+        const response = await axios.get(`${API_URL}/api/users`);
+        const user = response.data.find(user => user._id === currentUserId);
+        setUserName(user.username);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchUserData();
   }, [authenticated]);
 

@@ -13,28 +13,29 @@ export default function MyCards() {
   const [endDate, setEndDate] = useState('');
   const { id } = useParams();
 
-  useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        if (authenticated) {
-          const token = localStorage.getItem('access_token');
+  async function fetchCards() {
+    try {
+      if (authenticated) {
+        const token = localStorage.getItem('access_token');
 
-          const response = await fetch(`${API_URL}/api/user/${id}/cards`, {
-            method: 'GET',
-            headers: {
-              Authorization: `${token}`,
-            },
-          });
-          const data = await response.json();
-          setCards(data);
-        } else {
-          setError({ message: 'No estás autenticado. Por favor, inicia sesión.' });
-        }
-      } catch (err) {
-        setError(err.message);
+        const response = await fetch(`${API_URL}/api/user/${id}/cards`, {
+          method: 'GET',
+          headers: {
+            Authorization: `${token}`,
+          },
+        });
+        const data = await response.json();
+        setCards(data);
+      } else {
+        setError({ message: 'No estás autenticado. Por favor, inicia sesión.' });
       }
-    };
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
+
+  useEffect(() => {
     fetchCards();
   }, [id, authenticated]);
 
@@ -131,7 +132,7 @@ export default function MyCards() {
             <h2 className="text-xl font-bold mb-2">{card.title}</h2>
             <p className="mb-2">{card.description}</p>
             <p className="text-gray-500">Tema: {card.theme}</p>
-            <p className="text-gray-500">Creado el: {new Date(card.createdAt).toLocaleDateString()}</p>
+            <p className="text-gray-500">Fecha de creación: {new Date(card.createdAt).toLocaleDateString()}</p>
             <div className="flex justify-between items-center">
               {card.frontImageUrl && (
                 <div className="text-center">

@@ -9,31 +9,32 @@ export default function UserDetail() {
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState({})
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        if (authenticated) {
-          const currentUserId = localStorage.getItem('userId');
-          const response = await axios.get(`${API_URL}/api/users`);
-          const userData = response.data.find((user) => user._id === currentUserId);
-          switch (response.status) {
-            case 200:
-              setUser(userData);
-              break;
-            case 403:
-            case 404:
-              setErrors(userData);
-              break;
-            default:
-              break;
-          }
-        } else {
-          setErrors({ message: 'No estás autenticado. Por favor, inicia sesión.' });
-          }
-      } catch (error) {
-        console.error(error);
+  async function fetchUserData() {
+    try {
+      if (authenticated) {
+        const currentUserId = localStorage.getItem('userId');
+        const response = await axios.get(`${API_URL}/api/users`);
+        const userData = response.data.find((user) => user._id === currentUserId);
+        switch (response.status) {
+          case 200:
+            setUser(userData);
+            break;
+          case 403:
+          case 404:
+            setErrors(userData);
+            break;
+          default:
+            break;
+        }
+      } else {
+        setErrors({ message: 'No estás autenticado. Por favor, inicia sesión.' });
       }
-    };
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+
     fetchUserData();
   }, [authenticated]);
 
@@ -64,7 +65,7 @@ export default function UserDetail() {
             ))}
           </ul>
           <p><strong>Total de Cartas:</strong> {user.cards && user.cards.length}</p>
-          <p><strong>Total de Mazos:</strong> {user.desks && user.desks.length}</p>
+          <p><strong>Total de Mazos:</strong> {user.decks && user.decks.length}</p>
           <p><strong>Total de Juegos:</strong> {user.games && user.games.length}</p>
         </div>
       </div>
