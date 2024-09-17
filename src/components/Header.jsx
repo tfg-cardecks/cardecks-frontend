@@ -18,10 +18,8 @@ export default function Header() {
       icon: 'success',
       title: 'Desconectado',
       text: 'Has cerrado sesión correctamente.',
-      showConfirmButton: true,
-      confirmButtonColor: 'black',
-      background: 'gray',
-      color: 'white',
+      showConfirmButton: false,
+          timer: 1500,
     }).then(() => {
       navigate('/');
     });

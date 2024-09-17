@@ -47,10 +47,11 @@ export default function DeckDetailsEdit() {
     }
   }
 
-  async function fetchAllCards() {
+    async function fetchUserCards() {
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`${API_URL}/api/cards`, {
+      const currentUserId = localStorage.getItem("userId");
+      const res = await fetch(`${API_URL}/api/user/${currentUserId}/cards`, {
         method: 'GET',
         headers: {
           Authorization: `${token}`,
@@ -67,9 +68,10 @@ export default function DeckDetailsEdit() {
     }
   }
 
+
   useEffect(() => {
     fetchDeck();
-    fetchAllCards();
+    fetchUserCards();
   }, [id, authenticated]);
 
   async function handleUpdate() {
@@ -126,10 +128,14 @@ export default function DeckDetailsEdit() {
     });
   };
 
+  const handleCancel = () => {
+    navigate(`/deck/${id}`);
+  };
+
   return (
     deck ? (
       <div className="container mx-auto p-4 w-4/5">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-3xl font-bold mb-4">{deck.name}</h1>
           {error && <p className="text-yellow-600">{error.message}</p>}
 
@@ -174,9 +180,16 @@ export default function DeckDetailsEdit() {
             <div className="flex space-x-4 mt-4">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+                className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none"
               >
                 Actualizar
+              </button>
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
+              >
+                Cancelar
               </button>
             </div>
           </form>

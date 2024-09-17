@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
 import { API_URL } from '../config';
+import Swal from 'sweetalert2';
 
 export default function DeckDetails() {
   const { id } = useParams();
@@ -59,6 +60,14 @@ export default function DeckDetails() {
       });
 
       if (res.status === 204) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Mazo eliminada',
+          text: 'Se ha eliminado correctamente el mazo.',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
         navigate('/');
       } else {
         const data = await res.json();
@@ -80,8 +89,8 @@ export default function DeckDetails() {
   return (
     deck ? (
       <div className="container mx-auto p-4 w-4/5">
-        <div className="flex flex-col items-center">
-          <h1 className="text-3xl font-bold mb-4">{deck.name}</h1>
+        <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-6">
+        <h1 className="text-3xl font-bold mb-4">{deck.name}</h1>
           {error && <p className="text-yellow-600">{error}</p>}
 
           <p className="mb-2">{deck.description}</p>
@@ -92,25 +101,25 @@ export default function DeckDetails() {
           <div className="flex space-x-4 mt-4">
             <button
               onClick={handleUpdate}
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none"
             >
               Actualizar
             </button>
             <button
               onClick={handleDelete}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
+              className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
             >
               Eliminar
             </button>
             <button
               onClick={handleImportCard}
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700"
-            >
+              className="bg-gradient-to-r from-green-400 to-green-600 text-black px-4 py-2 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
+              >
               Importar Carta a Mazo
             </button>
             <button
               onClick={handleExportDeck}
-              className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700"
+              className="bg-gradient-to-r from-yellow-200 to-yellow-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-yellow-300 focus:outline-none"
             >
               Exportar Mazo
             </button>

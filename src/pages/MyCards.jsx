@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { API_URL } from '../config';
 import { useAuthContext } from '../context/authContext';
+import Swal from 'sweetalert2';
 
 export default function MyCards() {
   const { authenticated } = useAuthContext();
@@ -13,6 +14,7 @@ export default function MyCards() {
   const [endDate, setEndDate] = useState('');
   const { id } = useParams();
   const navigate = useNavigate();
+  const [file, setFile] = useState(null);
 
   async function fetchCards() {
     try {
@@ -39,7 +41,6 @@ export default function MyCards() {
           default:
             break;
         }
-  
       } else {
         setError({ message: 'No estás autenticado. Por favor, inicia sesión.' });
       }
@@ -60,8 +61,48 @@ export default function MyCards() {
     return matchesTitle && matchesTheme && matchesStartDate && matchesEndDate;
   });
 
-  async function handleImportCard() {
-    console.log('Importar carta');
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setError(null);
+  };
+
+  async function handleImportCard(event) {
+    event.preventDefault();
+
+    if (!file) {
+      setError("No se ha seleccionado ningún archivo.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const token = localStorage.getItem('access_token');
+      const res = await fetch(`${API_URL}/api/card/import`, {
+        method: 'POST',
+        headers: {
+          Authorization: `${token}`,
+        },
+        body: formData,
+      });
+
+      if (res.status === 201) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Carta importada',
+          text: 'Se ha importado correctamente la carta.',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        fetchCards();
+      } else {
+        const data = await res.json();
+        setError(data.message);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
   return (
@@ -69,7 +110,7 @@ export default function MyCards() {
       <h1 className="text-3xl font-bold mb-4">
         Mis Cartas ({filteredCards.length})
       </h1>
-      {error && <p className="text-red-500">{error.message}</p>}
+      {error && <p className="text-red-500">{error}</p>}
       <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="mb-2">
           <label className="block mb-1">
@@ -141,9 +182,11 @@ export default function MyCards() {
         </div>
       </div>
       <div className="flex space-x-4 mb-4">
+        <input id="fileInput" type="file" onChange={handleFileChange} />
         <button
           onClick={handleImportCard}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700"
+
+          className="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
         >
           Importar Carta
         </button>

@@ -5,6 +5,7 @@ import { API_URL } from '../config'
 import AnimatedCards from "../components/AnimatedCards";
 import '../styles/FondoCartas.css';
 import MainButton from "../components/mainButton.jsx";
+import SecondaryButton from "../components/secondaryButton.jsx";
 import Swal from 'sweetalert2'
 
 export default function Login() {
@@ -48,14 +49,9 @@ export default function Login() {
             icon: 'info',
             title: 'Por favor espera',
             text: 'Iniciando sesión. Esto puede tardar un poco.',
-            showConfirmButton: true,
-            confirmButtonColor: 'black',
-            allowOutsideClick: false,
-            background: 'gray',
-            color: 'white',
-            timer: 1000,
+            showConfirmButton: false,
+            timer: 1500,
           }).then(() => {
-
             login(data.token, data.role, data.id)
             navigate('/user/details')
           })
@@ -156,16 +152,23 @@ export default function Login() {
             </div>
           </div>
           {errors.errors && errors.errors[0] && errors.errors[0].detail && <p className='text-yellow-200'>{errors.errors[0].detail}</p>}
-          <div className="flex justify-center">
-            <div className="flex justify-center" style={{ marginLeft: '20%' }}>
-              {MainButton('Iniciar sesión', '/', handleSubmit)}
-            </div>
-            <div className='flex items-center justify-center h-full'>
+          <div className='flex-row space-x-24 m-auto mt-4'>
+            <div
+              className='flex items-center justify-center h-full'
+            >
               <Link to='/' className='text-blue-300 hover:text-blue-700'>
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>
+            <div className='flex justify-center' style={{ marginLeft: '10px', marginTop: '2%' }}>
+
+              {MainButton('Iniciar sesión', '/', handleSubmit)}
+              {SecondaryButton('Cancelar', '/')}
+
+            </div>
           </div>
+
+
         </form>
       </div>
     </div>

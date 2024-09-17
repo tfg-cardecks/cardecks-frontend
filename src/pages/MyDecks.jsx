@@ -25,14 +25,18 @@ export default function MyDecks() {
         },
       });
       const data = await response.json();
-      if (response.status === 401) {
-        setError(data);
-        return;
-      } else if (response.status === 404) {
-        setError(data);
-        return;
-      } else {
-        setDecks(data);
+      switch (response.status) {
+        case 401:
+          setError(data);
+          break;
+        case 404:
+          setError(data);
+          break;
+        case 200:
+          setDecks(data);
+          break;
+        default:
+          break;
       }
 
     } catch (err) {
@@ -135,7 +139,7 @@ export default function MyDecks() {
       <div className="flex space-x-4 mb-4">
         <button
           onClick={handleImport}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700"
+          className="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
         >
           Importar Mazos
         </button>

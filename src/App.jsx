@@ -13,6 +13,7 @@ import CreateDeck from "./pages/CreateDeck";
 import DeckDetails from "./pages/DeckDetails";
 import DeckDetailsEdit from "./pages/DeckDetailsEdit";
 import CardDetails from "./pages/CardDetails";
+import CardDetailsEdit from "./pages/CardDetailsEdit";
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/card/:id" element={<CardDetails />} />
           <Route path="/deck/:id" element={<DeckDetails />} />
           <Route path="/deck/edit/:id" element={<DeckDetailsEdit />} />
+          <Route path="/card/edit/:id" element={<CardDetailsEdit />} />
 
         </Routes>
         <Footer />

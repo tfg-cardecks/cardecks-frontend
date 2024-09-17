@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { API_URL } from '../config';
-import MainButton from "../components/mainButton.jsx";
-import SecondaryButton from "../components/secondaryButton.jsx";
-import FormTextInputCreate from "../components/FormTextInputCreate.jsx";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
 import CardSelector from '../components/CardSelector';
+import FormTextInputCreate from '../components/FormTextInputCreate.jsx';
+import Swal from 'sweetalert2';
 
 export default function CreateDeck() {
   const [form, setForm] = useState({
@@ -39,14 +38,14 @@ export default function CreateDeck() {
         const data = await response.json();
         switch (response.status) {
           case 200:
-              setUserCards(data);
-              return;
-            case 404:
-              setErrors(data);
-              return;
-            default:
-              return;
-  
+            setUserCards(data);
+            return;
+          case 404:
+            setErrors(data);
+            return;
+          default:
+            return;
+
         }
       } else {
         setErrors({ message: 'No estás autenticado. Por favor, inicia sesión.' });
@@ -89,7 +88,14 @@ export default function CreateDeck() {
     const data = await res.json();
     switch (res.status) {
       case 201:
-        navigate('/');
+        Swal.fire({
+          title: 'Mazo creado',
+          text: 'El mazo se ha creado correctamente.',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(`/deck/${data._id}`);
         break;
       case 400:
         setErrors(data);
@@ -104,6 +110,10 @@ export default function CreateDeck() {
         break;
     }
   }
+
+  const handleCancel = () => {
+    navigate('/');
+  };
 
   const filteredCards = userCards.filter(card => {
     const matchesTitle = titleFilter ? card.title.toLowerCase().includes(titleFilter.toLowerCase()) : true;
@@ -243,8 +253,20 @@ export default function CreateDeck() {
         </div>
       </div>
       <div className='flex justify-center space-x-4 mt-4'>
-        {MainButton('Crear Mazo', '/', handleSubmit)}
-        {SecondaryButton('Cancelar', '/')}
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className="bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
+        >
+          Crear Mazo
+        </button>
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
+        >
+          Cancelar
+        </button>
       </div>
     </div>
   );

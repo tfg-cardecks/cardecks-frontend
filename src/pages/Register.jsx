@@ -8,37 +8,11 @@ import Swal from 'sweetalert2'
 import AnimatedCards from "../components/AnimatedCards";
 import '../styles/FondoCartas.css';
 
-const countries = [
-  "Argentina",
-  "Australia",
-  "Brazil",
-  "Canada",
-  "China",
-  "France",
-  "Germany",
-  "India",
-  "Italy",
-  "Japan",
-  "Mexico",
-  "Russia",
-  "South Africa",
-  "Spain",
-  "United Kingdom",
-  "United States",
-];
-
 const roles = [
   "admin",
   "authenticated",
   "customer",
 ];
-
-const typesOfUser = [
-  "Student",
-  "Teacher",
-  "Other",
-];
-
 
 export default function Register() {
 
@@ -113,10 +87,12 @@ export default function Register() {
     try {
       const response = await fetch(`${API_URL}/api/auth/signup`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(form),
       })
       const data = await response.json()
-
       switch (response.status) {
         case 201:
           Swal.fire({
@@ -124,6 +100,7 @@ export default function Register() {
             text: 'Usuario registrado con éxito',
             icon: 'success',
             confirmButtonText: 'Iniciar sesión',
+            timer: 1500,
           }).then(() => {
             navigate('/login')
           })
