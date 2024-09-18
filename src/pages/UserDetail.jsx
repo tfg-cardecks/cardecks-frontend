@@ -3,6 +3,7 @@ import { useAuthContext } from '../context/authContext';
 import axios from 'axios';
 import { API_URL } from '../config';
 import AnimatedCards from '../components/AnimatedCards';
+import '../styles/UserDetailStyles.css'; 
 
 export default function UserDetail() {
   const { authenticated } = useAuthContext();
@@ -34,32 +35,30 @@ export default function UserDetail() {
     }
   };
   useEffect(() => {
-
     fetchUserData();
   }, [authenticated]);
 
   return (
-    <div style={styles.container}>
+    <div className="container">
       <AnimatedCards pageClass="home-page" animationClass="home-animation" />
-      <div style={styles.card}>
+      <div className="card">
         {errors.message && (
           <p className='text-blue-700'>{errors.message}</p>
         )}
-        <h2 style={styles.title}>Detalles del Usuario</h2>
-        <hr style={styles.divider} />
-        <div style={styles.info}>
+        <h2 className="title">Detalles del Usuario</h2>
+        <hr className="divider" />
+        <div className="info">
           <p><strong>Nombre:</strong> {user.name}</p>
           <p><strong>Apellido:</strong> {user.lastName}</p>
           <p><strong>Email:</strong> {user.email}</p>
           <p><strong>Nombre de Usuario:</strong> {user.username}</p>
           <p><strong>Rol:</strong> {user.role}</p>
         </div>
-
-        <h2 style={styles.title}>Estadísticas</h2>
-        <hr style={styles.divider} />
-        <div style={styles.stats}>
+        <h2 className="title">Estadísticas</h2>
+        <hr className="divider" />
+        <div className="stats">
           <p><strong>Juegos Completados por Tipo:</strong></p>
-          <ul>
+          <ul className="statsList">
             {user.gamesCompletedByType && Object.entries(user.gamesCompletedByType).map(([type, count]) => (
               <li key={type}>{type}: {count}</li>
             ))}
@@ -72,47 +71,3 @@ export default function UserDetail() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '20px',
-  },
-  card: {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    width: '80%',
-    maxWidth: '800px',
-    padding: '30px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 6px black',
-  },
-  title: {
-    fontSize: '28px',
-    color: '#333',
-    marginBottom: '10px',
-    textAlign: 'center',
-  },
-  divider: {
-    border: 'none',
-    height: '2px',
-    backgroundColor: '#90EE90',
-    marginBottom: '20px',
-  },
-  info: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-    marginBottom: '30px',
-  },
-  stats: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-  },
-  statsList: {
-    listStyleType: 'disc',
-    marginLeft: '20px',
-  },
-};

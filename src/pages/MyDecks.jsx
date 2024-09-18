@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { API_URL } from '../config';
 import { useAuthContext } from '../context/authContext';
+import Swal from 'sweetalert2';
 
 export default function MyDecks() {
   const { authenticated } = useAuthContext();
@@ -13,11 +14,11 @@ export default function MyDecks() {
   const [endDate, setEndDate] = useState('');
   const { id } = useParams();
   const navigate = useNavigate();
+  const [file, setFile] = useState(null);
 
   async function fetchDecks() {
     try {
       const token = localStorage.getItem('access_token');
-
       const response = await fetch(`${API_URL}/api/user/${id}/decks`, {
         method: 'GET',
         headers: {
@@ -38,7 +39,6 @@ export default function MyDecks() {
         default:
           break;
       }
-
     } catch (err) {
       setError(err.message);
     }
@@ -56,8 +56,47 @@ export default function MyDecks() {
     return matchesName && matchesTheme && matchesStartDate && matchesEndDate;
   });
 
-  async function handleImport() {
-    console.log('Importar mazos');
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setError(null);
+  };
+
+  async function handleImportDeck(event) {
+    event.preventDefault();
+
+    if (!file) {
+      setError("No se ha seleccionado ningún archivo.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const token = localStorage.getItem('access_token');
+      const res = await fetch(`${API_URL}/api/deck/import`, {
+        method: 'POST',
+        headers: {
+          Authorization: `${token}`,
+        },
+        body: formData,
+      });
+      if (res.status === 201) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Mazo importado',
+          text: 'Se ha importado correctamente el mazo.',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        fetchDecks();
+      } else {
+        const data = await res.json();
+        setError(data.message);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
   return (
@@ -137,11 +176,12 @@ export default function MyDecks() {
         </div>
       </div>
       <div className="flex space-x-4 mb-4">
+        <input id="fileInput" type="file" onChange={handleFileChange} />
         <button
-          onClick={handleImport}
+          onClick={handleImportDeck}
           className="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
         >
-          Importar Mazos
+          Importar Mazo
         </button>
       </div>
       {filteredDecks.length === 0 && !error && (

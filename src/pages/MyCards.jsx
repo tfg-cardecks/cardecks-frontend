@@ -15,12 +15,12 @@ export default function MyCards() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
+  const [imageErrors, setImageErrors] = useState({});
 
   async function fetchCards() {
     try {
       if (authenticated) {
         const token = localStorage.getItem('access_token');
-
         const response = await fetch(`${API_URL}/api/user/${id}/cards`, {
           method: 'GET',
           headers: {
@@ -28,26 +28,24 @@ export default function MyCards() {
           },
         });
         const data = await response.json();
-        switch (response.status) {
-          case 200:
-            setCards(data);
-            break;
-          case 401:
-            setError(data);
-            break;
-          case 404:
-            setError(data);
-            break;
-          default:
-            break;
+        if (response.status === 200) {
+          setCards(data.map(card => ({
+            ...card,
+            frontImageError: false,
+            backImageError: false,
+            frontImageErrorMessage: '',
+            backImageErrorMessage: ''
+          })));
+        } else {
+          setError(data.message);
         }
       } else {
-        setError({ message: 'No estás autenticado. Por favor, inicia sesión.' });
+        setError('No estás autenticado. Por favor, inicia sesión.');
       }
     } catch (err) {
       setError(err.message);
     }
-  };
+  }
 
   useEffect(() => {
     fetchCards();
@@ -68,7 +66,6 @@ export default function MyCards() {
 
   async function handleImportCard(event) {
     event.preventDefault();
-
     if (!file) {
       setError("No se ha seleccionado ningún archivo.");
       return;
@@ -104,6 +101,16 @@ export default function MyCards() {
       setError(error.message);
     }
   }
+
+  const handleImageError = (cardId, side) => {
+    setImageErrors((prevErrors) => ({
+      ...prevErrors,
+      [cardId]: {
+        ...prevErrors[cardId],
+        [side]: true,
+      },
+    }));
+  };
 
   return (
     <div className="container mx-auto p-4 w-4/5">
@@ -185,7 +192,6 @@ export default function MyCards() {
         <input id="fileInput" type="file" onChange={handleFileChange} />
         <button
           onClick={handleImportCard}
-
           className="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
         >
           Importar Carta
@@ -205,7 +211,10 @@ export default function MyCards() {
             <p className="mb-2">{card.description}</p>
             <p className="text-gray-500">Tema: {card.theme}</p>
             <p className="text-gray-500">Fecha de creación: {new Date(card.createdAt).toLocaleDateString()}</p>
-            <div className="flex justify-between items-center">
+            {imageErrors[card._id]?.front && <p className="text-red-600">Error al cargar la imagen delantera</p>}
+            {imageErrors[card._id]?.back && <p className="text-red-600">Error al cargar la imagen trasera</p>}
+
+            <div className="flex justify-between items-center space-x-4">
               {card.frontImageUrl && (
                 <div className="text-center">
                   <img
@@ -217,9 +226,9 @@ export default function MyCards() {
                       border: '2px solid black'
                     }}
                     className="mt-2 rounded"
-                    onError={(e) => { console.log('Error al cargar la imagen delantera:', e); }}
+                    onError={() => handleImageError(card._id, 'front')}
                   />
-                  <p className="mt-2">Delantera</p>
+                  <p className={`mt-2 ${imageErrors[card._id]?.front ? 'text-red-500' : ''}`}>Delantera</p>
                 </div>
               )}
               {card.backImageUrl && (
@@ -233,9 +242,9 @@ export default function MyCards() {
                       border: '2px solid black'
                     }}
                     className="mt-2 rounded"
-                    onError={(e) => { console.log('Error al cargar la imagen trasera:', e); }}
+                    onError={() => handleImageError(card._id, 'back')}
                   />
-                  <p className="mt-2">Trasera</p>
+                  <p className={`mt-2 ${imageErrors[card._id]?.back ? 'text-red-500' : ''}`}>Trasera</p>
                 </div>
               )}
             </div>
