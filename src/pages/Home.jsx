@@ -64,6 +64,7 @@ export default function Home() {
             <div className="flex flex-col items-start justify-between">
               <div className="flex flex-row w-full p-4">
                 <div className="w-1/2 p-2">
+                <br />
                   <h3 className="text-4xl font-bold">¡Crea tus propias FlashCards y toma el control de tu aprendizaje!</h3>
                   <br />
                   <p className="text-lg">Con Cardecks, puedes diseñar tarjetas de estudio personalizadas para hacer que el aprendizaje sea más atractivo y efectivo. ¡Adapta tus sesiones de estudio a tus necesidades y objetivos personales!</p>
@@ -78,9 +79,10 @@ export default function Home() {
             <div className="flex flex-col items-start justify-between">
               <div className="flex flex-row w-full p-4">
                 <div className="w-1/2 p-2">
-                  <h3 className="text-4xl font-bold">¡Aprende inglés mientras te diviertes!</h3>
+                <br />
+                  <h3 className="text-4xl font-bold">¡Aprende cualquier cosa mientras te diviertes jugando!</h3>
                   <br />
-                  <p className="text-lg">Descubre una forma diferente de aprender inglés con juegos interactivos y desafiantes. Mejora tu vocabulario, gramática y comprensión sin darte cuenta mientras te sumerges en una experiencia divertida y educativa.</p>
+                  <p className="text-lg">Descubre una nueva forma de aprender cualquier tema mientras te diviertes. Personaliza tus cartas y participa en juegos interactivos que te ayudarán a mejorar tus conocimientos de manera entretenida y eficaz.</p>
                   <p className="text-lg">¡Aprender nunca ha sido tan entretenido!</p>
                 </div>
                 <div className="w-1/2 p-2">
@@ -98,7 +100,8 @@ export default function Home() {
                   <p className="text-lg">¡Es hora de convertir el estudio en una aventura que no querrás dejar!</p>
                 </div>
                 <div className="w-1/2 p-2">
-                  <img src={imagen3} alt="Característica 3" className="w-full h-max" />
+                <h1 className="text-4xl font-bold mt-28">¡Proximamente!</h1>
+
                 </div>
               </div>
             </div>
@@ -130,7 +133,7 @@ export default function Home() {
             <br />
             <p className="text-lg">Los juegos educativos en nuestra aplicación están diseñados para hacer que el aprendizaje sea una experiencia más divertida e interactiva. En lugar de estudiar de manera tradicional, los usuarios pueden aprender jugando, lo que les ayuda a mantenerse motivados y retener la información de manera más efectiva.</p>
             <br />
-            <p className="text-lg">Nuestros juegos permiten a los usuarios practicar vocabulario, gramática y otros temas de una manera entretenida. Aprender jugando ayuda a los usuarios a disfrutar más del proceso e incorporarlo en su rutina diaria de estudio sin sentirse abrumados.</p>
+            <p className="text-lg">En nuestra aplicación, los juegos educativos utilizan cartas personalizadas para ofrecer una experiencia de aprendizaje única y dinámica.</p>
           </div>
         </div>
 

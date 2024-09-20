@@ -17,6 +17,9 @@ import CardDetailsEdit from "./pages/CardDetailsEdit";
 import PreviewForm from "./pages/PreviewForm";
 import CreateTxtImgCard from "./pages/CreateTxtImgCard";
 import CreateTxtTxtCard from "./pages/CreateTxtTxtCard";
+import PrivacyNotice from "./pages/PrivacyNotice";
+import Contact from "./pages/Contact";
+import TermsOfUse from "./pages/TermsOfUse";
 
 export default function App() {
   return (
@@ -28,6 +31,9 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path= '/privacy-notice' element={<PrivacyNotice />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/terms-of-use' element={<TermsOfUse />} />
           {/* RUTAS PRIVADAS */}
           <Route path='/user/details' element={<UserDetail />} />
           <Route path='/user/:id/my-cards' element={<MyCards />} />
