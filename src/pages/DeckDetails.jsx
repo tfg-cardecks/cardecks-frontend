@@ -224,8 +224,8 @@ export default function DeckDetails() {
                   <p className="mb-2">{card.description}</p>
                   <p className="text-gray-500">Tema: {card.theme}</p>
                   <p className="text-gray-500">Fecha de creación: {new Date(card.createdAt).toLocaleDateString()}</p>
-                  {imageErrors[card._id]?.front && <p className="text-red-600 mr-2">Error al cargar la imagen delantera</p>}
-                  {imageErrors[card._id]?.back && <p className="text-red-600 mr-2">Error al cargar la imagen trasera</p>}
+                  {imageErrors[card._id]?.front && <p className="text-red-600 mr-2">No se ha podido cargar la imagen delantera</p>}
+                  {imageErrors[card._id]?.back && <p className="text-red-600 mr-2">No se ha podido cargar la imagen trasera</p>}
 
                   <div className="flex justify-between items-center">
                     <div className="text-center">

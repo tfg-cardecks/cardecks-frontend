@@ -14,6 +14,9 @@ import DeckDetails from "./pages/DeckDetails";
 import DeckDetailsEdit from "./pages/DeckDetailsEdit";
 import CardDetails from "./pages/CardDetails";
 import CardDetailsEdit from "./pages/CardDetailsEdit";
+import PreviewForm from "./pages/PreviewForm";
+import CreateTxtImgCard from "./pages/CreateTxtImgCard";
+import CreateTxtTxtCard from "./pages/CreateTxtTxtCard";
 
 export default function App() {
   return (
@@ -34,7 +37,9 @@ export default function App() {
           <Route path="/deck/:id" element={<DeckDetails />} />
           <Route path="/deck/edit/:id" element={<DeckDetailsEdit />} />
           <Route path="/card/edit/:id" element={<CardDetailsEdit />} />
-
+          <Route path="/user/:id/preview" element={<PreviewForm />} />
+          <Route path="/create-card/txtImg" element={<CreateTxtImgCard />} />
+          <Route path="/create-card/txtTxt" element={<CreateTxtTxtCard />} />
         </Routes>
         <Footer />
       </AuthContextProvider>

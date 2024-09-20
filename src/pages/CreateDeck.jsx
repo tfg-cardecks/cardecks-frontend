@@ -45,7 +45,6 @@ export default function CreateDeck() {
             return;
           default:
             return;
-
         }
       } else {
         setErrors({ message: 'No estás autenticado. Por favor, inicia sesión.' });

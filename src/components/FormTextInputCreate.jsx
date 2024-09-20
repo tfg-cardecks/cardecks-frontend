@@ -17,7 +17,7 @@ const FormTextInput = ({
         htmlFor={labelFor}
         className="block mb-2 text-sm font-bold text-black"
       >
-        {labelText} {isMandatory && <span style={{ color: 'black' }}>*</span>}
+        {labelText} {isMandatory && <span style={{ color: 'red' }}>*</span>}
       </label>
       <div className="flex"> 
         <input

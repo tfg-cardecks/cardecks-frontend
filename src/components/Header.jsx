@@ -114,7 +114,7 @@ export default function Header() {
             {authenticated && isCardsDropdownOpen && (
               <div className="absolute left-0 mt-2 w-48 bg-white border rounded shadow-lg">
                 <Link
-                  to="/create-cards"
+                  to={`/user/${userId}/preview`}
                   className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                   onClick={handleOptionClick}
                 >

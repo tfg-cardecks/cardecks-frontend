@@ -130,8 +130,8 @@ export default function CardDetail() {
         <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-4xl font-bold mb-4 text-gray-800">{card.title}</h1>
           {error && <p className="text-red-600 mb-4">{error}</p>}
-          {imageErrors.front && <p className="text-red-600 mb-4">Error al cargar la imagen delantera</p>}
-          {imageErrors.back && <p className="text-red-600 mb-4">Error al cargar la imagen trasera</p>}
+          {imageErrors.front && <p className="text-red-600 mb-4">No se ha podido cargar la imagen delantera</p>}
+          {imageErrors.back && <p className="text-red-600 mb-4">No se ha podido cargar la imagen trasera</p>}
           <p className="mb-2 text-lg text-gray-700">{card.description}</p>
           <p className="text-gray-500 mb-2">Tema: {card.theme}</p>
           <p className="text-gray-500 mb-4">Fecha de creación: {new Date(card.createdAt).toLocaleDateString()}</p>
