@@ -172,7 +172,7 @@ export default function CardDetail() {
                   className="mt-2 rounded shadow-md"
                   onError={() => handleImageError('front')}
                 />
-                <p className="mt-2 text-gray-600">Delantera</p>
+                <p className="mt-2 text-black">Delantera</p>
               </div>
             )}
             {card.backImageUrl && (
@@ -188,7 +188,7 @@ export default function CardDetail() {
                   className="mt-2 rounded shadow-md"
                   onError={() => handleImageError('back')}
                 />
-                <p className="mt-2 text-gray-600">Trasera</p>
+                <p className="mt-2 text-black">Trasera</p>
               </div>
             )}
           </div>

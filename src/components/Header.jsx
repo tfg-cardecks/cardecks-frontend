@@ -8,9 +8,11 @@ export default function Header() {
   const { authenticated, userId, logout } = useAuthContext();
   const [isCardsDropdownOpen, setIsCardsDropdownOpen] = useState(false);
   const [isDecksDropdownOpen, setIsDecksDropdownOpen] = useState(false);
+  const [isGamesDropdownOpen, setIsGamesDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const cardsDropdownRef = useRef(null);
   const decksDropdownRef = useRef(null);
+  const gamesDropdownRef = useRef(null);
 
   const handleLogout = () => {
     logout();
@@ -19,7 +21,7 @@ export default function Header() {
       title: 'Desconectado',
       text: 'Has cerrado sesión correctamente.',
       showConfirmButton: false,
-          timer: 1500,
+      timer: 1500,
     }).then(() => {
       navigate('/');
     });
@@ -63,6 +65,25 @@ export default function Header() {
     }
   };
 
+  const handleGamesClick = () => {
+    if (!authenticated) {
+      Swal.fire({
+        title: 'Necesitas registrarte',
+        text: 'Por favor, regístrate para acceder a esta función.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Registrarse',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/register');
+        }
+      });
+    } else {
+      setIsGamesDropdownOpen(!isGamesDropdownOpen);
+    }
+  };
+
   const handleClickOutside = (event) => {
     if (cardsDropdownRef.current && !cardsDropdownRef.current.contains(event.target)) {
       setIsCardsDropdownOpen(false);
@@ -70,10 +91,13 @@ export default function Header() {
     if (decksDropdownRef.current && !decksDropdownRef.current.contains(event.target)) {
       setIsDecksDropdownOpen(false);
     }
+    if (gamesDropdownRef.current && !gamesDropdownRef.current.contains(event.target)) {
+      setIsGamesDropdownOpen(false);
+    }
   };
 
   useEffect(() => {
-    if (isCardsDropdownOpen || isDecksDropdownOpen) {
+    if (isCardsDropdownOpen || isDecksDropdownOpen || isGamesDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -82,11 +106,12 @@ export default function Header() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isCardsDropdownOpen, isDecksDropdownOpen]);
+  }, [isCardsDropdownOpen, isDecksDropdownOpen, isGamesDropdownOpen]);
 
   const handleOptionClick = () => {
     setIsCardsDropdownOpen(false);
     setIsDecksDropdownOpen(false);
+    setIsGamesDropdownOpen(false);
   };
 
   return (
@@ -158,9 +183,25 @@ export default function Header() {
               </div>
             )}
           </div>
-          <Link to="/games" className="mr-5 hover:text-gray-900">
-            Juegos
-          </Link>
+          <div className="relative" ref={gamesDropdownRef}>
+            <button
+              onClick={handleGamesClick}
+              className="mr-5 hover:text-gray-900"
+            >
+              Juegos
+            </button>
+            {authenticated && isGamesDropdownOpen && (
+              <div className="absolute left-0 mt-2 w-48 bg-white border rounded shadow-lg">
+                <Link
+                  to={`/games`}
+                  className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                  onClick={handleOptionClick}
+                >
+                  Ver Juegos
+                </Link>
+              </div>
+            )}
+          </div>
           {authenticated && (
             <Link to="/user/details" className="mr-5 hover:text-gray-900">
               Usuario

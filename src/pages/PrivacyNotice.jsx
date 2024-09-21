@@ -4,7 +4,7 @@ export default function PrivacyNotice() {
   return (
     <div className="container mx-auto px-6 py-12">
       <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">Aviso de Privacidad y Protección de Datos</h1>
-      <p className="text-sm text-gray-500 mb-12 text-center">Última actualización: 20/09/2024</p>
+      <p className="text-sm text-gray-500 mb-12 text-center">Última actualización: {new Date().getDate() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getFullYear()}</p>
       
       <div className="space-y-12">
         <section>

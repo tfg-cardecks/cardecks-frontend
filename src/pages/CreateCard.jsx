@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { Stage, Layer, Text, Image, Rect } from 'react-konva';
 import useImage from 'use-image';
-import '../styles/CreateCard.css'; 
+import '../styles/CreateCard.css';
 import { API_URL } from '../config';
 
 export default function CreateCard({ title, theme, cardType, userId, cardWidth = 300, cardHeight = 500 }) {
   const [text, setText] = useState('Texto de ejemplo');
   const [fontSize, setFontSize] = useState(20);
   const [color, setColor] = useState('#000000');
-  const [side, setSide] = useState('front'); 
+  const [side, setSide] = useState('front');
   const [imageUrl, setImageUrl] = useState('');
   const [image] = useImage(imageUrl);
   const [frontText, setFrontText] = useState(null);
-  const [backText, setBackText] = useState(null); 
+  const [backText, setBackText] = useState(null);
   const [backElements, setBackElements] = useState([]);
   const [frontImageUrl, setFrontImageUrl] = useState('');
   const [backImageUrl, setBackImageUrl] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); 
-  const navigate = useNavigate(); 
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadCanvasState = () => {
@@ -44,6 +44,10 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     saveCanvasState();
   }, [frontText, backElements]);
 
+  const isValidImageUrl = (url) => {
+    return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+  };
+
   const handleAddText = () => {
     const newText = {
       type: 'text',
@@ -64,7 +68,15 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
   };
 
   const handleImageUrlUpload = () => {
-    if (!imageUrl) return;
+    if (!imageUrl) {
+      setErrorMessage('Por favor, introduce una URL de imagen.');
+      return;
+    }
+
+    if (!isValidImageUrl(imageUrl)) {
+      setErrorMessage('URL de imagen no válida. Por favor, introduce una URL que termine en .jpeg, .jpg, .gif, o .png.');
+      return;
+    }
 
     const newImage = {
       type: 'image',
@@ -80,7 +92,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
       setFrontText(newImage);
     } else if (side === 'back' && cardType === 'txtImg') {
       setBackImageUrl(`/images/${title}_back.png`);
-      setBackElements([newImage]); 
+      setBackElements([newImage]);
     }
   };
 
@@ -202,7 +214,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     <div className="create-card-container">
       <h1 className="text-3xl font-bold mb-8">Crear Carta</h1>
       {errorMessage && (
-        <pre className="text-red-500 whitespace-pre-wrap" style={{marginBottom:"2%"}}>{errorMessage}</pre>
+        <pre className="text-red-500 whitespace-pre-wrap" style={{ marginBottom: "2%" }}>{errorMessage}</pre>
       )}
       <div className="card-info bg-gray-100 p-4 rounded-lg shadow-md mb-8">
         <div className="card-info-item">
@@ -292,22 +304,22 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
               }}
               className="border p-2 rounded w-full"
             />
-            <button
-              onClick={handleImageUrlUpload}
-              className="bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-600 transition"
-            >
-              Cargar Imagen
-            </button>
-          </div>
-        )}
-        {cardType === 'txtImg' && side === 'back' && backElements.length > 0 && (
-          <div className="toolbar-group mb-4">
-            <button
-              onClick={handleDeleteImage}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
-            >
-              Eliminar Imagen
-            </button>
+            <div className="flex space-x-2 mt-2">
+              <button
+                onClick={handleImageUrlUpload}
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+              >
+                Cargar Imagen
+              </button>
+              {backElements.length > 0 && (
+                <button
+                  onClick={handleDeleteImage}
+                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+                >
+                  Eliminar Imagen
+                </button>
+              )}
+            </div>
           </div>
         )}
         <button
