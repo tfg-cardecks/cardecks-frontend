@@ -82,8 +82,8 @@ export default function CardDetailsEdit() {
   const handleUpdateCard = async () => {
     try {
       const updatedCardData = {
-        _id: card._id, // Asegúrate de incluir el ID de la carta
-        title: card.title, // Asegúrate de incluir el título de la carta
+        _id: card._id,
+        title: card.title,
         theme,
         cardType: card.cardType,
         frontSide: {
@@ -106,7 +106,6 @@ export default function CardDetailsEdit() {
           images: card.cardType === 'txtImg' ? backElements : [],
         },
       };
-      console.log(updatedCardData);
       const token = localStorage.getItem('access_token');
       const response = await fetch(`${API_URL}/api/card/${id}`, {
         method: 'PATCH',
