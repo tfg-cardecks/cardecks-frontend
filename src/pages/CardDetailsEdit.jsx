@@ -69,13 +69,37 @@ export default function CardDetailsEdit() {
     }
   };
 
+  const validateParagraph = (text, maxCharsPerLine, maxTotalChars) => {
+    const lines = text.split('\n');
+    let totalChars = 0;
+    for (let line of lines) {
+      if (line.length > maxCharsPerLine) {
+        return false;
+      }
+      totalChars += line.length;
+    }
+    return totalChars <= maxTotalChars;
+  };
+
   const handleTextChange = (e) => {
+    const newText = e.target.value;
+    if (side === 'back' && !validateParagraph(newText, 25, 200)) {
+      setErrorMessage('El párrafo tiene líneas que exceden el número máximo de caracteres permitidos 25');
+      return;
+    }
+    setErrorMessage('');
     if (side === 'front') {
-      setFrontText({ ...frontText, content: e.target.value });
+      setFrontText({ ...frontText, content: newText });
     } else if (side === 'back') {
-      const updatedBackText = { ...backText, content: e.target.value };
+      const updatedBackText = { ...backText, content: newText };
       setBackElements(backElements.map(el => el === backText ? updatedBackText : el));
       setBackText(updatedBackText);
+    }
+  };
+
+  const handleDeleteImage = () => {
+    if (side === 'back' && card.cardType === 'txtImg') {
+      setBackElements([]);
     }
   };
 
@@ -115,19 +139,27 @@ export default function CardDetailsEdit() {
         },
         body: JSON.stringify(updatedCardData),
       });
-  
+
       const data = await response.json();
       if (response.status === 200) {
         navigate(`/card/${data._id}`);
+      } else if (response.status === 404) {
+        setErrorMessage(data.message);
+      } else if (response.status === 400) {
+        const errorMessage = data.message.split(': ').pop().trim();
+        setErrorMessage(errorMessage);
+      } else if (response.status === 500) {
+        setErrorMessage(data.message);
       } else {
         setErrorMessage(data.message);
       }
+
     } catch (error) {
       console.error('Error updating card:', error);
       setErrorMessage('Error al actualizar la carta. Inténtalo de nuevo más tarde.');
     }
   };
-  
+
   if (!card) {
     return <div>Cargando...</div>;
   }
@@ -164,7 +196,7 @@ export default function CardDetailsEdit() {
             <div className="mb-4">
               <label className="block font-bold mb-2">Texto Delantero:</label>
               <p className="text-sm text-gray-600 mb-2">Cambia el texto aquí para actualizarlo en la imagen de la carta.</p>
-              <input
+              <textarea
                 type="text"
                 value={frontText?.content || ''}
                 onChange={handleTextChange}
@@ -175,7 +207,7 @@ export default function CardDetailsEdit() {
           {side === 'back' && card.cardType === 'txtTxt' && (
             <div className="mb-4">
               <label className="block font-bold mb-2">Texto Trasero:</label>
-              <input
+              <textarea
                 type="text"
                 value={backText?.content || ''}
                 onChange={handleTextChange}
@@ -203,6 +235,14 @@ export default function CardDetailsEdit() {
                 >
                   Cargar Imagen
                 </button>
+                {backElements.some(el => el.type === 'image') && (
+                  <button
+                    onClick={handleDeleteImage}
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+                  >
+                    Eliminar Imagen
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -215,28 +255,6 @@ export default function CardDetailsEdit() {
             </button>
           </div>
         </div>
-      </div>
-      <div className="w-1/2 flex justify-center items-center">
-        {side === 'back' && card.cardType === 'txtImg' && (
-          <>
-            {backElements.map((element, index) => {
-              if (element.type === 'image') {
-                return (
-                  <img
-                    key={index}
-                    src={element.url}
-                    alt={`Imagen ${index}`}
-                    style={{
-                      maxWidth: '100%',
-                      maxHeight: '100%',
-                    }}
-                  />
-                );
-              }
-              return null;
-            })}
-          </>
-        )}
       </div>
     </div>
   );
