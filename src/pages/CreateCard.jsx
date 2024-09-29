@@ -20,27 +20,27 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadCanvasState = () => {
-      const frontJson = localStorage.getItem('frontCanvasState');
-      const backJson = localStorage.getItem('backCanvasState');
-      if (frontJson) {
-        setFrontText(JSON.parse(frontJson));
-      }
-      if (backJson) {
-        setBackElements(JSON.parse(backJson));
-      }
-    };
+  const loadCanvasState = () => {
+    const frontJson = localStorage.getItem('frontCanvasState');
+    const backJson = localStorage.getItem('backCanvasState');
+    if (frontJson) {
+      setFrontText(JSON.parse(frontJson));
+    }
+    if (backJson) {
+      setBackElements(JSON.parse(backJson));
+    }
+  };
 
+  useEffect(() => {
     loadCanvasState();
   }, []);
 
-  useEffect(() => {
-    const saveCanvasState = () => {
-      localStorage.setItem('frontCanvasState', JSON.stringify(frontText));
-      localStorage.setItem('backCanvasState', JSON.stringify(backElements));
-    };
+  const saveCanvasState = () => {
+    localStorage.setItem('frontCanvasState', JSON.stringify(frontText));
+    localStorage.setItem('backCanvasState', JSON.stringify(backElements));
+  };
 
+  useEffect(() => {
     saveCanvasState();
   }, [frontText, backElements]);
 
@@ -53,7 +53,6 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
       setErrorMessage('El texto de la parte delantera no debe exceder los 25 caracteres.');
       return;
     }
-
     const newText = {
       type: 'text',
       text: text,
@@ -68,19 +67,6 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
       setFrontText(newText);
     }
   };
-  const validateParagraph = (text, maxCharsPerLine, maxTotalChars) => {
-    const lines = text.split('\n');
-    let totalChars = 0;
-    for (let line of lines) {
-      if (line.length > maxCharsPerLine) {
-        return false;
-      }
-      totalChars += line.length;
-    }
-    return totalChars <= maxTotalChars;
-  };
-
-
 
   const splitTextIntoLines = (text, maxCharsPerLine) => {
     const words = text.split(' ');
@@ -103,24 +89,35 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     return lines;
   };
 
+  const validateParagraph = (text, maxCharsPerLine, maxTotalChars) => {
+    const lines = text.split('\n');
+    let totalChars = 0;
+    for (let line of lines) {
+      if (line.length > maxCharsPerLine) {
+        return false;
+      }
+      totalChars += line.length;
+    }
+    return totalChars <= maxTotalChars;
+  };
+
   const handleAddBackText = () => {
-    if (!validateParagraph(text, 25, 105)) {
-      setErrorMessage('El párrafo tiene líneas que exceden el número máximo de caracteres permitidos 25 o el texto total excede los 105 caracteres.');
+    if (!validateParagraph(text, 25, 200)) {
+      setErrorMessage('El párrafo tiene líneas que exceden el número máximo de caracteres permitidos 25');
       return;
     }
-
-    const lines = splitTextIntoLines(text, 50);
+    const lines = splitTextIntoLines(text, 200);
     const newTextElements = lines.map((line, index) => ({
       type: 'text',
       text: line,
       fontSize: fontSize,
       fill: color,
       x: 10,
-      y: 50 + index * (fontSize + 5), // Ajusta la posición vertical para cada línea
+      y: 50 + index * (fontSize + 5),
       draggable: true,
     }));
     if (cardType === 'txtTxt' && !backText) {
-      setBackText(newTextElements[0]);
+      setBackText(newTextElements[0]);25+19+5
       setBackElements([...backElements, ...newTextElements]);
     }
   };
@@ -213,7 +210,6 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
         frontImageUrl: `/images/${title}_front.png`,
         backImageUrl: `/images/${title}_back.png`,
       };
-      console.log(cardData);
       const token = localStorage.getItem('access_token');
       const response = await fetch(`${API_URL}/api/cards`, {
         method: 'POST',
@@ -225,8 +221,6 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
         body: JSON.stringify(cardData),
       });
       const data = await response.json();
-      console.log(data);
-
       switch (response.status) {
         case 201:
           navigate(`/card/${data._id}`);
@@ -249,6 +243,12 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     } catch (error) {
       console.error(error);
       setErrorMessage('Error al crear la carta. Inténtalo de nuevo más tarde.');
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && side === 'back' && text.length > 102) {
+      e.preventDefault();
     }
   };
 
@@ -282,7 +282,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
                 setText(e.target.value);
                 setErrorMessage('');
               }}
-
+              onKeyDown={handleKeyDown}
               className="border p-2 rounded w-full"
               rows="4"
             />
@@ -294,7 +294,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
               >
                 Añadir Texto
               </button>
-              {(frontText || (side === 'back' && backElements.length > 0)) && (
+              {((side === 'front' && frontText) || (side === 'back' && backElements.length > 0)) && (
                 <button
                   onClick={() => {
                     if (side === 'front') {
@@ -336,7 +336,6 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
                 setColor(e.target.value);
                 setErrorMessage('');
               }}
-
               className="border p-2 rounded w-full"
             />
           </div>
@@ -349,7 +348,6 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
               setSide(e.target.value);
               setErrorMessage('');
             }}
-
             className="border p-2 rounded w-full"
           >
             <option value="front">Delantera</option>

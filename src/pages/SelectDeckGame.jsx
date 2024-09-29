@@ -48,7 +48,6 @@ export default function SelectDeckGame() {
 
   const handleStartGame = () => {
     if (selectedDeck) {
-      console.log('selectedDeck', selectedDeck);
       navigate(`/createCreateWordSearchGame/${gameType}/${selectedDeck}`);
     } else {
       alert('Por favor, selecciona un mazo antes de continuar.');

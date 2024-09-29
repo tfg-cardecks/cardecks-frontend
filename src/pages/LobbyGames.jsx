@@ -28,7 +28,7 @@ const gameTypes = [
 
 export default function LobbyGames() {
   const navigate = useNavigate();
-  const { userId } = useAuthContext(); // Suponiendo que el contexto de autenticación proporciona el usuario
+  const { userId } = useAuthContext();
 
   const handleGameTypeClick = (gameType) => {
     navigate(`/selectDeckGame/${gameType}/${userId}`);
