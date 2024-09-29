@@ -49,10 +49,6 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
   };
 
   const handleAddFrontText = () => {
-    if (text.length > 25) {
-      setErrorMessage('El texto de la parte delantera no debe exceder los 25 caracteres.');
-      return;
-    }
     const newText = {
       type: 'text',
       text: text,
@@ -117,7 +113,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
       draggable: true,
     }));
     if (cardType === 'txtTxt' && !backText) {
-      setBackText(newTextElements[0]);25+19+5
+      setBackText(newTextElements[0]); 25 + 19 + 5
       setBackElements([...backElements, ...newTextElements]);
     }
   };
