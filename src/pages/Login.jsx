@@ -13,11 +13,11 @@ import SecondaryButton from "../components/secondaryButton.jsx";
 export default function Login() {
   const { login } = useAuthContext();
   const [form, setForm] = useState({
-    username: "",
+    emailOrUsername: "",
     password: "",
   });
   const [errors, setErrors] = useState({});
-  const { username, password } = form;
+  const { emailOrUsername, password } = form;
   let navigate = useNavigate();
 
   function onInputChange(e) {
@@ -104,7 +104,7 @@ export default function Login() {
             style={{ marginBottom: "1rem", marginTop: "3%" }}
           >
             <label
-              htmlFor="Username"
+              htmlFor="emailOrUsername"
               className="block text-lg font-bold text-white self-center text-center"
               style={{
                 marginBottom: "1rem",
@@ -121,13 +121,13 @@ export default function Login() {
                 className="leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 style={{ width: "100%", padding: "0.5rem 0.75rem" }}
                 placeholder="Escribe tu nombre de usuario"
-                name="username"
-                value={username}
+                name="emailOrUsername"
+                value={emailOrUsername}
                 onChange={(e) => onInputChange(e)}
               />
-              {errors.username && (
+              {errors.emailOrUsername && (
                 <p className="text-yellow-200 text-xs italic">
-                  {errors.username}
+                  {errors.emailOrUsername}
                 </p>
               )}
             </div>

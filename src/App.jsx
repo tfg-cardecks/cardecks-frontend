@@ -21,6 +21,10 @@ import PrivacyNotice from "./pages/PrivacyNotice";
 import Contact from "./pages/Contact";
 import TermsOfUse from "./pages/TermsOfUse";
 
+import LobbyGames from "./pages/LobbyGames";
+import SelectDeckGame from "./pages/SelectDeckGame";
+import CreateWordSearchGame from "./pages/CreateWordSearchGame";
+
 export default function App() {
   return (
     <Router>
@@ -31,7 +35,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path= '/privacy-notice' element={<PrivacyNotice />} />
+          <Route path='/privacy-notice' element={<PrivacyNotice />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/terms-of-use' element={<TermsOfUse />} />
           {/* RUTAS PRIVADAS */}
@@ -46,6 +50,10 @@ export default function App() {
           <Route path="/user/:id/preview" element={<PreviewForm />} />
           <Route path="/create-card/txtImg" element={<CreateTxtImgCard />} />
           <Route path="/create-card/txtTxt" element={<CreateTxtTxtCard />} />
+          <Route path="/lobby" element={<LobbyGames />} />
+          <Route path="/selectDeckGame/:gameType/:id" element={<SelectDeckGame />} />
+          <Route path="/createCreateWordSearchGame/:gameType/:deckId" element={<CreateWordSearchGame />} />
+
         </Routes>
         <Footer />
       </AuthContextProvider>

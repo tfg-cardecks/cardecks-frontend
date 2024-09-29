@@ -48,7 +48,12 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
   };
 
-  const handleAddText = () => {
+  const handleAddFrontText = () => {
+    if (text.length > 25) {
+      setErrorMessage('El texto de la parte delantera no debe exceder los 25 caracteres.');
+      return;
+    }
+
     const newText = {
       type: 'text',
       text: text,
@@ -59,11 +64,64 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
       draggable: true,
     };
 
-    if (side === 'front' && !frontText) {
+    if (!frontText) {
       setFrontText(newText);
-    } else if (side === 'back' && cardType === 'txtTxt' && !backText) {
-      setBackText(newText);
-      setBackElements([...backElements, newText]);
+    }
+  };
+  const validateParagraph = (text, maxCharsPerLine, maxTotalChars) => {
+    const lines = text.split('\n');
+    let totalChars = 0;
+    for (let line of lines) {
+      if (line.length > maxCharsPerLine) {
+        return false;
+      }
+      totalChars += line.length;
+    }
+    return totalChars <= maxTotalChars;
+  };
+
+
+
+  const splitTextIntoLines = (text, maxCharsPerLine) => {
+    const words = text.split(' ');
+    const lines = [];
+    let currentLine = '';
+
+    words.forEach(word => {
+      if ((currentLine + word).length <= maxCharsPerLine) {
+        currentLine += (currentLine ? ' ' : '') + word;
+      } else {
+        lines.push(currentLine);
+        currentLine = word;
+      }
+    });
+
+    if (currentLine) {
+      lines.push(currentLine);
+    }
+
+    return lines;
+  };
+
+  const handleAddBackText = () => {
+    if (!validateParagraph(text, 25, 105)) {
+      setErrorMessage('El párrafo tiene líneas que exceden el número máximo de caracteres permitidos 25 o el texto total excede los 105 caracteres.');
+      return;
+    }
+
+    const lines = splitTextIntoLines(text, 50);
+    const newTextElements = lines.map((line, index) => ({
+      type: 'text',
+      text: line,
+      fontSize: fontSize,
+      fill: color,
+      x: 10,
+      y: 50 + index * (fontSize + 5), // Ajusta la posición vertical para cada línea
+      draggable: true,
+    }));
+    if (cardType === 'txtTxt' && !backText) {
+      setBackText(newTextElements[0]);
+      setBackElements([...backElements, ...newTextElements]);
     }
   };
 
@@ -104,25 +162,6 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
       const updatedBackText = { ...backText, x, y };
       setBackElements(backElements.map(el => el === backText ? updatedBackText : el));
       setBackText(updatedBackText);
-    }
-  };
-
-  const handleTextChange = (e) => {
-    if (side === 'front') {
-      setFrontText({ ...frontText, text: e.target.value });
-    } else if (side === 'back') {
-      const updatedBackText = { ...backText, text: e.target.value };
-      setBackElements(backElements.map(el => el === backText ? updatedBackText : el));
-      setBackText(updatedBackText);
-    }
-  };
-
-  const handleDeleteText = () => {
-    if (side === 'front') {
-      setFrontText(null);
-    } else if (side === 'back') {
-      setBackElements(backElements.filter(el => el !== backText));
-      setBackText(null);
     }
   };
 
@@ -174,6 +213,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
         frontImageUrl: `/images/${title}_front.png`,
         backImageUrl: `/images/${title}_back.png`,
       };
+      console.log(cardData);
       const token = localStorage.getItem('access_token');
       const response = await fetch(`${API_URL}/api/cards`, {
         method: 'POST',
@@ -185,6 +225,8 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
         body: JSON.stringify(cardData),
       });
       const data = await response.json();
+      console.log(data);
+
       switch (response.status) {
         case 201:
           navigate(`/card/${data._id}`);
@@ -234,15 +276,19 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
         {(cardType !== 'txtImg' || side !== 'back') && (
           <div className="toolbar-group mb-4">
             <label className="block font-bold mb-2">Texto:</label>
-            <input
-              type="text"
+            <textarea
               value={text}
-              onChange={(e) => setText(e.target.value)}
+              onChange={(e) => {
+                setText(e.target.value);
+                setErrorMessage('');
+              }}
+
               className="border p-2 rounded w-full"
+              rows="4"
             />
             <div className="flex space-x-2 mt-2">
               <button
-                onClick={handleAddText}
+                onClick={side === 'front' ? handleAddFrontText : handleAddBackText}
                 disabled={(side === 'front' && frontText !== null) || (side === 'back' && backText !== null && cardType === 'txtTxt')}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
               >
@@ -250,7 +296,14 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
               </button>
               {(frontText || (side === 'back' && backElements.length > 0)) && (
                 <button
-                  onClick={handleDeleteText}
+                  onClick={() => {
+                    if (side === 'front') {
+                      setFrontText(null);
+                    } else if (side === 'back') {
+                      setBackText(null);
+                      setBackElements(backElements.filter(el => el.type !== 'text'));
+                    }
+                  }}
                   className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
                 >
                   Eliminar Texto
@@ -265,7 +318,10 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
             <input
               type="number"
               value={fontSize}
-              onChange={(e) => setFontSize(parseInt(e.target.value))}
+              onChange={(e) => {
+                setFontSize(parseInt(e.target.value));
+                setErrorMessage("")
+              }}
               className="border p-2 rounded w-full"
             />
           </div>
@@ -276,7 +332,11 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
             <input
               type="color"
               value={color}
-              onChange={(e) => setColor(e.target.value)}
+              onChange={(e) => {
+                setColor(e.target.value);
+                setErrorMessage('');
+              }}
+
               className="border p-2 rounded w-full"
             />
           </div>
@@ -285,7 +345,11 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
           <label className="block font-bold mb-2">Parte:</label>
           <select
             value={side}
-            onChange={(e) => setSide(e.target.value)}
+            onChange={(e) => {
+              setSide(e.target.value);
+              setErrorMessage('');
+            }}
+
             className="border p-2 rounded w-full"
           >
             <option value="front">Delantera</option>
@@ -299,8 +363,8 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
               type="text"
               value={imageUrl}
               onChange={(e) => {
-                setImageUrl(e.target.value)
-                setErrorMessage('')
+                setImageUrl(e.target.value);
+                setErrorMessage('');
               }}
               className="border p-2 rounded w-full"
             />
@@ -311,7 +375,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
               >
                 Cargar Imagen
               </button>
-              {backElements.length > 0 && (
+              {backElements.some(el => el.type === 'image') && (
                 <button
                   onClick={handleDeleteImage}
                   className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
@@ -330,14 +394,14 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
         </button>
       </div>
       <div className="canvas-container">
-        <Stage width={cardWidth} height={cardHeight} className="card-canvas">
+        <Stage width={300} height={500} className="card-canvas">
           <Layer>
             {side === 'front' && (
               <>
                 <Rect
                   x={0}
                   y={100}
-                  width={200}
+                  width={250}
                   height={200}
                   stroke="red"
                   dash={[4, 4]}
@@ -350,7 +414,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
                   <Rect
                     x={0}
                     y={100}
-                    width={200}
+                    width={250}
                     height={300}
                     stroke="red"
                     dash={[4, 4]}
