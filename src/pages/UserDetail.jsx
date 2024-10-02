@@ -57,7 +57,7 @@ export default function UserDetail() {
         <h2 className="title">Estadísticas</h2>
         <hr className="divider" />
         <div className="stats">
-          <p><strong>Juegos Completados por Tipo:</strong></p>
+          <p><strong>Juegos Completados por Tipo(Sin forzar):</strong></p>
           <ul className="statsList">
             {user.gamesCompletedByType && Object.entries(user.gamesCompletedByType).map(([type, count]) => (
               <li key={type}>{type}: {count}</li>

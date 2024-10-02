@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import FormTextInputCreate from '../components/FormTextInputCreate'; 
 
-export default function PreviewForm() {
+export default function PreviewFormCard() {
   const [title, setTitle] = useState('');
   const [theme, setTheme] = useState('');
   const [cardType, setCardType] = useState('txtImg');

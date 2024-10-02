@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
 import { API_URL } from '../config';
+import axios from 'axios';
 
 export default function SelectDeckGame() {
   const { authenticated } = useAuthContext();
   const { gameType, id } = useParams();
   const [decks, setDecks] = useState([]);
   const [selectedDeck, setSelectedDeck] = useState(null);
+  const [inProgressGameId, setInProgressGameId] = useState(null);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [isCreating, setIsCreating] = useState(false);
 
   async function fetchDecks() {
     try {
@@ -30,7 +33,6 @@ export default function SelectDeckGame() {
           setDecks(data);
           break;
         default:
-          setError('Unexpected error');
           break;
       }
     } catch (err) {
@@ -46,18 +48,79 @@ export default function SelectDeckGame() {
     setSelectedDeck(deckId);
   };
 
-  const handleStartGame = () => {
+  const handleStartGame = async () => {
     if (selectedDeck) {
-      navigate(`/createCreateWordSearchGame/${gameType}/${selectedDeck}`);
+      try {
+        setIsCreating(true);
+        const token = localStorage.getItem('access_token');
+        const response = await axios.post(
+          `${API_URL}/api/wordSearchGames`,
+          { deckId: selectedDeck },
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        );
+        switch (response.status) {
+          case 201:
+            navigate(`/wordSearchGame/${response.data.wordSearchGameId}`);
+            break;
+          case 200:
+            if (response.data.message === "Ya tienes una sopa de letras en progreso") {
+              setInProgressGameId(response.data.wordSearchGameId);
+            }
+            break;
+          case 400:
+          case 401:
+          case 404:
+            setError(response.data.message);
+            break;
+          default:
+            break;
+        }
+      } catch (error) {
+        setError(error.response.data.message);
+      } finally {
+        setIsCreating(false);
+      }
     } else {
       alert('Por favor, selecciona un mazo antes de continuar.');
+    }
+  };
+
+  const handleResumeGame = () => {
+    if (inProgressGameId) {
+      navigate(`/wordSearchGame/${inProgressGameId}`);
+    }
+  };
+
+  const handleResetGamesCompleted = async () => {
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await axios.patch(
+        `${API_URL}/api/resetGamesCompletedByType`,
+        { gameType: 'WordSearchGame' },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        alert(response.data.message);
+      } else {
+        setError(response.data.message);
+      }
+    } catch (error) {
+      setError(error.response.data.message);
     }
   };
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Selecciona un Mazo para {gameType}</h1>
-      {error && <p className="text-red-500 text-center">{error}</p>}
+      {error && <p className="text-red-500 text-center" style={{marginBottom: "1%"}}>{error}</p>}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {decks.map((deck) => (
           <div
@@ -79,10 +142,28 @@ export default function SelectDeckGame() {
       <div className="flex justify-center mt-6">
         <button
           onClick={handleStartGame}
-          disabled={!selectedDeck}
+          disabled={!selectedDeck || isCreating}
           className={`px-4 py-2 rounded-lg shadow-lg transition-transform duration-300 ${selectedDeck ? 'bg-green-500 text-white hover:bg-green-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
         >
-          Iniciar Juego
+          {isCreating ? 'Creando...' : 'Iniciar Juego'}
+        </button>
+      </div>
+      {inProgressGameId && (
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={handleResumeGame}
+            className="px-4 py-2 rounded-lg shadow-lg bg-yellow-500 text-white hover:bg-yellow-600 transition-transform duration-300"
+          >
+            Continuar Juego en Progreso
+          </button>
+        </div>
+      )}
+      <div className="flex justify-center mt-6">
+        <button
+          onClick={handleResetGamesCompleted}
+          className="px-4 py-2 rounded-lg shadow-lg bg-red-500 text-white hover:bg-red-600 transition-transform duration-300"
+        >
+          Resetear Contador de Juegos
         </button>
       </div>
     </div>

@@ -14,16 +14,15 @@ import DeckDetails from "./pages/DeckDetails";
 import DeckDetailsEdit from "./pages/DeckDetailsEdit";
 import CardDetails from "./pages/CardDetails";
 import CardDetailsEdit from "./pages/CardDetailsEdit";
-import PreviewForm from "./pages/PreviewForm";
+import PreviewFormCard from "./pages/PreviewFormCard";
 import CreateTxtImgCard from "./pages/CreateTxtImgCard";
 import CreateTxtTxtCard from "./pages/CreateTxtTxtCard";
 import PrivacyNotice from "./pages/PrivacyNotice";
 import Contact from "./pages/Contact";
 import TermsOfUse from "./pages/TermsOfUse";
-
 import LobbyGames from "./pages/LobbyGames";
 import SelectDeckGame from "./pages/SelectDeckGame";
-import CreateWordSearchGame from "./pages/CreateWordSearchGame";
+import WordSearchGame from "./pages/WordSearchGame";
 
 export default function App() {
   return (
@@ -47,13 +46,12 @@ export default function App() {
           <Route path="/deck/:id" element={<DeckDetails />} />
           <Route path="/deck/edit/:id" element={<DeckDetailsEdit />} />
           <Route path="/card/edit/:id" element={<CardDetailsEdit />} />
-          <Route path="/user/:id/preview" element={<PreviewForm />} />
+          <Route path="/user/:id/preview" element={<PreviewFormCard />} />
           <Route path="/create-card/txtImg" element={<CreateTxtImgCard />} />
           <Route path="/create-card/txtTxt" element={<CreateTxtTxtCard />} />
           <Route path="/lobby" element={<LobbyGames />} />
           <Route path="/selectDeckGame/:gameType/:id" element={<SelectDeckGame />} />
-          <Route path="/createCreateWordSearchGame/:gameType/:deckId" element={<CreateWordSearchGame />} />
-
+          <Route path="/wordSearchGame/:wordSearchGameId" element={<WordSearchGame />} />
         </Routes>
         <Footer />
       </AuthContextProvider>

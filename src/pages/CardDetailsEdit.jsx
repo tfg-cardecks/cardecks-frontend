@@ -13,30 +13,30 @@ export default function CardDetailsEdit() {
   const [imageUrl, setImageUrl] = useState('');
   const [side, setSide] = useState('front');
   const [errorMessage, setErrorMessage] = useState('');
+  const fetchCard = async () => {
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await fetch(`${API_URL}/api/card/${id}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+      const data = await response.json();
+      setCard(data);
+      setTheme(data.theme);
+      setFrontText(data.frontSide.text[0] || null);
+      setBackText(data.backSide.text[0] || null);
+      setBackElements([...data.backSide.text, ...data.backSide.images]);
+      setImageUrl(data.backSide.images[0]?.url || '');
+    } catch (error) {
+      console.error('Error fetching card:', error);
+      setErrorMessage('Error al cargar la carta. Inténtalo de nuevo más tarde.');
+    }
+  };
+
 
   useEffect(() => {
-    const fetchCard = async () => {
-      try {
-        const token = localStorage.getItem('access_token');
-        const response = await fetch(`${API_URL}/api/card/${id}`, {
-          method: 'GET',
-          headers: {
-            Authorization: `${token}`,
-          },
-        });
-        const data = await response.json();
-        setCard(data);
-        setTheme(data.theme);
-        setFrontText(data.frontSide.text[0] || null);
-        setBackText(data.backSide.text[0] || null);
-        setBackElements([...data.backSide.text, ...data.backSide.images]);
-        setImageUrl(data.backSide.images[0]?.url || '');
-      } catch (error) {
-        console.error('Error fetching card:', error);
-        setErrorMessage('Error al cargar la carta. Inténtalo de nuevo más tarde.');
-      }
-    };
-
     fetchCard();
   }, [id]);
 
@@ -141,19 +141,21 @@ export default function CardDetailsEdit() {
       });
 
       const data = await response.json();
-      if (response.status === 200) {
-        navigate(`/card/${data._id}`);
-      } else if (response.status === 404) {
-        setErrorMessage(data.message);
-      } else if (response.status === 400) {
-        const errorMessage = data.message.split(': ').pop().trim();
-        setErrorMessage(errorMessage);
-      } else if (response.status === 500) {
-        setErrorMessage(data.message);
-      } else {
-        setErrorMessage(data.message);
+      switch (response.status) {
+        case 200:
+          navigate(`/card/${data._id}`);
+          break;
+        case 404:
+          setErrorMessage(data.message);
+          break;
+        case 400:
+          setErrorMessage(data.message.split(': ').pop().trim());
+          break;
+        case 500:
+          setErrorMessage(data.message);
+        default:
+          break;
       }
-
     } catch (error) {
       console.error('Error updating card:', error);
       setErrorMessage('Error al actualizar la carta. Inténtalo de nuevo más tarde.');
