@@ -12,8 +12,7 @@ export default function WordSearchGame() {
   const [highlightedCells, setHighlightedCells] = useState([]);
   const [foundWords, setFoundWords] = useState([]);
   const [allWordsFound, setAllWordsFound] = useState(false);
-  const [wordToCheck, setWordToCheck] = useState('');
-  const [checkResult, setCheckResult] = useState(null);
+  const [time, setTime] = useState(0);
 
   const fetchGameData = async () => {
     try {
@@ -47,6 +46,13 @@ export default function WordSearchGame() {
   useEffect(() => {
     fetchGameData();
   }, [wordSearchGameId]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(prevTime => prevTime + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const isAdjacent = (cell1, cell2) => {
     const rowDiff = Math.abs(cell1.row - cell2.row);
@@ -90,7 +96,7 @@ export default function WordSearchGame() {
     if (selectedCells.length > 1) {
       const word = selectedCells.map(cell => gameData.grid[cell.row][cell.col]).join('');
       const cleanedWord = cleanWord(word);
-      const cleanedWords = gameData.words.map(cleanWord);
+      const cleanedWords = gameData.words.map((word) => cleanWord(word));
       if (cleanedWords.includes(cleanedWord) && !foundWords.includes(cleanedWord)) {
         setFoundWords(prevFoundWords => {
           const newFoundWords = [...prevFoundWords, cleanedWord];
@@ -111,10 +117,7 @@ export default function WordSearchGame() {
   const handleNextGame = async () => {
     try {
       const token = localStorage.getItem('access_token');
-      const cleanedFoundWords = foundWords.map(cleanWord);
-      console.log("Token:", token);
-      console.log("Found Words:", cleanedFoundWords);
-
+      const cleanedFoundWords = foundWords.map((word) => separateWord(word, gameData.words));
       const response = await axios.post(
         `${API_URL}/api/currentWordSearchGame/${wordSearchGameId}`,
         { foundWords: cleanedFoundWords },
@@ -180,32 +183,6 @@ export default function WordSearchGame() {
     }
   };
 
-  const handleCheckWord = async () => {
-    try {
-      const token = localStorage.getItem('access_token');
-      const response = await axios.get(`${API_URL}/api/wordSearchGames/${wordSearchGameId}/checkWord/${wordToCheck}`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      });
-      switch (response.status) {
-        case 200:
-          setCheckResult(response.data.found ? 'Palabra encontrada' : 'Palabra no encontrada');
-          break;
-        case 401:
-        case 404:
-        case 400:
-          setCheckResult(response.data);
-          break;
-        default:
-          break;
-      }
-    } catch (error) {
-      console.error(error);
-      setCheckResult('Error al verificar la palabra');
-    }
-  };
-
   const renderGrid = () => {
     if (!gameData || !gameData.grid) return null;
 
@@ -238,7 +215,7 @@ export default function WordSearchGame() {
 
     return (
       <div className="ml-4">
-        <h2 className="text-xl font-bold mb-2">Palabras a Buscar:</h2>
+        <h2 className="text-xl font-bold mb-2 mt-6">Palabras a Buscar:</h2>
         <ul>
           {gameData.words.map((word, index) => (
             <li key={index} className={`mb-1 ${foundWords.includes(cleanWord(word)) ? 'line-through' : ''}`}>
@@ -263,23 +240,8 @@ export default function WordSearchGame() {
         <h1 className="text-3xl font-bold mb-4 text-center">Sopa de Letras</h1>
         {renderGrid()}
       </div>
+      <p className="mt-4">{time} segundos</p>
       {renderWordsToFind()}
-      <div className="mt-4">
-        <input
-          type="text"
-          value={wordToCheck}
-          onChange={(e) => setWordToCheck(e.target.value)}
-          placeholder="Ingresa una palabra"
-          className="border p-2 rounded"
-        />
-        <button
-          className="ml-2 px-4 py-2 bg-blue-500 text-white rounded"
-          onClick={handleCheckWord}
-        >
-          Comprobar Palabra
-        </button>
-      </div>
-      {checkResult && <p className="mt-2">{checkResult}</p>}
       {allWordsFound && (
         <button
           className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
@@ -300,6 +262,17 @@ export default function WordSearchGame() {
 
 function cleanWord(word) {
   const withoutSpaces = word.replace(/\s+/g, '');
-  const withoutAccents = withoutSpaces.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const withoutAccents = withoutSpaces.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
   return withoutAccents.replace(/[^A-Z]/gi, '').toUpperCase();
+}
+
+function separateWord(concatenatedWord, originalWords) {
+  const cleanedConcatenatedWord = cleanWord(concatenatedWord);
+  for (const originalWord of originalWords) {
+    const cleanedOriginalWord = cleanWord(originalWord);
+    if (cleanedConcatenatedWord === cleanedOriginalWord.replace(/\s+/g, '')) {
+      return originalWord;
+    }
+  }
+  return concatenatedWord; // Return the concatenated word if no match is found
 }
