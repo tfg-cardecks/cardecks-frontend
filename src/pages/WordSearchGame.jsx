@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../config';
+import Swal from 'sweetalert2';
 
 export default function WordSearchGame() {
   const { wordSearchGameId } = useParams();
@@ -111,6 +112,11 @@ export default function WordSearchGame() {
   useEffect(() => {
     if (gameData && foundWords.length === gameData.words.length) {
       setAllWordsFound(true);
+      Swal.fire({
+        icon: 'success',
+        title: '¡Felicidades!',
+        text: 'Has encontrado todas las palabras.',
+      });
     }
   }, [foundWords, gameData]);
 
@@ -127,9 +133,6 @@ export default function WordSearchGame() {
           },
         }
       );
-
-      console.log("Response:", response);
-
       switch (response.status) {
         case 201:
           const newWordSearchGameId = response.data.wordSearchGameId;
@@ -141,10 +144,9 @@ export default function WordSearchGame() {
         case 401:
         case 404:
         case 400:
-          setErrorMessage(response.data.message || 'Error inesperado');
+          setErrorMessage(response.data.message);
           break;
         default:
-          setErrorMessage('Error inesperado al completar el juego.');
           break;
       }
     } catch (error) {
@@ -215,7 +217,7 @@ export default function WordSearchGame() {
 
     return (
       <div className="ml-4">
-        <h2 className="text-xl font-bold mb-2 mt-6">Palabras a Buscar:</h2>
+        <h2 className="text-xl font-bold mb-2 mt-4">Palabras a Buscar:</h2>
         <ul>
           {gameData.words.map((word, index) => (
             <li key={index} className={`mb-1 ${foundWords.includes(cleanWord(word)) ? 'line-through' : ''}`}>
@@ -227,35 +229,44 @@ export default function WordSearchGame() {
     );
   };
 
-  if (errorMessage) {
-    return <p className="text-red-600">{errorMessage}</p>;
-  }
-
-  if (!gameData) {
-    return <p>Cargando...</p>;
-  }
   return (
     <div className="container mx-auto p-4 flex flex-col items-center">
-      <div>
-        <h1 className="text-3xl font-bold mb-4 text-center">Sopa de Letras</h1>
-        {renderGrid()}
-      </div>
-      <p className="mt-4">{time} segundos</p>
-      {renderWordsToFind()}
-      {allWordsFound && (
-        <button
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-          onClick={handleNextGame}
-        >
-          Siguiente
-        </button>
+      {errorMessage ? (
+        <p className="text-red-600">{errorMessage}</p>
+      ) : !gameData ? (
+        <p>Cargando...</p>
+      ) : (
+        <>
+          <div>
+            <h1 className="text-3xl font-bold mb-4 text-center">Sopa de Letras</h1>
+            {renderGrid()}
+          </div>
+          <p className="mt-4">{time} segundos</p>
+          {renderWordsToFind()}
+          {allWordsFound && (
+            <button
+              className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none" style={{ marginTop: '2%' }}
+              onClick={handleNextGame}
+            >
+              Siguiente
+            </button>
+          )}
+          <div className="flex space-x-4 mt-4">
+            <button
+              className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-red-200 to-red-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none w-48 duration-300"
+              onClick={handleForceComplete}
+            >
+              Forzar Completado
+            </button>
+            <button
+              className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
+              onClick={() => navigate('/lobby')}
+            >
+              Volver al Lobby
+            </button>
+          </div>
+        </>
       )}
-      <button
-        className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
-        onClick={handleForceComplete}
-      >
-        Forzar Completado
-      </button>
     </div>
   );
 }
@@ -274,5 +285,5 @@ function separateWord(concatenatedWord, originalWords) {
       return originalWord;
     }
   }
-  return concatenatedWord; // Return the concatenated word if no match is found
+  return concatenatedWord;
 }

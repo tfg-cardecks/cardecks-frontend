@@ -3,12 +3,13 @@ import { useAuthContext } from '../context/authContext';
 import axios from 'axios';
 import { API_URL } from '../config';
 import AnimatedCards from '../components/AnimatedCards';
-import '../styles/UserDetailStyles.css'; 
+import '../styles/UserDetailStyles.css';
+import Swal from 'sweetalert2';
 
 export default function UserDetail() {
   const { authenticated } = useAuthContext();
   const [user, setUser] = useState({});
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
 
   async function fetchUserData() {
     try {
@@ -33,10 +34,53 @@ export default function UserDetail() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }
+
   useEffect(() => {
     fetchUserData();
   }, [authenticated]);
+
+  const getTotalGamesCompleted = (gameType) => {
+    const totalGamesCompleted = localStorage.getItem(`totalGamesCompleted_${gameType}`);
+    return totalGamesCompleted ? parseInt(totalGamesCompleted, 10) : 0;
+  };
+
+  const handleResetGamesCompleted = async (gameType) => {
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await axios.patch(
+        `${API_URL}/api/resetGamesCompletedByType`,
+        { gameType },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      switch (response.status) {
+        case 200:
+          const currentCount = user.gamesCompletedByType[gameType] || 0;
+          const totalGamesCompleted = getTotalGamesCompleted(gameType) + currentCount;
+          localStorage.setItem(`totalGamesCompleted_${gameType}`, totalGamesCompleted);
+          fetchUserData();
+          Swal.fire({
+            icon: 'success',
+            title: 'Contador Reseteado',
+            text: response.data.message,
+          });
+          break;
+        case 400:
+        case 401:
+        case 404:
+          setErrors(response.data.message);
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      setErrors(error.response.data.message);
+    }
+  };
 
   return (
     <div className="container">
@@ -57,10 +101,18 @@ export default function UserDetail() {
         <h2 className="title">Estadísticas</h2>
         <hr className="divider" />
         <div className="stats">
-          <p><strong>Juegos Completados por Tipo(Sin forzar):</strong></p>
+          <p><strong>Juegos Completados por Tipo sin forzar:</strong></p>
           <ul className="statsList">
             {user.gamesCompletedByType && Object.entries(user.gamesCompletedByType).map(([type, count]) => (
-              <li key={type}>{type}: {count}</li>
+              <li key={type}>
+                {type}: {count} (Total: {getTotalGamesCompleted(type)})
+                <button style={{
+                  marginLeft: '5px',
+                  border: '1px solid #000',
+                  padding: '1px 5px',
+                  borderRadius: '5px',
+                }} onClick={() => handleResetGamesCompleted(type)}>Resetear Contador de Juego</button>
+              </li>
             ))}
           </ul>
           <p><strong>Total de Cartas:</strong> {user.cards && user.cards.length}</p>

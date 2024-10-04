@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
 import { API_URL } from '../config';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default function SelectDeckGame() {
   const { authenticated } = useAuthContext();
@@ -64,7 +65,13 @@ export default function SelectDeckGame() {
         );
         switch (response.status) {
           case 201:
-            navigate(`/wordSearchGame/${response.data.wordSearchGameId}`);
+            Swal.fire({
+              icon: 'success',
+              title: 'Juego Creado',
+              text: 'El juego de sopa de letras se ha creado exitosamente.',
+            }).then(() => {
+              navigate(`/wordSearchGame/${response.data.wordSearchGameId}`);
+            });
             break;
           case 200:
             if (response.data.message === "Ya tienes una sopa de letras en progreso") {
@@ -85,7 +92,11 @@ export default function SelectDeckGame() {
         setIsCreating(false);
       }
     } else {
-      alert('Por favor, selecciona un mazo antes de continuar.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Mazo no seleccionado',
+        text: 'Por favor, selecciona un mazo antes de continuar.',
+      });
     }
   };
 
@@ -95,33 +106,15 @@ export default function SelectDeckGame() {
     }
   };
 
-  const handleResetGamesCompleted = async () => {
-    try {
-      const token = localStorage.getItem('access_token');
-      const response = await axios.patch(
-        `${API_URL}/api/resetGamesCompletedByType`,
-        { gameType: 'WordSearchGame' },
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
-      if (response.status === 200) {
-        alert(response.data.message);
-      } else {
-        setError(response.data.message);
-      }
-    } catch (error) {
-      setError(error.response.data.message);
-    }
+  const handleCancel = () => {
+    navigate('/lobby');
   };
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Selecciona un Mazo para {gameType}</h1>
-      {error && <p className="text-red-500 text-center" style={{marginBottom: "1%"}}>{error}</p>}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {error && <p className="text-red-500 text-center" style={{ marginBottom: "1%" }}>{error}</p>}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{marginTop: "1%"}}>
         {decks.map((deck) => (
           <div
             key={deck._id}
@@ -139,33 +132,31 @@ export default function SelectDeckGame() {
           </div>
         ))}
       </div>
-      <div className="flex justify-center mt-6">
+      <div className="flex justify-center mt-6 space-x-4">
         <button
           onClick={handleStartGame}
           disabled={!selectedDeck || isCreating}
-          className={`px-4 py-2 rounded-lg shadow-lg transition-transform duration-300 ${selectedDeck ? 'bg-green-500 text-white hover:bg-green-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+          className={`px-4 py-2 rounded-lg shadow-lg transition-transform duration-300 ${selectedDeck ? 'bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none w-40' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
         >
           {isCreating ? 'Creando...' : 'Iniciar Juego'}
+        </button>
+        <button
+          onClick={handleCancel}
+          className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-red-200 to-red-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none w-32 duration-300"
+        >
+          Cancelar
         </button>
       </div>
       {inProgressGameId && (
         <div className="flex justify-center mt-6">
           <button
             onClick={handleResumeGame}
-            className="px-4 py-2 rounded-lg shadow-lg bg-yellow-500 text-white hover:bg-yellow-600 transition-transform duration-300"
+            className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-purple-200 to-purple-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-purple-300 focus:outline-none w-44 duration-300"
           >
             Continuar Juego en Progreso
           </button>
         </div>
       )}
-      <div className="flex justify-center mt-6">
-        <button
-          onClick={handleResetGamesCompleted}
-          className="px-4 py-2 rounded-lg shadow-lg bg-red-500 text-white hover:bg-red-600 transition-transform duration-300"
-        >
-          Resetear Contador de Juegos
-        </button>
-      </div>
     </div>
   );
 }
