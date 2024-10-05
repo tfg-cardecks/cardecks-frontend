@@ -93,7 +93,7 @@ export default function Register() {
         pageClass="register-page"
         animationClass="register-animation"
       />
-      <div className="w-1/2 p-11 mx-auto my-11 rounded-md shadow-lg flex flex-col justify-between bg-black bg-opacity-50 border-2 border-black backdrop-blur-sm overflow-auto">
+      <div className="w-1/2 p-11 mx-auto my-11 rounded-md shadow-lg flex flex-col justify-between bg-black bg-opacity-50 border-2 border-black backdrop-blur-sm">
         <h2
           className="text-4xl font-bold text-center mb-4 text-white"
           style={{ marginTop: "0px", marginBottom: "13px" }}

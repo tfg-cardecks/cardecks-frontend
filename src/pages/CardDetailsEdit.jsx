@@ -167,7 +167,7 @@ export default function CardDetailsEdit() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 flex justify-center items-center min-h-screen">
+    <div className="container mx-auto px-4 py-8 flex justify-center items-center">
       <div className="w-1/2">
         <h1 className="text-3xl font-bold mb-8 text-center">Editar Carta</h1>
         {errorMessage && (
