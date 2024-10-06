@@ -12,8 +12,8 @@ beforeEach(() => {
   goToHomePage();
 });
 
-describe("testing the navigation bar", () => {
-  it("clicking the nav elements with login to the page", () => {
+describe("testing the create card", () => {
+  it("creating a new card successfully", () => {
     cy.get("header")
       .find("nav")
       .next()
@@ -39,12 +39,29 @@ describe("testing the navigation bar", () => {
       cy.get("button").contains("Iniciar sesión").click().wait(2000);
 
       clickToNavElement("Cartas");
-      clickToNavElement("Mazos");
-      clickToNavElement("Juegos");
+      cy.get("a").contains("Crear Carta").click().wait(1500);
 
-      goToHomePage();
+      typeAndAssert("input[name='title']", "Carta de prueba");
+      typeAndAssert("input[name='theme']", "Tema de prueba");
+      cy.get("select#cardType").select("Texto y Texto").wait(1500);
 
-      cy.wait(2000);
+      cy.get("button").contains("Crear Carta").click().wait(2000);
+
+      cy.get("button").contains("Añadir Texto").click().wait(1500);
+      cy.get('canvas')
+        .trigger('mousedown', { which: 1, pageX: 150, pageY: 150 })
+        .trigger('mousemove', { which: 1, pageX: 200, pageY: 200 })
+        .trigger('mouseup', { force: true });
+
+      cy.get("select").select("Trasera").wait(1500);
+
+      cy.get("button").contains("Añadir Texto").click().wait(1500);
+      cy.get('canvas')
+        .trigger('mousedown', { which: 1, pageX: 150, pageY: 150 })
+        .trigger('mousemove', { which: 1, pageX: 200, pageY: 200 })
+        .trigger('mouseup', { force: true });
+
+      cy.get("button").contains("Crear Carta").click().wait(2000);
 
       cy.get("header")
         .find("nav")

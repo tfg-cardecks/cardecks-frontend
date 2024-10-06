@@ -143,7 +143,7 @@ export default function Header() {
                   className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                   onClick={handleOptionClick}
                 >
-                  Crear cartas
+                  Crear Carta
                 </Link>
                 {userId && (
                   <Link
@@ -151,7 +151,7 @@ export default function Header() {
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                     onClick={handleOptionClick}
                   >
-                    Mis cartas
+                    Mis Cartas
                   </Link>
                 )}
               </div>

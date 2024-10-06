@@ -12,8 +12,8 @@ beforeEach(() => {
   goToHomePage();
 });
 
-describe("testing the navigation bar", () => {
-  it("clicking the nav elements with login to the page", () => {
+describe("testing the create deck", () => {
+  it("creating a new deck successfully without selecting any cards", () => {
     cy.get("header")
       .find("nav")
       .next()
@@ -38,13 +38,14 @@ describe("testing the navigation bar", () => {
       typeAndAssert("input[name='password']", "@Password1");
       cy.get("button").contains("Iniciar sesión").click().wait(2000);
 
-      clickToNavElement("Cartas");
       clickToNavElement("Mazos");
-      clickToNavElement("Juegos");
+      cy.get("a").contains("Crear Mazo").click().wait(1500);
 
-      goToHomePage();
+      typeAndAssert("input[name='name']", "Test Deck");
+      typeAndAssert("input[name='description']", "This is a test deck.");
+      typeAndAssert("input[name='theme']", "Test Theme");
 
-      cy.wait(2000);
+      cy.get("button").contains("Crear Mazo").click().wait(2000);
 
       cy.get("header")
         .find("nav")

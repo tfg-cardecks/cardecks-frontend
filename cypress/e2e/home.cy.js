@@ -19,7 +19,6 @@ describe("rendering the home page", () => {
 
 describe("testing the navigation bar", () => {
   it("clicking the nav elements without login to the page", () => {
-    // clicking "Cancelar" swal button
     clickToNavElement("Cartas");
     clickToTextSwalButton("Cancelar");
     clickToNavElement("Mazos");
@@ -27,7 +26,6 @@ describe("testing the navigation bar", () => {
     clickToNavElement("Juegos");
     clickToTextSwalButton("Cancelar");
 
-    // now clicking "Registrarse"
     clickToNavElement("Cartas");
     clickToTextSwalButton("Registrarse");
     goToHomePage();
