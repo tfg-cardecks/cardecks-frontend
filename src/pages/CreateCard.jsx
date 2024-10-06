@@ -55,7 +55,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
       fontSize: fontSize,
       fill: color,
       x: 50,
-      y: 50,
+      y: 100,
       draggable: true,
     };
 
@@ -109,11 +109,11 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
       fontSize: fontSize,
       fill: color,
       x: 10,
-      y: 50 + index * (fontSize + 5),
+      y: 100 + index * (fontSize + 5),
       draggable: true,
     }));
     if (cardType === 'txtTxt' && !backText) {
-      setBackText(newTextElements[0]); 25 + 19 + 5
+      setBackText(newTextElements[0]);
       setBackElements([...backElements, ...newTextElements]);
     }
   };
