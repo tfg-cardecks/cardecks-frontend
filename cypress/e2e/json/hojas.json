@@ -1,0 +1,38 @@
+{
+  "frontSide": {
+    "text": [
+      {
+        "content": "Hojas",
+        "fontSize": 20,
+        "color": "#000000",
+        "left": 50,
+        "top": 100,
+        "_id": "67031e5ee57cb3a177eb7ad1"
+      }
+    ]
+  },
+  "backSide": {
+    "text": [],
+    "images": [
+      {
+        "url": "https://www.portalambiental.com.mx/sites/default/files/media/image/2023/01/plantas_0.jpeg",
+        "left": 55,
+        "top": 160,
+        "width": 200,
+        "height": 200,
+        "_id": "67031e5ee57cb3a177eb7ad2"
+      }
+    ]
+  },
+  "_id": "67031e5ee57cb3a177eb7ad0",
+  "title": "hojas",
+  "cardWidth": 300,
+  "cardHeight": 500,
+  "theme": "naturaleza",
+  "cardType": "txtImg",
+  "frontImageUrl": "/images/hojas_front.png",
+  "backImageUrl": "/images/hojas_back.png",
+  "createdAt": "2024-10-06T23:33:50.302Z",
+  "updatedAt": "2024-10-06T23:33:50.302Z",
+  "__v": 0
+}

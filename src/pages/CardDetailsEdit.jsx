@@ -13,6 +13,7 @@ export default function CardDetailsEdit() {
   const [imageUrl, setImageUrl] = useState('');
   const [side, setSide] = useState('front');
   const [errorMessage, setErrorMessage] = useState('');
+  
   const fetchCard = async () => {
     try {
       const token = localStorage.getItem('access_token');
@@ -34,7 +35,6 @@ export default function CardDetailsEdit() {
       setErrorMessage('Error al cargar la carta. Inténtalo de nuevo más tarde.');
     }
   };
-
 
   useEffect(() => {
     fetchCard();
@@ -162,6 +162,10 @@ export default function CardDetailsEdit() {
     }
   };
 
+  const handleCancel = () => {
+    navigate(`/card/${id}`);
+  };
+
   if (!card) {
     return <div>Cargando...</div>;
   }
@@ -248,12 +252,18 @@ export default function CardDetailsEdit() {
               </div>
             </div>
           )}
-          <div className="flex justify-center">
+          <div className="flex justify-center space-x-4">
             <button
               className="bg-gradient-to-r from-green-400 to-green-600 text-white px-8 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
               onClick={handleUpdateCard}
             >
               Actualizar Carta
+            </button>
+            <button
+              className="bg-gradient-to-r from-gray-400 to-gray-600 text-white px-8 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none"
+              onClick={handleCancel}
+            >
+              Cancelar
             </button>
           </div>
         </div>

@@ -1,0 +1,38 @@
+{
+  "frontSide": {
+    "text": [
+      {
+        "content": "Lluvia",
+        "fontSize": 20,
+        "color": "#000000",
+        "left": 50,
+        "top": 100,
+        "_id": "67031fa9e57cb3a177eb7bfc"
+      }
+    ]
+  },
+  "backSide": {
+    "text": [],
+    "images": [
+      {
+        "url": "https://www.fundacionaquae.org/wp-content/uploads/2016/01/lluvia-pais-1024x683.jpg",
+        "left": 55,
+        "top": 160,
+        "width": 200,
+        "height": 200,
+        "_id": "67031fa9e57cb3a177eb7bfd"
+      }
+    ]
+  },
+  "_id": "67031fa9e57cb3a177eb7bfb",
+  "title": "lluvia",
+  "cardWidth": 300,
+  "cardHeight": 500,
+  "theme": "naturaleza",
+  "cardType": "txtImg",
+  "frontImageUrl": "/images/lluvia_front.png",
+  "backImageUrl": "/images/lluvia_back.png",
+  "createdAt": "2024-10-06T23:39:21.476Z",
+  "updatedAt": "2024-10-06T23:39:21.476Z",
+  "__v": 0
+}

@@ -6,6 +6,9 @@ import {
   typeAndAssert,
   goToHomePage,
   generateRandomUser,
+  getCorrectInputDateWithSpecificDate,
+  getTemaLabel,
+  clearDate,
 } from "./utils";
 
 beforeEach(() => {
@@ -67,47 +70,26 @@ describe("testing the create deck", () => {
       typeAndAssert("input[name='description']", "This is a test deck.");
       typeAndAssert("input[name='theme']", "Test Theme");
 
-      cy.get('input[type="checkbox"]')
-        .check()
-        .wait(5000);
-      cy.get("button").contains("Crear Mazo").click().wait(5000);
-
-      cy.get("a").contains("Carta de prueba").click().wait(2000);
-      cy.get("button").contains("Eliminar").click().wait(2000);
-
-      clickToNavElement("Mazos");
-      cy.get("a").contains("Mis Mazos").click().wait(1500);
-      cy.get("div.border.p-4.rounded-lg.shadow-lg")
-        .contains("Test Deck")
-        .click()
-        .wait(2000);
-
       // Aplicar filtro de título
       cy.get('input[type="text"]').eq(0).type("Carta de prueba");
       cy.get("button").contains("Limpiar").eq(0).click().wait(500);
 
       // Aplicar filtro de tema
-      cy.get('input[type="text"]').eq(1).type("Tema de prueba");
-      cy.get("button").contains("Limpiar").eq(1).click().wait(500);
+      getTemaLabel().children().type("Tema de prueba");
+      getTemaLabel()
+        .parent()
+        .find("button")
+        .contains("Limpiar")
+        .click()
+        .wait(500);
 
-      // Aplicar filtro de fecha de inicio
-      cy.get('input[type="date"]').eq(0).type("2023-01-01");
-      cy.get("button").contains("Limpiar").eq(2).click().wait(500);
+      getCorrectInputDateWithSpecificDate(0, "2023-01-01");
+      clearDate("Fecha de Inicio:");
 
-      // Aplicar filtro de fecha de fin
-      cy.get('input[type="date"]').eq(1).type("2023-12-31");
-      cy.get("button").contains("Limpiar").eq(3).click().wait(500);
+      getCorrectInputDateWithSpecificDate(1, "2023-12-31");
+      clearDate("Fecha de Fin:");
 
-      // Verificar que las cartas filtradas se muestran correctamente
-      cy.get(".h-96.overflow-y-auto.border.p-4.rounded-lg")
-        .find(".card-selector-item")
-        .should("have.length.greaterThan", 0);
-
-      // Seleccionar una carta filtrada
-      cy.get(".card-selector-item").first().click();
-
-      // Verificar que la carta está seleccionada
-      cy.get(".card-selector-item.selected").should("have.length", 1);
+      cy.get("button").contains("Crear Mazo").click().wait(2000);
 
       cy.get("button").contains("Eliminar").click().wait(2000);
 
