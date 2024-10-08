@@ -56,7 +56,7 @@ import {
 
         cy.get("button").contains("Cargar Imagen").click().wait(2000);
   
-        cy.get("button").contains("Crear Carta").click().wait(2000);
+        cy.get("button").contains("Crear Carta").click().wait(4000);
       
         // Hacer clic en el botón de exportar carta
         cy.get("button").contains("Exportar Carta").click();

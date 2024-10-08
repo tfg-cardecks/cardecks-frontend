@@ -56,21 +56,6 @@ export function AuthContextProvider({ children }) {
         setUserId(null);
     }, []);
 
-    const verifyTokenUser = useCallback(async () => {
-        try {
-            const token = localStorage.getItem('access_token');
-            const userId = localStorage.getItem('userId');
-            const config = {
-                headers: { Authorization: `${token}` },
-            };
-            await axios.get(apiURL + '/user/' + userId, config);
-        } catch (error) {
-            console.error(error);
-            logout();
-            navigate('/login');
-        }
-    }, [apiURL, logout, navigate]);
-
     useEffect(() => {
         const handleStorageChange = () => {
             if (authenticated) {
