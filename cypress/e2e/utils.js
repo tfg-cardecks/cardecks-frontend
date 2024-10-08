@@ -16,6 +16,10 @@ export function typeAndAssert(selector, value) {
   cy.get(selector).type(value).should("have.value", value);
 }
 
+export function typeAndAssertIndex(selector, value, index = 0) {
+  cy.get(selector).eq(index).clear().type(value).should("have.value", value);
+}
+
 export function generateRandomUser() {
   return cy.request("https://randomuser.me/api/").then((response) => {
     const user = response.body.results[0];
@@ -72,6 +76,11 @@ export function setupToPlayGames() {
 export function generateRandomText() {
   return `Test Deck ${Math.floor(Math.random() * 1000)}`;
 }
+
+export function generateRandomTextCard() {
+  return `Test Card3 ${Math.floor(Math.random() * 1000)}`;
+}
+
 
 export function selectedFileToImportAndSubmit(path) {
   cy.get("h2")

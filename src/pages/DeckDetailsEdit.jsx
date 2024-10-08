@@ -9,7 +9,7 @@ export default function DeckDetailsEdit() {
   const [deck, setDeck] = useState(null);
   const [allCards, setAllCards] = useState([]);
   const { authenticated } = useAuthContext();
-  const [error, setErrors] = useState(null);
+  const [error, setErrors] = useState('');
   const [formData, setFormData] = useState({
     theme: '',
     description: '',
@@ -47,7 +47,7 @@ export default function DeckDetailsEdit() {
     }
   }
 
-    async function fetchUserCards() {
+  async function fetchUserCards() {
     try {
       const token = localStorage.getItem('access_token');
       const currentUserId = localStorage.getItem("userId");
@@ -96,6 +96,7 @@ export default function DeckDetailsEdit() {
           navigate(`/deck/${id}`);
           break;
         case 400:
+          console.log(data);
           setErrors(data);
           break;
         case 401:
@@ -137,8 +138,7 @@ export default function DeckDetailsEdit() {
       <div className="container mx-auto p-4 w-4/5">
         <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-3xl font-bold mb-4">{deck.name}</h1>
-          {error && <p className="text-yellow-600">{error.message}</p>}
-
+          {error && <p className="text-red-600">{error.message}</p>}
           <form onSubmit={(e) => { e.preventDefault(); handleUpdate(); }} className="w-full">
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="theme">
@@ -182,7 +182,7 @@ export default function DeckDetailsEdit() {
                 type="submit"
                 className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none"
               >
-                Actualizar
+                Actualizar Mazo
               </button>
               <button
                 type="button"

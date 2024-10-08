@@ -6,6 +6,7 @@ import {
     typeAndAssert,
     goToHomePage,
     generateRandomUser,
+    generateRandomTextCard,
   } from "./utils";
   
   beforeEach(() => {
@@ -41,7 +42,7 @@ import {
         clickToNavElement("Cartas");
         cy.get("a").contains("Crear Carta").click().wait(1500);
   
-        typeAndAssert("input[name='title']", "Carta de prueba12");
+        typeAndAssert("input[name='title']", generateRandomTextCard());
         typeAndAssert("input[name='theme']", "Tema de prueba12");
         cy.get("select#cardType").select("Texto e Imagen").wait(1500);
   

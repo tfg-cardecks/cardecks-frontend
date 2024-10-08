@@ -176,7 +176,7 @@ export default function DeckDetails() {
       <div className="container mx-auto p-4 w-4/5">
         <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-3xl font-bold mb-4">{deck.name}</h1>
-          {error && <p className="text-yellow-600">{error}</p>}
+          {error && <p className="text-red-600 mb-4">{error}</p>}
 
           <p className="mb-2">{deck.description}</p>
           <p className="text-gray-500">Tema: {deck.theme}</p>

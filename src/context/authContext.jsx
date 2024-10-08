@@ -74,14 +74,14 @@ export function AuthContextProvider({ children }) {
     useEffect(() => {
         const handleStorageChange = () => {
             if (authenticated) {
-                verifyTokenUser();
+                return;
             }
         };
         window.addEventListener('storage', handleStorageChange);
         return () => {
             window.removeEventListener('storage', handleStorageChange);
         };
-    }, [authenticated, verifyTokenUser]);
+    }, [authenticated]);
 
     const value = useMemo(
         () => ({
