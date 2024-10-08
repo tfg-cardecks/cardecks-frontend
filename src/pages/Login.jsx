@@ -52,9 +52,6 @@ export default function Login() {
             navigate("/user/details");
           });
           break;
-        case 401:
-          setErrors(data);
-          break;
         case 404:
           setErrors(data);
           break;

@@ -227,6 +227,9 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
         case 401:
           setErrorMessage(data.message);
           break;
+        case 403:
+          setErrorMessage(data.error);
+          break;
         case 404:
           setErrorMessage(data.message);
           break;

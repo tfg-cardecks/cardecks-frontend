@@ -6,6 +6,7 @@ import {
   typeAndAssert,
   goToHomePage,
   generateRandomUser,
+  generateRandomTextCard,
 } from "./utils";
 
 beforeEach(() => {

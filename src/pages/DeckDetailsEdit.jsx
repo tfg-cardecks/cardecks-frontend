@@ -96,7 +96,6 @@ export default function DeckDetailsEdit() {
           navigate(`/deck/${id}`);
           break;
         case 400:
-          console.log(data);
           setErrors(data);
           break;
         case 401:
