@@ -44,7 +44,6 @@ export function clearDate(label) {
 }
 
 export function setupToPlayGames() {
-  // Registration
   cy.visit("http://localhost:5173/");
   cy.get("header")
     .find("nav")
@@ -66,7 +65,6 @@ export function setupToPlayGames() {
 
     cy.wait(2000);
 
-    // Login
     typeAndAssert("input[name='emailOrUsername']", username);
     typeAndAssert("input[name='password']", "@Password1");
     cy.get("button").contains("Iniciar sesión").click().wait(2000);
@@ -81,7 +79,6 @@ export function generateRandomTextCard() {
   return `Test Card3 ${Math.floor(Math.random() * 1000)}`;
 }
 
-
 export function selectedFileToImportAndSubmit(path) {
   cy.get("h2")
     .contains("Cartas")
@@ -91,7 +88,6 @@ export function selectedFileToImportAndSubmit(path) {
   cy.get("button").contains("Importar Carta a Mazo").click().wait(2000);
 }
 
-// Word Search Game Methods //
 export function getGrid() {
   return cy.get(".grid div").then((cells) => {
     const grid = [];
@@ -134,4 +130,36 @@ function getPositionsBetween(start, end) {
   positions.push([endRow, endCol]);
 
   return positions;
+}
+
+export function applyTitleFilter(title) {
+  cy.get('input[type="text"]').eq(0).type(title);
+}
+
+export function clearTitleFilter() {
+  cy.get("button").contains("Limpiar").eq(0).click().wait(500);
+}
+
+export function applyThemeFilter(theme) {
+  cy.get('label:contains("Tema:")').find('input[type="text"]').type(theme);
+}
+
+export function clearThemeFilter() {
+  cy.get('label:contains("Tema:")').parent().find('button').contains("Limpiar").click().wait(500);
+}
+
+export function applyStartDateFilter(date) {
+  cy.get('label:contains("Fecha de Inicio:")').find('input[type="date"]').type(date);
+}
+
+export function clearStartDateFilter() {
+  cy.get('label:contains("Fecha de Inicio:")').parent().find('button').contains("Limpiar").click().wait(500);
+}
+
+export function applyEndDateFilter(date) {
+  cy.get('label:contains("Fecha de Fin:")').find('input[type="date"]').type(date);
+}
+
+export function clearEndDateFilter() {
+  cy.get('label:contains("Fecha de Fin:")').parent().find('button').contains("Limpiar").click().wait(500);
 }

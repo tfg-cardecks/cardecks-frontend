@@ -43,7 +43,7 @@ export default function Footer() {
                 <a className="text-gray-600 hover:text-gray-800">Planes de precios</a>
               </li>
               <li>
-                <Link to="/terms-of-use" className="text-gray-600 hover:text-gray-800">Inicio</Link>
+                <Link to="/terms-of-use" className="text-gray-600 hover:text-gray-800">Términos de uso</Link>
               </li>
             </nav>
           </div>

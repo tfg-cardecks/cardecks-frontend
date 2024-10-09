@@ -49,7 +49,6 @@ describe("testing the import card functionality", () => {
       cy.get("button").contains("Exportar Mazo").click();
 
       cy.get("button").contains("Eliminar").click().wait(2000);
-
     });
   });
 });

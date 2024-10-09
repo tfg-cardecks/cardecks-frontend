@@ -75,11 +75,9 @@ describe("Edit Deck Functionality", () => {
       typeAndAssert("input[name='description']", "This is a test deck.");
       typeAndAssert("input[name='theme']", "Test Theme");
 
-      // Aplicar filtro de título
       cy.get('input[type="text"]').eq(0).type("Carta de prueba");
       cy.get("button").contains("Limpiar").eq(0).click().wait(500);
 
-      // Aplicar filtro de tema
       getTemaLabel().children().type("Tema de prueba");
       getTemaLabel()
         .parent()
@@ -176,11 +174,9 @@ describe("Edit Deck Validation", () => {
       typeAndAssert("input[name='description']", "This is a test deck.");
       typeAndAssert("input[name='theme']", "Test Theme");
 
-      // Aplicar filtro de título
       cy.get('input[type="text"]').eq(0).type("Carta de prueba");
       cy.get("button").contains("Limpiar").eq(0).click().wait(500);
 
-      // Aplicar filtro de tema
       getTemaLabel().children().type("Tema de prueba");
       getTemaLabel()
         .parent()

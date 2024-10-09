@@ -62,7 +62,6 @@ describe("testing the edit card functionality", () => {
 
       cy.get("button").contains("Crear Carta").click().wait(2000);
 
-      // Hacer clic en el botón de exportar carta
       cy.get("button").contains("Actualizar").click();
 
       cy.get("select").select("Trasera").wait(1500);
