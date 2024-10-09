@@ -43,7 +43,7 @@ export default function DeckDetailsEdit() {
           break;
       }
     } catch (error) {
-      console.error(error);
+      setErrors({ message: 'Error al cargar el mazo' });
     }
   }
 
@@ -64,7 +64,7 @@ export default function DeckDetailsEdit() {
         setErrors(data);
       }
     } catch (error) {
-      console.error(error);
+      setErrors({ message: 'Error al cargar las cartas' });
     }
   }
 
@@ -108,7 +108,7 @@ export default function DeckDetailsEdit() {
           break;
       }
     } catch (error) {
-      console.error(error);
+      setErrors({ message: 'Error al actualizar el mazo' });
     }
   }
 

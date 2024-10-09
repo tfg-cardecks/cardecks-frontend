@@ -32,7 +32,7 @@ export default function CardDetail() {
           break;
       }
     } catch (error) {
-      console.error(error);
+      setErrors('Error al cargar la carta');
     }
   }
 
@@ -69,7 +69,7 @@ export default function CardDetail() {
         setErrors(data);
       }
     } catch (error) {
-      console.error(error);
+      setErrors('Error al eliminar la carta. Inténtalo de nuevo más tarde.');
     }
   }
 
@@ -106,7 +106,7 @@ export default function CardDetail() {
         setErrors(data);
       }
     } catch (error) {
-      console.error(error);
+      setErrors('Error al exportar la carta. Inténtalo de nuevo más tarde.');
     }
   }
 

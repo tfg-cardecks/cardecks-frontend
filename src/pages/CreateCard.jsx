@@ -240,7 +240,6 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
           break;
       }
     } catch (error) {
-      console.error(error);
       setErrorMessage('Error al crear la carta. Inténtalo de nuevo más tarde.');
     }
   };

@@ -32,7 +32,7 @@ export default function UserDetail() {
         setErrors({ message: 'No estás autenticado. Por favor, inicia sesión.' });
       }
     } catch (error) {
-      console.error(error);
+      setErrors({ message: error.response.data.message });
     }
   }
 

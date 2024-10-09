@@ -39,7 +39,6 @@ export default function WordSearchGame() {
           break;
       }
     } catch (error) {
-      console.error(error);
       setErrorMessage('Error al cargar la sopa de letras');
     }
   };
@@ -150,7 +149,6 @@ export default function WordSearchGame() {
           break;
       }
     } catch (error) {
-      console.error('Error al completar la sopa de letras:', error);
       setErrorMessage('Error al completar la sopa de letras');
     }
   };
@@ -180,7 +178,6 @@ export default function WordSearchGame() {
           break;
       }
     } catch (error) {
-      console.error(error);
       setErrorMessage('Error al forzar la finalización de la sopa de letras');
     }
   };

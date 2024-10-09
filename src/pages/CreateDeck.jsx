@@ -39,12 +39,9 @@ export default function CreateDeck() {
         switch (response.status) {
           case 200:
             setUserCards(data);
-            return;
-          case 404:
-            setErrors(data);
-            return;
+            break;
           default:
-            return;
+            break;
         }
       } else {
         setErrors({ message: 'No estás autenticado. Por favor, inicia sesión.' });
@@ -99,10 +96,7 @@ export default function CreateDeck() {
       case 400:
         setErrors(data);
         break;
-      case 401:
-        setErrors(data);
-        break;
-      case 404:
+      case 403:
         setErrors(data);
         break;
       default:

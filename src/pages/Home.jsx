@@ -12,7 +12,6 @@ import carta from '../images/carta.png';
 import carta1 from '../images/carta1.png';
 import imagen1 from '../images/imagen1.png';
 import imagen2 from '../images/imagen2.png';
-import imagen3 from '../images/imagen3.png';
 import juego from '../images/juego.png';
 import manual from '../images/manual.png';
 

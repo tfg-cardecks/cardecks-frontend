@@ -62,7 +62,7 @@ export default function Login() {
           break;
       }
     } catch (error) {
-      console.error(error);
+      setErrors({ message: "Error de conexión. Inténtalo de nuevo." });
     }
   }
 

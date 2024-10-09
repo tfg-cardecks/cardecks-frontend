@@ -7,7 +7,6 @@ export default function CreateTxtTxtCard() {
   const navigate = useNavigate();
 
   if (!location.state) {
-    console.error('location.state es null');
     navigate('/');
     return null;
   }

@@ -32,7 +32,7 @@ export default function DeckDetails() {
           break;
       }
     } catch (error) {
-      console.error(error);
+      setErrors({ message: 'Error al cargar el mazo' });
     }
   }
 
@@ -70,7 +70,7 @@ export default function DeckDetails() {
         setErrors(data);
       }
     } catch (error) {
-      console.error(error);
+      setErrors({ message: 'Error al eliminar el mazo' });
     }
   }
 
@@ -151,7 +151,7 @@ export default function DeckDetails() {
         setErrors(data);
       }
     } catch (error) {
-      console.error(error);
+      setErrors({ message: 'Error al exportar el mazo' });
     }
   }
 

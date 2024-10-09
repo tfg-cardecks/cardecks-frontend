@@ -83,7 +83,7 @@ export default function Register() {
           break;
       }
     } catch (error) {
-      console.error(error);
+      setErrors({ message: "Error al registrar el usuario" });
     }
   }
 

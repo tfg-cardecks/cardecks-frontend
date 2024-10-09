@@ -20,7 +20,6 @@ export function AuthContextProvider({ children }) {
         try {
             return JSON.parse(roleFromStorage);
         } catch (error) {
-            console.error('Error parsing role from localStorage', error);
             return { authenticated: false, isCustomer: false, isAdmin: false, role: 'anonymous' };
         }
     };

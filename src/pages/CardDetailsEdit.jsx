@@ -31,7 +31,6 @@ export default function CardDetailsEdit() {
       setBackElements([...data.backSide.text, ...data.backSide.images]);
       setImageUrl(data.backSide.images[0]?.url || '');
     } catch (error) {
-      console.error('Error fetching card:', error);
       setErrorMessage('Error al cargar la carta. Inténtalo de nuevo más tarde.');
     }
   };
@@ -157,7 +156,6 @@ export default function CardDetailsEdit() {
           break;
       }
     } catch (error) {
-      console.error('Error updating card:', error);
       setErrorMessage('Error al actualizar la carta. Inténtalo de nuevo más tarde.');
     }
   };
