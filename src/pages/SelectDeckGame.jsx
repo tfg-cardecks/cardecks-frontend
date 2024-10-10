@@ -11,9 +11,27 @@ export default function SelectDeckGame() {
   const [decks, setDecks] = useState([]);
   const [selectedDeck, setSelectedDeck] = useState(null);
   const [inProgressGameId, setInProgressGameId] = useState(null);
+  const [showInfo, setShowInfo] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [isCreating, setIsCreating] = useState(false);
+
+  // Información estática del juego
+  const gameInfo = {
+    numberOfCards: 4,
+    wordSize: 'Entre 4 y 10 caracteres',
+    allowedWordTypes: [
+      'Palabras con espacios: Se limpian a letras concatenadas. Ejemplo: "MI CASA" se convierte en "MICASA".',
+      'Palabras con acentos: Se eliminan los acentos. Ejemplo: "CAFÉ" se convierte en "CAFE".',
+      'Palabras con caracteres especiales o números: Se eliminan caracteres especiales y números. Ejemplo: "CÓDIGO! 123" se convierte en "CODIGO".',
+      'Palabras con letras mayúsculas y minúsculas: Se convierten a mayúsculas. Ejemplo: "Hola Mundo" se convierte en "HOLAMUNDO".'
+    ],
+    notAllowedWordTypes: [
+      'Palabras que, una vez limpiadas, no contengan letras. Ejemplo: "123!!!" se convierte en "" (no permitida porque no contiene letras).',
+      'Palabras que queden vacías tras el proceso de limpieza. Ejemplo: "!!!" se convierte en "" (queda vacía, no permitida).'
+    ],
+    totalGamesBeforeReset: 25,
+  };
 
   async function fetchDecks() {
     try {
@@ -108,28 +126,65 @@ export default function SelectDeckGame() {
     navigate('/lobby');
   };
 
+  const toggleInfo = () => {
+    setShowInfo(!showInfo);
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Selecciona un Mazo para {gameType}</h1>
       {error && <p className="text-red-500 text-center" style={{ marginBottom: "1%" }}>{error}</p>}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{marginTop: "1%"}}>
-        {decks.map((deck) => (
-          <div
-            key={deck._id}
-            className={`border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer ${selectedDeck === deck._id ? 'bg-blue-100' : 'bg-white'}`}
-            onClick={() => handleDeckClick(deck._id)}
-          >
-            <h2 className="text-xl font-bold mb-2 text-center">{deck.name}</h2>
-            <p className="mb-2 text-center">{deck.description}</p>
-            <button
-              onClick={() => handleDeckClick(deck._id)}
-              className="bg-blue-500 text-white px-4 py-2 rounded mt-2 w-full hover:bg-blue-600 transition-colors duration-300"
-            >
-              Seleccionar
-            </button>
-          </div>
-        ))}
+      <div className="flex justify-center mb-4">
+        <button
+          onClick={toggleInfo}
+          className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-blue-200 to-blue-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none w-32 duration-300"
+        >
+          {showInfo ? 'Ocultar Información' : 'Información'}
+        </button>
       </div>
+      {showInfo ? (
+        <div className="bg-blue-100 p-4 rounded-lg shadow-lg mb-4">
+          <h2 className="text-2xl font-bold mb-2">Información del Juego</h2>
+          <p className="mb-2">Número de Palabras a Buscar: {gameInfo.numberOfCards}</p>
+          <p className="mb-2">Tamaño de las Palabras: {gameInfo.wordSize}</p>
+          <div className="mb-2">
+            <h3 className="font-bold">Tipos de Palabras Permitidas:</h3>
+            <ul className="list-disc list-inside">
+              {gameInfo.allowedWordTypes.map((type, index) => (
+                <li key={index}>{type}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="mb-2">
+            <h3 className="font-bold">Tipos de Palabras No Permitidas:</h3>
+            <ul className="list-disc list-inside">
+              {gameInfo.notAllowedWordTypes.map((type, index) => (
+                <li key={index}>{type}</li>
+              ))}
+            </ul>
+          </div>
+          <p className="mb-2">Número Total de Juegos hasta Reiniciar: {gameInfo.totalGamesBeforeReset}</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ marginTop: "1%" }}>
+          {decks.map((deck) => (
+            <div
+              key={deck._id}
+              className={`border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer ${selectedDeck === deck._id ? 'bg-blue-100' : 'bg-white'}`}
+              onClick={() => handleDeckClick(deck._id)}
+            >
+              <h2 className="text-xl font-bold mb-2 text-center">{deck.name}</h2>
+              <p className="mb-2 text-center">{deck.description}</p>
+              <button
+                onClick={() => handleDeckClick(deck._id)}
+                className="bg-blue-500 text-white px-4 py-2 rounded mt-2 w-full hover:bg-blue-600 transition-colors duration-300"
+              >
+                Seleccionar
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
       <div className="flex justify-center mt-6 space-x-4">
         <button
           onClick={handleStartGame}
