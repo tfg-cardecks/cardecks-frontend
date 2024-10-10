@@ -83,6 +83,10 @@ describe("testing the first game", () => {
 
     cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
+    cy.contains("button", "Información").click().wait(2000);
+
+    cy.contains("button", "Ocultar Información").click().wait(2000);
+
     startGame();
     cy.get(".swal2-confirm").click();
 
@@ -90,7 +94,7 @@ describe("testing the first game", () => {
 
     getGrid().then((gridString) => {
       let grid = JSON.parse(gridString);
-      grid = grid.map((row) => row.join("")); 
+      grid = grid.map((row) => row.join(""));
       cy.log("The grid is:", grid).then(() => {
         const solution = wordSearchSolver(grid, words);
         cy.log("The solution is: ", solution).then(() => {
@@ -124,10 +128,10 @@ describe("testing the first game", () => {
 
     cy.get("h2")
       .contains("Estadísticas")
-      .next() 
-      .next() 
-      .children() 
-      .next() 
+      .next()
+      .next()
+      .children()
+      .next()
       .get("button")
       .contains("Resetear Contador de Juego")
       .click()
@@ -135,5 +139,16 @@ describe("testing the first game", () => {
       .then(() => {
         cy.get(".swal2-confirm").click();
       });
+  });
+
+  it("can go to information wordsearch game", () => {
+    cy.visit("http://localhost:5173/lobby").wait(2000);
+    cy.get(".game-type-list").click().wait(2000);
+
+    cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
+
+    cy.contains("button", "Información").click().wait(2000);
+
+    cy.contains("button", "Ocultar Información").click().wait(2000);
   });
 });
