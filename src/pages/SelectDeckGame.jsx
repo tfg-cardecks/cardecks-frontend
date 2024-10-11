@@ -4,6 +4,16 @@ import { useAuthContext } from '../context/authContext';
 import { API_URL } from '../config';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import wordsearch from '../icon/wordsearch.png';
+import guesstheword from '../icon/guesstheword.png';
+import guesstheimage from '../icon/guesstheimage.png';
+import guessthetext from '../icon/guesstheimage.png';
+import memoryGame from '../icon/guesstheimage.png';
+import strokeOrderGame from '../icon/guesstheimage.png';
+import matchingGame from '../icon/guesstheimage.png';
+import hangmanGame from '../icon/guesstheimage.png';
+import speedMemoryWordGame from '../icon/guesstheimage.png';
+import speedMemoryImageGame from '../icon/guesstheimage.png';
 
 export default function SelectDeckGame() {
   const { authenticated } = useAuthContext();
@@ -16,7 +26,19 @@ export default function SelectDeckGame() {
   const [error, setError] = useState(null);
   const [isCreating, setIsCreating] = useState(false);
 
-  // Información estática del juego
+  const gameTypes = [
+    { type: 'WordSearchGame', name: 'Sopa de Letras', icon: wordsearch },
+    { type: 'GuessTheWordGame', name: 'Adivina la Palabra', icon: guesstheword },
+    { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
+    { type: 'GuessTheTextGame', name: 'Adivina el Texto', icon: guessthetext },
+    { type: 'MemoryGame', name: 'Juego de Memoria', icon: memoryGame },
+    { type: 'StrokeOrderGame', name: 'Orden de trazos', icon: strokeOrderGame },
+    { type: 'MatchingGame', name: 'Juego de Relacionar', icon: matchingGame },
+    { type: 'HangmanGame', name: 'Juego del Ahorcado', icon: hangmanGame },
+    { type: 'SpeedMemoryWordGame', name: 'Juego de Memorización Rápida de Palabra', icon: speedMemoryWordGame },
+    { type: 'SpeedMemoryImageGame', name: 'Juego de Memorización Rápida de Imagen', icon: speedMemoryImageGame },
+  ];
+
   const gameInfo = {
     numberOfCards: 4,
     wordSize: 'Entre 4 y 10 caracteres',
@@ -130,9 +152,14 @@ export default function SelectDeckGame() {
     setShowInfo(!showInfo);
   };
 
+  const getGameName = (type) => {
+    const game = gameTypes.find(game => game.type === type);
+    return game ? game.name : type;
+  };
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4 text-center">Selecciona un Mazo para {gameType}</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center">Selecciona un Mazo para {getGameName(gameType)}</h1>
       {error && <p className="text-red-500 text-center" style={{ marginBottom: "1%" }}>{error}</p>}
       <div className="flex justify-center mb-4">
         <button

@@ -5,11 +5,34 @@ import { API_URL } from '../config';
 import AnimatedCards from '../components/AnimatedCards';
 import '../styles/UserDetailStyles.css';
 import Swal from 'sweetalert2';
+import wordsearch from '../icon/wordsearch.png';
+import guesstheword from '../icon/guesstheword.png';
+import guesstheimage from '../icon/guesstheimage.png';
+import guessthetext from '../icon/guesstheimage.png';
+import memoryGame from '../icon/guesstheimage.png';
+import strokeOrderGame from '../icon/guesstheimage.png';
+import matchingGame from '../icon/guesstheimage.png';
+import hangmanGame from '../icon/guesstheimage.png';
+import speedMemoryWordGame from '../icon/guesstheimage.png';
+import speedMemoryImageGame from '../icon/guesstheimage.png';
 
 export default function UserDetail() {
   const { authenticated } = useAuthContext();
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState({});
+
+  const gameTypes = [
+    { type: 'WordSearchGame', name: 'Sopa de Letras', icon: wordsearch },
+    { type: 'GuessTheWordGame', name: 'Adivina la Palabra', icon: guesstheword },
+    { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
+    { type: 'GuessTheTextGame', name: 'Adivina el Texto', icon: guessthetext },
+    { type: 'MemoryGame', name: 'Juego de Memoria', icon: memoryGame },
+    { type: 'StrokeOrderGame', name: 'Orden de trazos', icon: strokeOrderGame },
+    { type: 'MatchingGame', name: 'Juego de Relacionar', icon: matchingGame },
+    { type: 'HangmanGame', name: 'Juego del Ahorcado', icon: hangmanGame },
+    { type: 'SpeedMemoryWordGame', name: 'Juego de Memorización Rápida de Palabra', icon: speedMemoryWordGame },
+    { type: 'SpeedMemoryImageGame', name: 'Juego de Memorización Rápida de Imagen', icon: speedMemoryImageGame },
+  ];
 
   async function fetchUserData() {
     try {
@@ -82,6 +105,11 @@ export default function UserDetail() {
     }
   };
 
+  const getGameName = (type) => {
+    const game = gameTypes.find(game => game.type === type);
+    return game ? game.name : type;
+  };
+
   return (
     <div className="flex items-center justify-center">
       <div className="container">
@@ -106,7 +134,7 @@ export default function UserDetail() {
             <ul className="statsList">
               {user.gamesCompletedByType && Object.entries(user.gamesCompletedByType).map(([type, count]) => (
                 <li key={type}>
-                  {type}: {count} (Total: {getTotalGamesCompleted(type)})
+                  {getGameName(type)}: {count} (Total: {getTotalGamesCompleted(type)})
                   <button style={{
                     marginLeft: '5px',
                     border: '1px solid #000',
@@ -123,6 +151,5 @@ export default function UserDetail() {
         </div>
       </div>
     </div>
-
   );
 }
