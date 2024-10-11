@@ -28,6 +28,12 @@ export default function CardDetail() {
         case 200:
           setCard(data);
           break;
+        case 401:
+          setErrors(data);
+          break;
+        case 404:
+          setErrors(data);
+          break;
         default:
           break;
       }

@@ -53,9 +53,8 @@ export default function Login() {
           });
           break;
         case 404:
-          setErrors(data);
-          break;
         case 400:
+        case 401:
           setErrors(data);
           break;
         default:

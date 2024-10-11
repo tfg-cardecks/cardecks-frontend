@@ -67,6 +67,7 @@ export default function SelectDeckGame() {
       const data = await response.json();
       switch (response.status) {
         case 401:
+        case 404:
           setError(data);
           break;
         case 200:
@@ -119,6 +120,7 @@ export default function SelectDeckGame() {
             break;
           case 400:
           case 401:
+          case 404:
             setError(response.data.message);
             break;
           default:

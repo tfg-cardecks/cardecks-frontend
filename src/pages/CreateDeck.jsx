@@ -40,6 +40,9 @@ export default function CreateDeck() {
           case 200:
             setUserCards(data);
             break;
+          case 404:
+            setErrors(data);
+            break;
           default:
             break;
         }
@@ -94,8 +97,8 @@ export default function CreateDeck() {
         navigate(`/deck/${data._id}`);
         break;
       case 400:
-        setErrors(data);
-        break;
+      case 401:
+      case 404:
       case 403:
         setErrors(data);
         break;

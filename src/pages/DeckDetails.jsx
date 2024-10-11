@@ -28,6 +28,12 @@ export default function DeckDetails() {
         case 200:
           setDeck(data);
           break;
+        case 401:
+          setErrors(data);
+          break;
+        case 404:
+          setErrors(data);
+          break;
         default:
           break;
       }
