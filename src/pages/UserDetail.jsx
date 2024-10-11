@@ -83,43 +83,46 @@ export default function UserDetail() {
   };
 
   return (
-    <div className="container">
-      <AnimatedCards pageClass="home-page" animationClass="home-animation" />
-      <div className="card">
-        {errors.message && (
-          <p className='text-blue-700'>{errors.message}</p>
-        )}
-        <h2 className="title">Detalles del Usuario</h2>
-        <hr className="divider" />
-        <div className="info">
-          <p><strong>Nombre:</strong> {user.name}</p>
-          <p><strong>Apellido:</strong> {user.lastName}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Nombre de Usuario:</strong> {user.username}</p>
-          <p><strong>Rol:</strong> {user.role}</p>
-        </div>
-        <h2 className="title">Estadísticas</h2>
-        <hr className="divider" />
-        <div className="stats">
-          <p><strong>Juegos Completados por Tipo sin forzar:</strong></p>
-          <ul className="statsList">
-            {user.gamesCompletedByType && Object.entries(user.gamesCompletedByType).map(([type, count]) => (
-              <li key={type}>
-                {type}: {count} (Total: {getTotalGamesCompleted(type)})
-                <button style={{
-                  marginLeft: '5px',
-                  border: '1px solid #000',
-                  padding: '1px 5px',
-                  borderRadius: '5px',
-                }} onClick={() => handleResetGamesCompleted(type)}>Resetear Contador de Juego</button>
-              </li>
-            ))}
-          </ul>
-          <p><strong>Total de Cartas:</strong> {user.cards && user.cards.length}</p>
-          <p><strong>Total de Mazos:</strong> {user.decks && user.decks.length}</p>
-          <p><strong>Total de Juegos:</strong> {user.games && user.games.length}</p>
+    <div className="flex items-center justify-center">
+      <div className="container">
+        <AnimatedCards pageClass="home-page" animationClass="home-animation" />
+        <div className="card">
+          {errors.message && (
+            <p className='text-blue-700'>{errors.message}</p>
+          )}
+          <h2 className="title">Detalles del Usuario</h2>
+          <hr className="divider" />
+          <div className="info">
+            <p><strong>Nombre:</strong> {user.name}</p>
+            <p><strong>Apellido:</strong> {user.lastName}</p>
+            <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>Nombre de Usuario:</strong> {user.username}</p>
+            <p><strong>Rol:</strong> {user.role}</p>
+          </div>
+          <h2 className="title">Estadísticas</h2>
+          <hr className="divider" />
+          <div className="stats">
+            <p><strong>Juegos Completados por Tipo sin forzar:</strong></p>
+            <ul className="statsList">
+              {user.gamesCompletedByType && Object.entries(user.gamesCompletedByType).map(([type, count]) => (
+                <li key={type}>
+                  {type}: {count} (Total: {getTotalGamesCompleted(type)})
+                  <button style={{
+                    marginLeft: '5px',
+                    border: '1px solid #000',
+                    padding: '1px 5px',
+                    borderRadius: '5px',
+                  }} onClick={() => handleResetGamesCompleted(type)}>Resetear Contador de Juego</button>
+                </li>
+              ))}
+            </ul>
+            <p><strong>Total de Cartas:</strong> {user.cards && user.cards.length}</p>
+            <p><strong>Total de Mazos:</strong> {user.decks && user.decks.length}</p>
+            <p><strong>Total de Juegos:</strong> {user.games && user.games.length}</p>
+          </div>
         </div>
       </div>
     </div>
+
   );
 }

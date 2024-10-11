@@ -40,9 +40,6 @@ export default function Footer() {
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
             <nav className="list-none mb-2 mt-8">
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Planes de precios</a>
-              </li>
-              <li>
                 <Link to="/terms-of-use" className="text-gray-600 hover:text-gray-800">Términos de uso</Link>
               </li>
             </nav>

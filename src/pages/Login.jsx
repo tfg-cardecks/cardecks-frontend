@@ -67,7 +67,7 @@ export default function Login() {
   }
 
   return (
-    <div className=" flex flex-col justify-center bg-fixed home-container">
+    <div className="flex flex-col justify-center bg-fixed home-container">
       <AnimatedCards
         pageClass="register-page"
         animationClass="register-animation"
