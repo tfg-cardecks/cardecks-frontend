@@ -63,10 +63,7 @@ export default function UserDetail() {
     fetchUserData();
   }, [authenticated]);
 
-  const getTotalGamesCompleted = (gameType) => {
-    const totalGamesCompleted = localStorage.getItem(`totalGamesCompleted_${gameType}`);
-    return totalGamesCompleted ? parseInt(totalGamesCompleted, 10) : 0;
-  };
+
 
   const handleResetGamesCompleted = async (gameType) => {
     try {
@@ -83,7 +80,7 @@ export default function UserDetail() {
       switch (response.status) {
         case 200:
           const currentCount = user.gamesCompletedByType[gameType] || 0;
-          const totalGamesCompleted = getTotalGamesCompleted(gameType) + currentCount;
+          const totalGamesCompleted = currentCount;
           localStorage.setItem(`totalGamesCompleted_${gameType}`, totalGamesCompleted);
           fetchUserData();
           Swal.fire({
@@ -134,7 +131,7 @@ export default function UserDetail() {
             <ul className="statsList">
               {user.gamesCompletedByType && Object.entries(user.gamesCompletedByType).map(([type, count]) => (
                 <li key={type}>
-                  {getGameName(type)}: {count} (Total: {getTotalGamesCompleted(type)})
+                  {getGameName(type)}: {count}
                   <button style={{
                     marginLeft: '5px',
                     border: '1px solid #000',
@@ -144,9 +141,9 @@ export default function UserDetail() {
                 </li>
               ))}
             </ul>
-            <p><strong>Total de Cartas:</strong> {user.cards && user.cards.length}</p>
-            <p><strong>Total de Mazos:</strong> {user.decks && user.decks.length}</p>
-            <p><strong>Total de Juegos:</strong> {user.games && user.games.length}</p>
+            <p><strong>Total de Cartas Creadas:</strong> {user.cards && user.cards.length}</p>
+            <p><strong>Total de Mazos Creados:</strong> {user.decks && user.decks.length}</p>
+            <p><strong>Total de Juegos Creados:</strong> {user.games && user.games.length}</p>
           </div>
         </div>
       </div>

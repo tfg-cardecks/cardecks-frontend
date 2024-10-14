@@ -285,7 +285,7 @@ describe("testing the edit card functionality with errors", () => {
 
       cy.get("pre.text-red-500.whitespace-pre-wrap").should(
         "contain",
-        "URL de imagen no válida. Por favor, introduce una URL que termine en .jpeg, .jpg, .gif, o .png."
+        "URL de imagen no válida. Por favor, introduce una URL que termine en .jpeg, .jpg, .gif o .png."
       );
       cy.get("button").contains("Cancelar").click().wait(2000);
 

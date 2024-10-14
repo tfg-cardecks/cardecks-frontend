@@ -33,7 +33,7 @@ export default function WordSearchGame() {
           break;
         case 401:
         case 404:
-          setErrorMessage(response.data);
+          setErrorMessage(response.data.message);
           break;
         default:
           break;
@@ -149,7 +149,7 @@ export default function WordSearchGame() {
           break;
       }
     } catch (error) {
-      setErrorMessage('Error al completar la sopa de letras');
+      setErrorMessage('No hay suficientes palabras válidas para encajar en la siguiente cuadrícula. por favor, añada cartas al mazo para poder crear un nuevo juego.');
     }
   };
 
@@ -172,7 +172,7 @@ export default function WordSearchGame() {
         case 401:
         case 404:
         case 400:
-          setErrorMessage(response.data);
+          setErrorMessage(response.data.message);
           break;
         default:
           break;

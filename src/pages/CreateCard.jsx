@@ -125,7 +125,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     }
 
     if (!isValidImageUrl(imageUrl)) {
-      setErrorMessage('URL de imagen no válida. Por favor, introduce una URL que termine en .jpeg, .jpg, .gif, o .png.');
+      setErrorMessage('URL de imagen no válida. Por favor, introduce una URL que termine en .jpeg, .jpg, .gif o .png.');
       return;
     }
 
