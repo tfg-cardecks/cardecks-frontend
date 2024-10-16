@@ -8,9 +8,17 @@ import {
   generateRandomUser,
   generateRandomText,
   generateRandomTextCard,
-  getCorrectInputDateWithSpecificDate,
-  getTemaLabel,
-  clearDate,
+  applyTitleFilter,
+  clearTitleFilter,
+  clearThemeFilter,
+  applyThemeFilter,
+  applyStartDateFilter,
+  clearStartDateFilter,
+  applyEndDateFilter,
+  clearEndDateFilter,
+  applySortOption,
+  applyAlphabetFilter,
+  clearAlphabetFilter,
 } from "./utils";
 
 beforeEach(() => {
@@ -75,22 +83,25 @@ describe("Edit Deck Functionality", () => {
       typeAndAssert("input[name='description']", "This is a test deck.");
       typeAndAssert("input[name='theme']", "Test Theme");
 
-      cy.get('input[type="text"]').eq(0).type("Carta de prueba");
-      cy.get("button").contains("Limpiar").eq(0).click().wait(500);
+      applyTitleFilter("mazito");
+      clearTitleFilter();
 
-      getTemaLabel().children().type("Tema de prueba");
-      getTemaLabel()
-        .parent()
-        .find("button")
-        .contains("Limpiar")
-        .click()
-        .wait(500);
+      applyThemeFilter("mazito");
+      clearThemeFilter();
 
-      getCorrectInputDateWithSpecificDate(0, "2023-01-01");
-      clearDate("Fecha de Inicio:");
+      applyStartDateFilter("2023-01-01");
+      clearStartDateFilter();
 
-      getCorrectInputDateWithSpecificDate(1, "2023-12-31");
-      clearDate("Fecha de Fin:");
+      applyEndDateFilter("2023-12-31");
+      clearEndDateFilter();
+
+      applySortOption("name-asc");
+      applySortOption("name-desc");
+      applySortOption("createdAt-asc");
+      applySortOption("createdAt-desc");
+
+      applyAlphabetFilter("M");
+      clearAlphabetFilter();
 
       cy.get("button").contains("Crear Mazo").click().wait(2000);
 
@@ -173,23 +184,6 @@ describe("Edit Deck Validation", () => {
       typeAndAssert("input[name='name']", generateRandomText());
       typeAndAssert("input[name='description']", "This is a test deck.");
       typeAndAssert("input[name='theme']", "Test Theme");
-
-      cy.get('input[type="text"]').eq(0).type("Carta de prueba");
-      cy.get("button").contains("Limpiar").eq(0).click().wait(500);
-
-      getTemaLabel().children().type("Tema de prueba");
-      getTemaLabel()
-        .parent()
-        .find("button")
-        .contains("Limpiar")
-        .click()
-        .wait(500);
-
-      getCorrectInputDateWithSpecificDate(0, "2023-01-01");
-      clearDate("Fecha de Inicio:");
-
-      getCorrectInputDateWithSpecificDate(1, "2023-12-31");
-      clearDate("Fecha de Fin:");
 
       cy.get("button").contains("Crear Mazo").click().wait(2000);
 

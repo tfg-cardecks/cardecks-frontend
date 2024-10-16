@@ -107,7 +107,7 @@ describe("testing the first game", () => {
     cy.wait(1500).get(".swal2-confirm").click();
 
     cy.get("button").contains("Siguiente").click().wait(1000);
-    cy.get("button").contains("Volver al Lobby").click().wait(1000);
+    cy.get("button").contains("Volver al Catálogo de Juegos").click().wait(1000);
 
     cy.get(".game-type-list").click().wait(2000);
 
