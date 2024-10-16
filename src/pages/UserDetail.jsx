@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../context/authContext';
 import axios from 'axios';
 import { API_URL } from '../config';
-import AnimatedCards from '../components/AnimatedCards';
 import '../styles/UserDetailStyles.css';
 import Swal from 'sweetalert2';
 import wordsearch from '../icon/wordsearch.png';
@@ -110,7 +109,6 @@ export default function UserDetail() {
   return (
     <div className="flex items-center justify-center">
       <div className="container">
-        <AnimatedCards pageClass="home-page" animationClass="home-animation" />
         <div className="card">
           {errors.message && (
             <p className='text-blue-700'>{errors.message}</p>

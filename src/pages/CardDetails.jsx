@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
 import { API_URL } from '../config';
 import Swal from 'sweetalert2';
-import AnimatedCards from "../components/AnimatedCards";
 
 export default function CardDetail() {
   const { id } = useParams();
@@ -126,7 +125,6 @@ export default function CardDetail() {
   return (
     card ? (
       <div className="container mx-auto p-4 w-4/5">
-        <AnimatedCards pageClass="register-page" animationClass="register-animation" />
         <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-4xl font-bold mb-4 text-gray-800">{card.title}</h1>
           {error && <p className="text-red-600 mb-4">{error}</p>}

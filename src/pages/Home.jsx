@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../context/authContext";
 import axios from "axios";
 import { API_URL } from '../config';
-import AnimatedCards from "../components/AnimatedCards";
 import Slider from "react-slick";
-import '../styles/FondoCartas.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -45,7 +43,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-start home-container">
-      <AnimatedCards pageClass="home-page" animationClass="home-animation" />
       <div className="container mx-auto flex flex-col items-center text-center mt-12">
         <div>
           {authenticated ? (

@@ -40,8 +40,9 @@ export default function SelectDeckGame() {
   ];
 
   const gameInfo = {
-    numberOfCards: 4,
-    wordSize: 'Entre 4 y 10 caracteres',
+    numberOfCards: 5,
+    numberOfWordsToSearch: 4,
+    wordSize: 'Entre 2 y 10 caracteres',
     allowedWordTypes: [
       'Palabras con espacios: Se limpian a letras concatenadas. Ejemplo: "MI CASA" se convierte en "MICASA".',
       'Palabras con acentos: Se eliminan los acentos. Ejemplo: "CAFÉ" se convierte en "CAFE".',
@@ -174,7 +175,8 @@ export default function SelectDeckGame() {
       {showInfo ? (
         <div className="bg-blue-100 p-4 rounded-lg shadow-lg mb-4">
           <h2 className="text-2xl font-bold mb-2">Información del Juego</h2>
-          <p className="mb-2">Número de Palabras a Buscar: {gameInfo.numberOfCards}</p>
+          <p className="mb-2">Número de Cartas mínimo: {gameInfo.numberOfCards}</p>
+          <p className="mb-2">Número de Palabras a Buscar: {gameInfo.numberOfWordsToSearch}</p>
           <p className="mb-2">Tamaño de las Palabras: {gameInfo.wordSize}</p>
           <div className="mb-2">
             <h3 className="font-bold">Tipos de Palabras Permitidas:</h3>

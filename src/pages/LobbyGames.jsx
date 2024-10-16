@@ -36,7 +36,7 @@ export default function LobbyGames() {
 
   return (
     <div>
-      <h1 className="lobby-title">Tipos de Juegos</h1>
+      <h1 className="lobby-title">Catálogo de Juegos</h1>
       <div className="game-type-list">
         {gameTypes.map((game) => (
           <div key={game.type} className="game-type-item" onClick={() => handleGameTypeClick(game.type)}>

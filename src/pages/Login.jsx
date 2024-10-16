@@ -5,8 +5,6 @@ import Swal from "sweetalert2";
 // local imports
 import { useAuthContext } from "../context/authContext";
 import { API_URL } from "../config";
-import AnimatedCards from "../components/AnimatedCards";
-import "../styles/FondoCartas.css";
 import MainButton from "../components/mainButton.jsx";
 import SecondaryButton from "../components/secondaryButton.jsx";
 
@@ -67,10 +65,6 @@ export default function Login() {
 
   return (
     <div className="flex flex-col justify-center bg-fixed home-container">
-      <AnimatedCards
-        pageClass="register-page"
-        animationClass="register-animation"
-      />
       <div className="w-1/2 h-1/2 p-11 mx-auto my-11 rounded-md shadow-lg flex flex-col justify-between bg-black bg-opacity-50 border-2 border-black backdrop-blur-sm overflow-auto">
         <h2
           className="text-4xl font-bold text-center mb-4 text-white"
