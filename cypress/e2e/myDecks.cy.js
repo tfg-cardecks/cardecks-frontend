@@ -14,6 +14,9 @@ import {
   clearStartDateFilter,
   applyEndDateFilter,
   clearEndDateFilter,
+  applySortOption,
+  applyAlphabetFilter,
+  clearAlphabetFilter,
 } from "./utils";
 
 beforeEach(() => {
@@ -60,6 +63,16 @@ describe("testing the my deck functionality", () => {
 
       applyEndDateFilter("2023-12-31");
       clearEndDateFilter();
+
+      // Apply sort option filter
+      applySortOption("name-asc");
+      applySortOption("name-desc");
+      applySortOption("createdAt-asc");
+      applySortOption("createdAt-desc");
+
+      // Apply alphabet filter
+      applyAlphabetFilter("M");
+      clearAlphabetFilter();
 
       cy.get('input[type="file"]').selectFile('cypress/e2e/json/mazito.json');
       cy.get("button").contains("Importar Mazo").click().wait(2000);

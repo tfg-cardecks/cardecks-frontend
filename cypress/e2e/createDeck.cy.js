@@ -9,6 +9,11 @@ import {
   getCorrectInputDateWithSpecificDate,
   getTemaLabel,
   clearDate,
+  applyTypeFilter,
+  clearTypeFilter,
+  applySortOption,
+  applyAlphabetFilter,
+  clearAlphabetFilter,
 } from "./utils";
 
 beforeEach(() => {
@@ -86,6 +91,17 @@ describe("testing the create deck", () => {
 
       getCorrectInputDateWithSpecificDate(1, "2023-12-31");
       clearDate("Fecha de Fin:");
+
+      applyTypeFilter("Texto e Imagen");
+      clearTypeFilter();
+
+      applySortOption("name-asc");
+      applySortOption("name-desc");
+      applySortOption("createdAt-asc");
+      applySortOption("createdAt-desc");
+
+      applyAlphabetFilter("C");
+      clearAlphabetFilter();
 
       cy.get("button").contains("Crear Mazo").click().wait(2000);
 

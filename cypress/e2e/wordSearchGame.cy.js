@@ -77,6 +77,7 @@ describe("testing the first game", () => {
     selectedFileToImportAndSubmit("cypress/e2e/json/cascada.json");
     selectedFileToImportAndSubmit("cypress/e2e/json/hojas.json");
     selectedFileToImportAndSubmit("cypress/e2e/json/lluvia.json");
+    selectedFileToImportAndSubmit("cypress/e2e/json/nubosa.json");
 
     cy.visit("http://localhost:5173/lobby").wait(2000);
     cy.get(".game-type-list").click().wait(2000);

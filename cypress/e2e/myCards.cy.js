@@ -14,6 +14,11 @@ import {
   clearStartDateFilter,
   applyEndDateFilter,
   clearEndDateFilter,
+  applyTypeFilter,
+  clearTypeFilter,
+  applySortOption,
+  applyAlphabetFilter,
+  clearAlphabetFilter,
 } from "./utils";
 
 beforeEach(() => {
@@ -60,6 +65,14 @@ describe("testing the my card functionality", () => {
 
       applyEndDateFilter("2023-12-31");
       clearEndDateFilter();
+
+      applyTypeFilter("Texto e Imagen");
+      clearTypeFilter();
+
+      applySortOption("name-asc");
+
+      applyAlphabetFilter("N");
+      clearAlphabetFilter();
 
       cy.get('input[type="file"]').selectFile('cypress/e2e/json/nubes.json');
       cy.get("button").contains("Importar Carta").click().wait(2000);

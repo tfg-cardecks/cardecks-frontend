@@ -20,6 +20,26 @@ export function typeAndAssertIndex(selector, value, index = 0) {
   cy.get(selector).eq(index).clear().type(value).should("have.value", value);
 }
 
+export function applyTypeFilter(type) {
+  cy.get('label:contains("Tipo de Carta:")').find('select').select(type);
+}
+
+export function clearTypeFilter() {
+  cy.get('label:contains("Tipo de Carta:")').parent().find('button').contains("Limpiar").click().wait(500);
+}
+
+export function applySortOption(sortOption) {
+  cy.get('label:contains("Ordenar por:")').find('select').select(sortOption);
+}
+
+export function applyAlphabetFilter(letter) {
+  cy.get('button').contains(letter).click();
+}
+
+export function clearAlphabetFilter() {
+  cy.get('button').contains("Limpiar").click().wait(500);
+}
+
 export function generateRandomUser() {
   return cy.request("https://randomuser.me/api/").then((response) => {
     const user = response.body.results[0];

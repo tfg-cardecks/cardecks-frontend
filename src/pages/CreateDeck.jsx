@@ -19,6 +19,9 @@ export default function CreateDeck() {
   const [themeFilter, setThemeFilter] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
+  const [sortOption, setSortOption] = useState('');
+  const [alphabetFilter, setAlphabetFilter] = useState('');
   const { description, theme, name, cards } = form;
   const navigate = useNavigate();
   const { authenticated } = useAuthContext();
@@ -116,8 +119,27 @@ export default function CreateDeck() {
     const matchesTheme = themeFilter ? card.theme.toLowerCase().includes(themeFilter.toLowerCase()) : true;
     const matchesStartDate = startDate ? new Date(card.createdAt) >= new Date(startDate) : true;
     const matchesEndDate = endDate ? new Date(card.createdAt) <= new Date(endDate) : true;
-    return matchesTitle && matchesTheme && matchesStartDate && matchesEndDate;
+    const matchesType = typeFilter ? (typeFilter === 'Texto e Imagen' ? card.cardType === 'txtImg' : card.cardType === 'txtTxt') : true;
+    const matchesAlphabet = alphabetFilter ? card.title.startsWith(alphabetFilter) : true;
+    return matchesTitle && matchesTheme && matchesStartDate && matchesEndDate && matchesType && matchesAlphabet;
   });
+
+  const sortedCards = filteredCards.sort((a, b) => {
+    switch (sortOption) {
+      case 'name-asc':
+        return a.title.localeCompare(b.title);
+      case 'name-desc':
+        return b.title.localeCompare(a.title);
+      case 'createdAt-asc':
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      case 'createdAt-desc':
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      default:
+        return 0;
+    }
+  });
+
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
   return (
     <div className="container mx-auto p-4 h-screen flex flex-col items-center">
@@ -164,7 +186,8 @@ export default function CreateDeck() {
             />
           </div>
         </form>
-        <div className="mt-8">
+        <hr className="my-8 border-t-2 border-gray-300" />
+        <div>
           <h2 className="text-xl font-bold mb-2">Selecciona Cartas</h2>
           <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="mb-2">
@@ -235,13 +258,68 @@ export default function CreateDeck() {
                 Limpiar
               </button>
             </div>
+            <div className="mb-2">
+              <label className="block mb-1">
+                Tipo de Carta:
+                <select
+                  value={typeFilter}
+                  onChange={(e) => setTypeFilter(e.target.value)}
+                  className="border p-2 rounded w-full"
+                >
+                  <option value="">Todos</option>
+                  <option value="Texto e Imagen">Texto e Imagen</option>
+                  <option value="Texto y Texto">Texto y Texto</option>
+                </select>
+              </label>
+              <button
+                onClick={() => setTypeFilter('')}
+                className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
+              >
+                Limpiar
+              </button>
+            </div>
+            <div className="mb-2">
+              <label className="block mb-1">
+                Ordenar por:
+                <select
+                  value={sortOption}
+                  onChange={(e) => setSortOption(e.target.value)}
+                  className="border p-2 rounded w-full"
+                >
+                  <option value="">Seleccionar</option>
+                  <option value="name-asc">Nombre (A-Z)</option>
+                  <option value="name-desc">Nombre (Z-A)</option>
+                  <option value="createdAt-asc">Fecha de creación (más antiguas)</option>
+                  <option value="createdAt-desc">Fecha de creación (más recientes)</option>
+                </select>
+              </label>
+            </div>
           </div>
-          {filteredCards.length === 0 && !errors && (
+          <div className="mb-4">
+            <div className="flex flex-wrap">
+              {alphabet.map(letter => (
+                <button
+                  key={letter}
+                  onClick={() => setAlphabetFilter(letter)}
+                  className={`px-2 py-1 m-1 rounded ${alphabetFilter === letter ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                >
+                  {letter}
+                </button>
+              ))}
+              <button
+                onClick={() => setAlphabetFilter('')}
+                className="px-2 py-1 m-1 rounded bg-gray-200 text-gray-700"
+              >
+                Limpiar
+              </button>
+            </div>
+          </div>
+          {sortedCards.length === 0 && !errors && (
             <p className="text-gray-500">No hay cartas disponibles.</p>
           )}
           <div className="h-96 overflow-y-auto border p-4 rounded-lg">
             <CardSelector
-              allCards={filteredCards}
+              allCards={sortedCards}
               selectedCards={cards}
               onCardSelection={onCardSelect}
             />
