@@ -186,7 +186,6 @@ export default function CreateDeck() {
             />
           </div>
         </form>
-        <hr className="my-8 border-t-2 border-gray-300" />
         <div>
           <h2 className="text-xl font-bold mb-2">Selecciona Cartas</h2>
           <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
