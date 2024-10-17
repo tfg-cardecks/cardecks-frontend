@@ -91,7 +91,7 @@ describe("testing the first game", () => {
     startGame();
     cy.get(".swal2-confirm").click();
 
-    const words = ["cascade", "lluvia", "nubes", "hojas"];
+    const words = ["cascade", "lluvia", "nubes", "hojas", "nubosa"];
 
     getGrid().then((gridString) => {
       let grid = JSON.parse(gridString);
@@ -99,7 +99,7 @@ describe("testing the first game", () => {
       cy.log("The grid is:", grid).then(() => {
         const solution = wordSearchSolver(grid, words);
         cy.log("The solution is: ", solution).then(() => {
-          selectWord(solution);
+          selectWord(solution.filter((word) => word.found));
         });
       });
     });
@@ -107,7 +107,10 @@ describe("testing the first game", () => {
     cy.wait(1500).get(".swal2-confirm").click();
 
     cy.get("button").contains("Siguiente").click().wait(1000);
-    cy.get("button").contains("Volver al Catálogo de Juegos").click().wait(1000);
+    cy.get("button")
+      .contains("Volver al Catálogo de Juegos")
+      .click()
+      .wait(1000);
 
     cy.get(".game-type-list").click().wait(2000);
 
