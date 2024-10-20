@@ -178,7 +178,7 @@ export default function UserDetail() {
               onClick={handleDelete}
               className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
             >
-              Eliminar
+              Borrar Usuario
             </button>
           </div>
         </div>

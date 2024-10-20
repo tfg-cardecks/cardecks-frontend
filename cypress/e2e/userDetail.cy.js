@@ -37,7 +37,7 @@ describe("testing the user details", () => {
       typeAndAssert("input[name='password']", "@Password1");
       cy.get("button").contains("Iniciar sesión").click().wait(2000);
 
-      cy.get("button").contains("Eliminar").click().wait(2000);
+      cy.get("button").contains("Borrar Usuario").click().wait(2000);
     });
   });
 });
