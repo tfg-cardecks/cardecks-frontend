@@ -44,10 +44,8 @@ export function generateRandomUser() {
   return cy.request("https://randomuser.me/api/").then((response) => {
     const user = response.body.results[0];
     const email = user.email.replace("example", "gmail");
-    const name = user.name.first;
-    const lastName = user.name.last;
     const username = user.login.username;
-    return { email, name, lastName, username };
+    return { email, username };
   });
 }
 
@@ -73,9 +71,7 @@ export function setupToPlayGames() {
     .click()
     .wait(1500);
 
-  generateRandomUser().then(({ email, name, lastName, username }) => {
-    typeAndAssert("input[name='name']", name);
-    typeAndAssert("input[name='lastName']", lastName);
+  generateRandomUser().then(({ email, username }) => {
     typeAndAssert("input[name='username']", username);
     typeAndAssert("input[name='password']", "@Password1");
     typeAndAssert("input[name='password2']", "@Password1");

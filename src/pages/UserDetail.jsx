@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../context/authContext';
 import axios from 'axios';
 import { API_URL } from '../config';
+import { useNavigate } from 'react-router-dom';
 import '../styles/UserDetailStyles.css';
 import Swal from 'sweetalert2';
 import wordsearch from '../icon/wordsearch.png';
@@ -16,9 +17,12 @@ import speedMemoryWordGame from '../icon/guesstheimage.png';
 import speedMemoryImageGame from '../icon/guesstheimage.png';
 
 export default function UserDetail() {
-  const { authenticated } = useAuthContext();
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
+  const { authenticated, userId, logout } = useAuthContext();
+
 
   const gameTypes = [
     { type: 'WordSearchGame', name: 'Sopa de Letras', icon: wordsearch },
@@ -105,6 +109,34 @@ export default function UserDetail() {
     const game = gameTypes.find(game => game.type === type);
     return game ? game.name : type;
   };
+  async function handleDelete() {
+    try {
+      const token = localStorage.getItem('access_token');
+      const res = await fetch(`${API_URL}/api/user/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+        },
+      });
+      if (res.status === 204) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuario eliminado',
+          text: 'Se ha eliminado correctamente el usuario.',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        logout();
+        navigate('/');
+      } else {
+        const data = await res.json();
+        setErrors(data);
+      }
+    } catch (error) {
+      setErrors('Error al eliminar el usuario. Inténtalo de nuevo más tarde.');
+    }
+  }
 
   return (
     <div className="flex items-center justify-center">
@@ -116,8 +148,6 @@ export default function UserDetail() {
           <h2 className="title">Detalles del Usuario</h2>
           <hr className="divider" />
           <div className="info">
-            <p><strong>Nombre:</strong> {user.name}</p>
-            <p><strong>Apellido:</strong> {user.lastName}</p>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Nombre de Usuario:</strong> {user.username}</p>
             <p><strong>Rol:</strong> {user.role}</p>
@@ -142,6 +172,14 @@ export default function UserDetail() {
             <p><strong>Total de Cartas Creadas:</strong> {user.cards && user.cards.length}</p>
             <p><strong>Total de Mazos Creados:</strong> {user.decks && user.decks.length}</p>
             <p><strong>Total de Juegos Creados:</strong> {user.games && user.games.length}</p>
+          </div>
+          <div className="flex space-x-4 mt-4">
+            <button
+              onClick={handleDelete}
+              className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
+            >
+              Eliminar
+            </button>
           </div>
         </div>
       </div>

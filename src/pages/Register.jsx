@@ -12,8 +12,6 @@ const roles = ["admin", "authenticated", "customer"];
 
 export default function Register() {
   const [form, setForm] = useState({
-    name: "",
-    lastName: "",
     email: "",
     username: "",
     password: "",
@@ -22,7 +20,7 @@ export default function Register() {
   });
 
   const [errors, setErrors] = useState({});
-  const { name, lastName, email, username, password, password2, role } = form;
+  const { email, username, password, password2, role } = form;
 
   let navigate = useNavigate();
 
@@ -100,27 +98,6 @@ export default function Register() {
           className="flex flex-wrap -mx-3"
         >
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            <FormTextInput
-              labelFor="Name"
-              labelText="Nombre"
-              placeholder="Introduce tu nombre"
-              name="name"
-              value={name}
-              onChange={(e) => onInputChange(e)}
-              errors={errors}
-              isMandatory
-            />
-
-            <FormTextInput
-              labelFor="LastName"
-              labelText="Apellidos"
-              placeholder="Introduce tus apellidos"
-              name="lastName"
-              value={lastName}
-              onChange={(e) => onInputChange(e)}
-              errors={errors}
-              isMandatory
-            />
             <FormTextInput
               labelFor="Username"
               labelText="Nombre de Usuario"

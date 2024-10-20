@@ -13,8 +13,8 @@ beforeEach(() => {
   goToHomePage();
 });
 
-describe("testing the export card functionality", () => {
-  it("should export a card successfully", () => {
+describe("testing the user details", () => {
+  it("should access to the user details successfully", () => {
     cy.get("header")
       .find("nav")
       .next()
@@ -36,30 +36,6 @@ describe("testing the export card functionality", () => {
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
       cy.get("button").contains("Iniciar sesión").click().wait(2000);
-
-      clickToNavElement("Cartas");
-      cy.get("a").contains("Crear Carta").click().wait(1500);
-
-      typeAndAssert("input[name='title']", generateRandomTextCard());
-      typeAndAssert("input[name='theme']", "Tema de prueba12");
-      cy.get("select#cardType").select("Texto e Imagen").wait(1500);
-
-      cy.get("button").contains("Crear Carta").click().wait(2000);
-
-      cy.get("button").contains("Añadir Texto").click().wait(1500);
-
-      cy.get("select").select("Trasera").wait(1500);
-
-      typeAndAssert(
-        "input[type='text']",
-        "https://img.freepik.com/vector-gratis/perro-lindo-alegre-sobre-fondo-blanco_1308-132745.jpg"
-      );
-
-      cy.get("button").contains("Cargar Imagen").click().wait(2000);
-
-      cy.get("button").contains("Crear Carta").click().wait(4000);
-
-      cy.get("button").contains("Exportar Carta").click();
 
       cy.get("button").contains("Eliminar").click().wait(2000);
     });

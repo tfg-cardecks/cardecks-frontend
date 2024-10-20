@@ -9,8 +9,6 @@ beforeEach(() => {
 
 describe("testing register page", () => {
   it("can't register (no password2)", () => {
-    typeAndAssert("input[name='name']", "name");
-    typeAndAssert("input[name='lastName']", "lastName");
     typeAndAssert("input[name='username']", "username");
     typeAndAssert("input[name='email']", "a@gmail.com");
     cy.get('select[name="role"]').select("authenticated");
@@ -22,8 +20,6 @@ describe("testing register page", () => {
   });
 
   it("can't register (passwords don't match)", () => {
-    typeAndAssert("input[name='name']", "name");
-    typeAndAssert("input[name='lastName']", "lastName");
     typeAndAssert("input[name='username']", "username");
     typeAndAssert("input[name='email']", "a@gmail.com");
     typeAndAssert("input[name='password']", "password");

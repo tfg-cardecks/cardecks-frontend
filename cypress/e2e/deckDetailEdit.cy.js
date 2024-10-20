@@ -35,9 +35,7 @@ describe("Edit Deck Functionality", () => {
       .click()
       .wait(1500);
 
-    generateRandomUser().then(({ email, name, lastName, username }) => {
-      typeAndAssert("input[name='name']", name);
-      typeAndAssert("input[name='lastName']", lastName);
+    generateRandomUser().then(({ email, username }) => {
       typeAndAssert("input[name='username']", username);
       typeAndAssert("input[name='password']", "@Password1");
       typeAndAssert("input[name='password2']", "@Password1");
@@ -137,9 +135,7 @@ describe("Edit Deck Validation", () => {
       .click()
       .wait(1500);
 
-    generateRandomUser().then(({ email, name, lastName, username }) => {
-      typeAndAssert("input[name='name']", name);
-      typeAndAssert("input[name='lastName']", lastName);
+    generateRandomUser().then(({ email, username }) => {
       typeAndAssert("input[name='username']", username);
       typeAndAssert("input[name='password']", "@Password1");
       typeAndAssert("input[name='password2']", "@Password1");
