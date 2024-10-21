@@ -82,8 +82,8 @@ export default function Register() {
   }
 
   return (
-    <div className="h-screen flex flex-col justify-center bg-fixed home-container">
-      <div className="w-1/2 p-11 mx-auto my-11 rounded-md shadow-lg flex flex-col justify-between bg-black bg-opacity-50 border-2 border-black backdrop-blur-sm">
+    <div className=" flex flex-col justify-center bg-fixed home-container">
+      <div className="w-1/2 h-1/2 p-11 mx-auto my-11 rounded-md shadow-lg flex flex-col justify-between bg-black bg-opacity-50 border-2 border-black backdrop-blur-sm">
         <h2
           className="text-4xl font-bold text-center mb-4 text-white"
           style={{ marginTop: "0px", marginBottom: "13px" }}
@@ -117,17 +117,6 @@ export default function Register() {
               errors={errors}
               isMandatory
             />
-            <FormTextInput
-              labelFor="Password2"
-              labelText="Repite la Contraseña"
-              placeholder="Introduce tu contraseña de nuevo"
-              name="password2"
-              value={password2}
-              onChange={(e) => onInputChange(e)}
-              type="password"
-              errors={errors}
-              isMandatory
-            />
           </div>
           <div className="w-full md:w-1/2 px-3">
             <FormTextInput
@@ -138,6 +127,17 @@ export default function Register() {
               value={email}
               onChange={(e) => onInputChange(e)}
               type="email"
+              errors={errors}
+              isMandatory
+            />
+            <FormTextInput
+              labelFor="Password2"
+              labelText="Repite la Contraseña"
+              placeholder="Introduce tu contraseña de nuevo"
+              name="password2"
+              value={password2}
+              onChange={(e) => onInputChange(e)}
+              type="password"
               errors={errors}
               isMandatory
             />
