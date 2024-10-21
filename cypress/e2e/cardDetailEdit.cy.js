@@ -29,7 +29,6 @@ describe("testing the edit card functionality", () => {
       typeAndAssert("input[name='password']", "@Password1");
       typeAndAssert("input[name='password2']", "@Password1");
       typeAndAssert("input[name='email']", email);
-      cy.get('select[name="role"]').select("authenticated");
       cy.get("button").contains("Registrar").click().wait(1500);
 
       cy.wait(2000);
@@ -104,7 +103,6 @@ describe("testing the edit card functionality with errors", () => {
       typeAndAssert("input[name='password']", "@Password1");
       typeAndAssert("input[name='password2']", "@Password1");
       typeAndAssert("input[name='email']", email);
-      cy.get('select[name="role"]').select("authenticated");
       cy.get("button").contains("Registrar").click().wait(1500);
 
       cy.wait(2000);
@@ -164,7 +162,6 @@ describe("testing the edit card functionality with errors", () => {
       typeAndAssert("input[name='password']", "@Password1");
       typeAndAssert("input[name='password2']", "@Password1");
       typeAndAssert("input[name='email']", email);
-      cy.get('select[name="role"]').select("authenticated");
       cy.get("button").contains("Registrar").click().wait(1500);
 
       cy.wait(2000);
@@ -233,7 +230,6 @@ describe("testing the edit card functionality with errors", () => {
       typeAndAssert("input[name='password']", "@Password1");
       typeAndAssert("input[name='password2']", "@Password1");
       typeAndAssert("input[name='email']", email);
-      cy.get('select[name="role"]').select("authenticated");
       cy.get("button").contains("Registrar").click().wait(1500);
 
       cy.wait(2000);

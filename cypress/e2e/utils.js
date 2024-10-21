@@ -76,7 +76,6 @@ export function setupToPlayGames() {
     typeAndAssert("input[name='password']", "@Password1");
     typeAndAssert("input[name='password2']", "@Password1");
     typeAndAssert("input[name='email']", email);
-    cy.get('select[name="role"]').select("authenticated");
     cy.get("button").contains("Registrar").click().wait(2000);
 
     cy.wait(2000);

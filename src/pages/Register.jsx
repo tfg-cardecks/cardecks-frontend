@@ -8,15 +8,13 @@ import MainButton from "../components/mainButton.jsx";
 import SecondaryButton from "../components/secondaryButton.jsx";
 import FormTextInput from "../components/FormTextInput.jsx";
 
-const roles = ["admin", "authenticated", "customer"];
-
 export default function Register() {
   const [form, setForm] = useState({
     email: "",
     username: "",
     password: "",
     password2: "",
-    role: "",
+    role: "authenticated",
   });
 
   const [errors, setErrors] = useState({});
@@ -143,30 +141,6 @@ export default function Register() {
               errors={errors}
               isMandatory
             />
-            <div className="mb-4">
-              <label
-                htmlFor="Role"
-                className="block text-white text-sm font-bold mb-2"
-              >
-                Rol *
-              </label>
-              <select
-                name="role"
-                value={role}
-                onChange={(e) => onInputChange(e)}
-                className="block appearance-none w-full bg-white border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              >
-                <option value="">Selecciona tu rol</option>
-                {roles.map((rol) => (
-                  <option key={rol} value={rol}>
-                    {rol}
-                  </option>
-                ))}
-              </select>
-              {errors.role && (
-                <p className="text-yellow-200 text-xs italic">{errors.role}</p>
-              )}
-            </div>
           </div>
           <div className="flex-row space-x-24 m-auto mt-4">
             <div className="flex items-center justify-center h-full">

@@ -11,7 +11,6 @@ describe("testing register page", () => {
   it("can't register (no password2)", () => {
     typeAndAssert("input[name='username']", "username");
     typeAndAssert("input[name='email']", "a@gmail.com");
-    cy.get('select[name="role"]').select("authenticated");
     cy.get("button").contains("Registrar").click().wait(1500);
     cy.get("p").should(
       "contain.text",
@@ -23,7 +22,6 @@ describe("testing register page", () => {
     typeAndAssert("input[name='username']", "username");
     typeAndAssert("input[name='email']", "a@gmail.com");
     typeAndAssert("input[name='password']", "password");
-    cy.get('select[name="role"]').select("authenticated");
     cy.get("button").contains("Registrar").click().wait(1500);
     cy.get("p").should("contain.text", "Las contraseñas no coinciden");
   });
@@ -32,6 +30,6 @@ describe("testing register page", () => {
     typeAndAssert("input[name='password']", "@Password1");
     typeAndAssert("input[name='password2']", "@Password1");
     cy.get("button").contains("Registrar").click().wait(2000);
-    cy.get("p").should("contain.text", "Rol inválido");
+    cy.get("p").should("contain.text", "El correo electrónico debe ser de gmail, hotmail o outlook");
   });
 });

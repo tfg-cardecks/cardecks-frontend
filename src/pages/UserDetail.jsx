@@ -111,27 +111,38 @@ export default function UserDetail() {
   };
   async function handleDelete() {
     try {
-      const token = localStorage.getItem('access_token');
-      const res = await fetch(`${API_URL}/api/user/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `${token}`,
-        },
+      const alert = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        timer: 5000,
       });
-      if (res.status === 204) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Usuario eliminado',
-          text: 'Se ha eliminado correctamente el usuario.',
-          showConfirmButton: false,
-          timer: 1500,
+
+      const token = localStorage.getItem('access_token');
+      if (alert.isConfirmed) {
+        const res = await fetch(`${API_URL}/api/user/${userId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`,
+          },
         });
-        logout();
-        navigate('/');
-      } else {
-        const data = await res.json();
-        setErrors(data);
+        if (res.status === 204) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Usuario eliminado',
+            text: 'Se ha dado de baja correctamente.',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          logout();
+          navigate('/');
+        }
       }
     } catch (error) {
       setErrors('Error al eliminar el usuario. Inténtalo de nuevo más tarde.');
@@ -178,7 +189,7 @@ export default function UserDetail() {
               onClick={handleDelete}
               className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
             >
-              Borrar Usuario
+              Darse de baja
             </button>
           </div>
         </div>

@@ -40,7 +40,6 @@ describe("Edit Deck Functionality", () => {
       typeAndAssert("input[name='password']", "@Password1");
       typeAndAssert("input[name='password2']", "@Password1");
       typeAndAssert("input[name='email']", email);
-      cy.get('select[name="role"]').select("authenticated");
       cy.get("button").contains("Registrar").click().wait(2000);
 
       cy.wait(2000);
@@ -140,7 +139,6 @@ describe("Edit Deck Validation", () => {
       typeAndAssert("input[name='password']", "@Password1");
       typeAndAssert("input[name='password2']", "@Password1");
       typeAndAssert("input[name='email']", email);
-      cy.get('select[name="role"]').select("authenticated");
       cy.get("button").contains("Registrar").click().wait(2000);
 
       cy.wait(2000);
@@ -181,7 +179,7 @@ describe("Edit Deck Validation", () => {
       typeAndAssert("input[name='description']", "This is a test deck.");
       typeAndAssert("input[name='theme']", "Test Theme");
 
-      cy.get("button").contains("Crear Mazo").click().wait(2000);
+      cy.get("button").contains("Crear Mazo").click().wait(4000);
 
       cy.get("button").contains("Actualizar").click();
 
