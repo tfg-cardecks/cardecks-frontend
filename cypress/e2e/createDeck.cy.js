@@ -14,6 +14,7 @@ import {
   applySortOption,
   applyAlphabetFilter,
   clearAlphabetFilter,
+  selectCardsPerPageAndNavigateToPage,
 } from "./utils";
 
 beforeEach(() => {
@@ -99,6 +100,8 @@ describe("testing the create deck", () => {
 
       applyAlphabetFilter("C");
       clearAlphabetFilter();
+
+      selectCardsPerPageAndNavigateToPage(5);
 
       cy.get("button").contains("Crear Mazo").click().wait(2000);
 

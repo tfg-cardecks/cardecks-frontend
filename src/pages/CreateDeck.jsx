@@ -26,6 +26,8 @@ export default function CreateDeck() {
   const navigate = useNavigate();
   const { authenticated } = useAuthContext();
   const { id } = useParams();
+  const [cardsPerPage, setCardsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
   async function fetchUserCards() {
     try {
@@ -138,6 +140,12 @@ export default function CreateDeck() {
         return 0;
     }
   });
+
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentCards = sortedCards.slice(indexOfFirstCard, indexOfLastCard);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
@@ -294,8 +302,8 @@ export default function CreateDeck() {
               </label>
             </div>
           </div>
-          <div className="mb-4">
-            <div className="flex flex-wrap">
+          <div className="mb-4 flex justify-center">
+            <div className="flex flex-wrap justify-center">
               {alphabet.map(letter => (
                 <button
                   key={letter}
@@ -313,15 +321,45 @@ export default function CreateDeck() {
               </button>
             </div>
           </div>
+          <div className="mb-4 flex justify-center">
+            <label className="block mb-1">
+              Cartas por página:
+              <select
+                id="cardsPerPage"
+                value={cardsPerPage}
+                onChange={(e) => {
+                  setCardsPerPage(Number(e.target.value));
+                  setCurrentPage(1); // Resetear a la primera página
+                }}
+                className="border p-2 rounded w-full"
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+              </select>
+            </label>
+          </div>
           {sortedCards.length === 0 && !errors && (
             <p className="text-gray-500">No hay cartas disponibles.</p>
           )}
           <div className="h-96 overflow-y-auto border p-4 rounded-lg">
             <CardSelector
-              allCards={sortedCards}
+              allCards={currentCards}
               selectedCards={cards}
               onCardSelection={onCardSelect}
             />
+          </div>
+          <div className="flex justify-center mt-4">
+            {Array.from({ length: Math.ceil(sortedCards.length / cardsPerPage) }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => paginate(index + 1)}
+                className={`px-3 py-1 mx-1 rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+              >
+                {index + 1}
+              </button>
+            ))}
           </div>
         </div>
       </div>

@@ -17,6 +17,8 @@ export default function MyDecks() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [decksPerPage, setDecksPerPage] = useState(10); // Número de mazos por página
 
   async function fetchDecks() {
     try {
@@ -73,6 +75,12 @@ export default function MyDecks() {
         return 0;
     }
   });
+
+  const indexOfLastCard = currentPage * decksPerPage;
+  const indexOfFirstCard = indexOfLastCard - decksPerPage;
+  const currentDecks = sortedDecks.slice(indexOfFirstCard, indexOfLastCard);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -239,11 +247,30 @@ export default function MyDecks() {
           Importar Mazo
         </button>
       </div>
+      <div className="mb-4">
+        <label className="block mb-1">
+          Mazos por página:
+          <select
+            id="decksPerPage"
+            value={decksPerPage}
+            onChange={(e) => {
+              setDecksPerPage(Number(e.target.value));
+              setCurrentPage(1); // Resetear a la primera página
+            }}
+            className="border p-2 rounded w-full"
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
+        </label>
+      </div>
       {sortedDecks.length === 0 && !error && (
         <p className="text-gray-500">No hay mazos disponibles.</p>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {sortedDecks.map((deck) => (
+        {currentDecks.map((deck) => (
           <div
             key={deck._id}
             className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
@@ -256,6 +283,17 @@ export default function MyDecks() {
             <p className="text-gray-500">Tema: {deck.theme}</p>
             <p className="text-gray-500">Fecha de creación: {new Date(deck.createAt).toLocaleDateString()}</p>
           </div>
+        ))}
+      </div>
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: Math.ceil(sortedDecks.length / decksPerPage) }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={`px-3 py-1 mx-1 rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+          >
+            {index + 1}
+          </button>
         ))}
       </div>
     </div>

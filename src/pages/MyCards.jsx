@@ -15,6 +15,8 @@ export default function MyCards() {
   const [typeFilter, setTypeFilter] = useState('');
   const [sortOption, setSortOption] = useState('');
   const [alphabetFilter, setAlphabetFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [cardsPerPage, setCardsPerPage] = useState(10);
   const { id } = useParams();
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
@@ -78,6 +80,12 @@ export default function MyCards() {
         return 0;
     }
   });
+
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentCards = sortedCards.slice(indexOfFirstCard, indexOfLastCard);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -274,11 +282,30 @@ export default function MyCards() {
           Importar Carta
         </button>
       </div>
+      <div className="mb-4">
+        <label className="block mb-1">
+          Cartas por página:
+          <select
+            id="cardsPerPage"
+            value={cardsPerPage}
+            onChange={(e) => {
+              setCardsPerPage(Number(e.target.value));
+              setCurrentPage(1); // Resetear a la primera página
+            }}
+            className="border p-2 rounded w-full"
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
+        </label>
+      </div>
       {sortedCards.length === 0 && !error && (
         <p className="text-gray-500">No hay cartas disponibles.</p>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {sortedCards.map((card) => (
+        {currentCards.map((card) => (
           <div
             key={card._id}
             className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
@@ -326,6 +353,17 @@ export default function MyCards() {
               )}
             </div>
           </div>
+        ))}
+      </div>
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: Math.ceil(sortedCards.length / cardsPerPage) }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={`px-3 py-1 mx-1 rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+          >
+            {index + 1}
+          </button>
         ))}
       </div>
     </div>

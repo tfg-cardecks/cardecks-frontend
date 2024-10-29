@@ -19,6 +19,7 @@ import {
   applySortOption,
   applyAlphabetFilter,
   clearAlphabetFilter,
+  selectCardsPerPageAndNavigateToPage,
 } from "./utils";
 
 beforeEach(() => {
@@ -71,7 +72,9 @@ describe("testing the my card functionality", () => {
       applyAlphabetFilter("N");
       clearAlphabetFilter();
 
-      cy.get('input[type="file"]').selectFile('cypress/e2e/json/nubes.json');
+      selectCardsPerPageAndNavigateToPage(5);
+
+      cy.get('input[type="file"]').selectFile("cypress/e2e/json/nubes.json");
       cy.get("button").contains("Importar Carta").click().wait(2000);
     });
   });

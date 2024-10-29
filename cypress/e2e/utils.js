@@ -40,6 +40,27 @@ export function clearAlphabetFilter() {
   cy.get('button').contains("Limpiar").click().wait(500);
 }
 
+export function selectCardsPerPageAndNavigateToPage(cardsPerPage) {
+  cy.get('#cardsPerPage').should("exist");
+
+  cy.get('#cardsPerPage').select(cardsPerPage.toString());
+
+  cy.get('#cardsPerPage').should("have.value", cardsPerPage.toString());
+
+  // cy.get("button").contains("1").click();
+}
+
+export function selectDecksPerPageAndNavigateToPage(decksPerPage) {
+  cy.get('#decksPerPage').should("exist");
+
+  cy.get('#decksPerPage').select(decksPerPage.toString());
+
+  cy.get('#decksPerPage').should("have.value", decksPerPage.toString());
+
+  //cy.get("button").contains("1").click();
+}
+
+
 export function generateRandomUser() {
   return cy.request("https://randomuser.me/api/").then((response) => {
     const user = response.body.results[0];
