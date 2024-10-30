@@ -23,7 +23,6 @@ export default function UserDetail() {
 
   const { authenticated, userId, logout } = useAuthContext();
 
-
   const gameTypes = [
     { type: 'WordSearchGame', name: 'Sopa de Letras', icon: wordsearch },
     { type: 'GuessTheWordGame', name: 'Adivina la Palabra', icon: guesstheword },
@@ -66,8 +65,6 @@ export default function UserDetail() {
     fetchUserData();
   }, [authenticated]);
 
-
-
   const handleResetGamesCompleted = async (gameType) => {
     try {
       const token = localStorage.getItem('access_token');
@@ -82,9 +79,6 @@ export default function UserDetail() {
       );
       switch (response.status) {
         case 200:
-          const currentCount = user.gamesCompletedByType[gameType] || 0;
-          const totalGamesCompleted = currentCount;
-          localStorage.setItem(`totalGamesCompleted_${gameType}`, totalGamesCompleted);
           fetchUserData();
           Swal.fire({
             icon: 'success',
@@ -109,6 +103,7 @@ export default function UserDetail() {
     const game = gameTypes.find(game => game.type === type);
     return game ? game.name : type;
   };
+
   async function handleDelete() {
     try {
       const alert = await Swal.fire({
@@ -166,25 +161,38 @@ export default function UserDetail() {
           <h2 className="title">Estadísticas</h2>
           <hr className="divider" />
           <div className="stats">
-            <p><strong>Juegos Completados por Tipo sin forzar:</strong></p>
-            <ul className="statsList">
-              {user.gamesCompletedByType && Object.entries(user.gamesCompletedByType).map(([type, count]) => (
-                <li key={type}>
-                  {getGameName(type)}: {count}
-                  <button style={{
-                    marginLeft: '5px',
-                    border: '1px solid #000',
-                    padding: '1px 5px',
-                    borderRadius: '5px',
-                  }} onClick={() => handleResetGamesCompleted(type)}>Resetear Contador de Juego</button>
-                </li>
-              ))}
-            </ul>
+            <div className="flex justify-between">
+              <div className="w-1/2 pr-2">
+                <p><strong>Juegos Completados por Tipo sin forzar:</strong></p>
+                <ul className="statsList">
+                  {user.gamesCompletedByType && Object.entries(user.gamesCompletedByType).map(([type, count]) => (
+                    <li key={type} >
+                      {getGameName(type)}: {count} (25)
+                      <button style={{
+                        marginLeft: '5px',
+                        border: '1px solid #000',
+                        padding: '1px 5px',
+                        borderRadius: '5px',
+                      }} onClick={() => handleResetGamesCompleted(type)}>Resetear Contador</button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="w-1/2 pl-8">
+                <p><strong>Total de Juegos Completados por Tipo:</strong></p>
+                <ul className="statsList">
+                  {user.totalGamesCompletedByType && Object.entries(user.totalGamesCompletedByType).map(([type, count]) => (
+                    <li key={type}>
+                      {getGameName(type)}: {count}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
             <p><strong>Total de Cartas Creadas:</strong> {user.cards && user.cards.length}</p>
             <p><strong>Total de Mazos Creados:</strong> {user.decks && user.decks.length}</p>
             <p><strong>Total de Juegos Creados:</strong> {user.games && user.games.length}</p>
-          </div>
-          <div className="flex space-x-4 mt-4">
+          </div>          <div className="flex space-x-4 mt-4">
             <button
               onClick={handleDelete}
               className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
