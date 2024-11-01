@@ -9,7 +9,7 @@ export default function Contact() {
         <section>
           <h2 className="text-2xl font-semibold mb-4 text-gray-700">Dirección de correo electrónico</h2>
           <p className="text-lg text-gray-600">
-            <a href="mailto:cardeck@gmail.es" className="text-blue-500 hover:underline">cardeck@gmail.es</a>
+            <a href="mailto:cardeckstfg@gmail.es" className="text-blue-500 hover:underline">cardeckstfg@gmail.es</a>
           </p>
         </section>
         
@@ -34,7 +34,7 @@ export default function Contact() {
             <li><a href="/edit-details" className="text-blue-500 hover:underline">Editar detalles personales</a></li>
           </ul>
           <p className="text-lg text-gray-600">
-            Otras cuestiones pueden resolverse enviando un correo electrónico a <a href="mailto:cardeck@gmail.es" className="text-blue-500 hover:underline">cardeck@gmail.es</a>.
+            Otras cuestiones pueden resolverse enviando un correo electrónico a <a href="mailto:cardeckstfg@gmail.es" className="text-blue-500 hover:underline">cardeckstfg@gmail.es</a>.
           </p>
         </section>
         
@@ -42,7 +42,7 @@ export default function Contact() {
           <h3 className="text-xl font-semibold mb-3 text-gray-700">¿Cómo informo sobre un problema o hago una solicitud?</h3>
          
           <p className="text-lg text-gray-600">
-            Puedes enviar un correo electrónico al equipo de desarrollo: <a href="mailto:cardeck@gmail.es" className="text-blue-500 hover:underline">cardeck@gmail.es</a>.
+            Puedes enviar un correo electrónico al equipo de desarrollo: <a href="mailto:cardeckstfg@gmail.es" className="text-blue-500 hover:underline">cardeckstfg@gmail.es</a>.
           </p>
         </section>
       </div>
