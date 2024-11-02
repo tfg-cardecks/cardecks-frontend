@@ -158,7 +158,22 @@ export default function UserDetail() {
             <p><strong>Nombre de Usuario:</strong> {user.username}</p>
             <p><strong>Rol:</strong> {user.role}</p>
           </div>
-          <h2 className="title">Estadísticas</h2>
+          <div className="flex space-x-4 mt-4">
+            <button
+              onClick={handleDelete}
+              className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
+            >
+              Darse de baja
+            </button>
+            <button
+              onClick={() => navigate('/user/edit')}
+              className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none"
+            >
+              Editar Detalles
+            </button>
+          </div>
+
+          <h2 className="title" style={{ marginTop: "5%" }}>Estadísticas</h2>
           <hr className="divider" />
           <div className="stats">
             <div className="flex justify-between">
@@ -192,13 +207,6 @@ export default function UserDetail() {
             <p><strong>Total de Cartas Creadas:</strong> {user.cards && user.cards.length}</p>
             <p><strong>Total de Mazos Creados:</strong> {user.decks && user.decks.length}</p>
             <p><strong>Total de Juegos Creados:</strong> {user.games && user.games.length}</p>
-          </div>          <div className="flex space-x-4 mt-4">
-            <button
-              onClick={handleDelete}
-              className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
-            >
-              Darse de baja
-            </button>
           </div>
         </div>
       </div>

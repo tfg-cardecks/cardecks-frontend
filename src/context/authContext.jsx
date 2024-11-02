@@ -1,12 +1,9 @@
 import React, { createContext, useCallback, useMemo, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
-    const navigate = useNavigate();
     const apiURL = import.meta.env.VITE_BACKEND_URL;
     const [authenticated, setAuthenticated] = useState(
         Boolean(localStorage.getItem('access_token'))

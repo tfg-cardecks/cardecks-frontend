@@ -23,6 +23,8 @@ import TermsOfUse from "./pages/TermsOfUse";
 import LobbyGames from "./pages/LobbyGames";
 import SelectDeckGame from "./pages/SelectDeckGame";
 import WordSearchGame from "./pages/WordSearchGame";
+import RememberPassword from "./pages/RememberPassword";
+import EditUserDetail from "./pages/EditUserDetail"; // Importar el componente
 
 export default function App() {
   return (
@@ -37,10 +39,12 @@ export default function App() {
           <Route path='/privacy-notice' element={<PrivacyNotice />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/terms-of-use' element={<TermsOfUse />} />
+          <Route path='/remember-password' element={<RememberPassword />} />
           {/* RUTAS PRIVADAS */}
           <Route path='/user/details' element={<UserDetail />} />
           <Route path='/user/:id/my-cards' element={<MyCards />} />
           <Route path='/user/:id/my-decks' element={<MyDecks />} />
+          <Route path="/user/edit" element={<EditUserDetail />} />
           <Route path='/user/:id/create-deck' element={<CreateDeck />} />
           <Route path="/card/:id" element={<CardDetails />} />
           <Route path="/deck/:id" element={<DeckDetails />} />
