@@ -155,7 +155,7 @@ export default function Login() {
           )}
           <div className="flex-row space-x-24 m-auto mt-4">
             <div className="flex items-center justify-center h-full">
-              <Link to="/" className="text-blue-300 hover:text-blue-700">
+              <Link to="/remember-password" className="text-blue-300 hover:text-blue-700">
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>
