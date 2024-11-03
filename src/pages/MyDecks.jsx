@@ -18,7 +18,7 @@ export default function MyDecks() {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [decksPerPage, setDecksPerPage] = useState(10); // Número de mazos por página
+  const [decksPerPage, setDecksPerPage] = useState(10);
 
   async function fetchDecks() {
     try {
@@ -255,7 +255,7 @@ export default function MyDecks() {
             value={decksPerPage}
             onChange={(e) => {
               setDecksPerPage(Number(e.target.value));
-              setCurrentPage(1); // Resetear a la primera página
+              setCurrentPage(1);
             }}
             className="border p-2 rounded w-full"
           >

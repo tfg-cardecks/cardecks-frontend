@@ -40,6 +40,8 @@ describe("testing the my deck functionality", () => {
       typeAndAssert("input[name='password']", "@Password1");
       typeAndAssert("input[name='password2']", "@Password1");
       typeAndAssert("input[name='email']", email);
+      cy.get("input[id='terms']").check();
+      cy.get("input[id='priv']").check();  
       cy.get("button").contains("Registrar").click().wait(1500);
 
       cy.wait(2000);

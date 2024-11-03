@@ -290,7 +290,7 @@ export default function MyCards() {
             value={cardsPerPage}
             onChange={(e) => {
               setCardsPerPage(Number(e.target.value));
-              setCurrentPage(1); // Resetear a la primera página
+              setCurrentPage(1);
             }}
             className="border p-2 rounded w-full"
           >

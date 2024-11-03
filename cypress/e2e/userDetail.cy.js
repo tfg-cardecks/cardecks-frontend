@@ -2,11 +2,9 @@
 
 // local imports
 import {
-  clickToNavElement,
   typeAndAssert,
   goToHomePage,
   generateRandomUser,
-  generateRandomTextCard,
 } from "./utils";
 
 beforeEach(() => {
@@ -28,6 +26,9 @@ describe("testing the user details", () => {
       typeAndAssert("input[name='password']", "@Password1");
       typeAndAssert("input[name='password2']", "@Password1");
       typeAndAssert("input[name='email']", email);
+      cy.get("input[id='terms']").check();
+      cy.get("input[id='priv']").check();
+  
       cy.get("button").contains("Registrar").click().wait(1500);
 
       cy.wait(2000);
@@ -35,6 +36,13 @@ describe("testing the user details", () => {
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
       cy.get("button").contains("Iniciar sesión").click().wait(2000);
+      cy.get("button").contains("Editar Detalles").click().wait(2000);
+
+      cy.get("input[name='username']").clear().type("newUsername");
+      cy.get("input[name='email']").clear().type(email);
+
+      cy.get("button").contains("Guardar Cambios").click().wait(2000);
+      cy.get(".swal2-confirm").click().wait(2000);
 
       cy.get("button").contains("Darse de baja").click().wait(2000);
 

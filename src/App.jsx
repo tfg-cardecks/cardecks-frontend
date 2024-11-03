@@ -24,7 +24,7 @@ import LobbyGames from "./pages/LobbyGames";
 import SelectDeckGame from "./pages/SelectDeckGame";
 import WordSearchGame from "./pages/WordSearchGame";
 import RememberPassword from "./pages/RememberPassword";
-import EditUserDetail from "./pages/EditUserDetail"; // Importar el componente
+import EditUserDetail from "./pages/EditUserDetail"; 
 
 export default function App() {
   return (

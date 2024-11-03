@@ -344,6 +344,8 @@ export default function Register() {
           <div className="w-full px-3 mb-6 md:mb-0">
             <label className="inline-flex items-center">
               <input
+                id="terms"
+
                 type="checkbox"
                 className="form-checkbox"
                 checked={checkedTerms}
@@ -352,7 +354,7 @@ export default function Register() {
               <span className="ml-2 text-white">
                 Acepto los{" "}
                 <button
-                  type="button"
+                  ç type="button"
                   className="text-green-400 hover:text-green-200 underline"
                   onClick={showTerms}
                 >
@@ -364,6 +366,7 @@ export default function Register() {
           <div className="w-full px-3 mb-6 md:mb-0">
             <label className="inline-flex items-center">
               <input
+                id="priv"
                 type="checkbox"
                 className="form-checkbox"
                 checked={checkedPriv}
