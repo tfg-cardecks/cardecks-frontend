@@ -1,11 +1,7 @@
 /// <reference types="cypress" />
 
 // local imports
-import {
-  typeAndAssert,
-  goToHomePage,
-  generateRandomUser,
-} from "./utils";
+import { typeAndAssert, goToHomePage, generateRandomUser } from "./utils";
 
 beforeEach(() => {
   goToHomePage();
@@ -28,7 +24,7 @@ describe("testing the user details", () => {
       typeAndAssert("input[name='email']", email);
       cy.get("input[id='terms']").check();
       cy.get("input[id='priv']").check();
-  
+
       cy.get("button").contains("Registrar").click().wait(1500);
 
       cy.wait(2000);
@@ -42,6 +38,14 @@ describe("testing the user details", () => {
       cy.get("input[name='email']").clear().type(email);
 
       cy.get("button").contains("Guardar Cambios").click().wait(2000);
+      cy.get(".swal2-confirm").click().wait(2000);
+
+      cy.get("button").contains("Cambiar Contraseña").click().wait(2000);
+
+      cy.get("input[name='currentPassword']").clear().type("@Password1");
+      cy.get("input[name='newPassword']").clear().type("@Password2");
+
+      cy.get("button").contains("Cambiar Contraseña").click().wait(2000);
       cy.get(".swal2-confirm").click().wait(2000);
 
       cy.get("button").contains("Darse de baja").click().wait(2000);

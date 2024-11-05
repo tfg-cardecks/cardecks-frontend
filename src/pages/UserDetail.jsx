@@ -171,8 +171,13 @@ export default function UserDetail() {
             >
               Editar Detalles
             </button>
+            <button
+              onClick={() => navigate('/user/edit/password')}
+              className="bg-gradient-to-r from-orange-200 to-orange-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-orange-300 focus:outline-none"
+            >
+              Cambiar Contraseña
+            </button>
           </div>
-
           <h2 className="title" style={{ marginTop: "5%" }}>Estadísticas</h2>
           <hr className="divider" />
           <div className="stats">

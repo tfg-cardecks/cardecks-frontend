@@ -382,11 +382,20 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
             </div>
           </div>
         )}
+      </div>
+      <div className="flex justify-center mt-4 space-x-4">
         <button
           className="bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none w-full"
           onClick={handleCreateCard}
         >
           Crear Carta
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate('/')}
+          className="bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none w-full"
+        >
+          Cancelar
         </button>
       </div>
       <div className="canvas-container">

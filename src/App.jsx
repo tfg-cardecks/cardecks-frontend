@@ -25,6 +25,7 @@ import SelectDeckGame from "./pages/SelectDeckGame";
 import WordSearchGame from "./pages/WordSearchGame";
 import RememberPassword from "./pages/RememberPassword";
 import EditUserDetail from "./pages/EditUserDetail"; 
+import EditUserPassword from "./pages/EditUserPassword";
 
 export default function App() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
           <Route path='/user/:id/my-cards' element={<MyCards />} />
           <Route path='/user/:id/my-decks' element={<MyDecks />} />
           <Route path="/user/edit" element={<EditUserDetail />} />
+          <Route path="/user/edit/password" element={<EditUserPassword />} />
           <Route path='/user/:id/create-deck' element={<CreateDeck />} />
           <Route path="/card/:id" element={<CardDetails />} />
           <Route path="/deck/:id" element={<DeckDetails />} />
