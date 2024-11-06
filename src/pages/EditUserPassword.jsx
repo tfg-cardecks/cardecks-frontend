@@ -22,8 +22,8 @@ export default function EditUserPassword() {
     setForm({ ...form, [name]: value });
     setErrors({});
   };
-
-  const handleSubmitPassword = async (e) => {
+  
+  async function handleSubmit(e) {
     e.preventDefault();
     try {
       const token = localStorage.getItem('access_token');
@@ -68,7 +68,7 @@ export default function EditUserPassword() {
 
           <h2 className="title">Cambiar Contraseña del Usuario</h2>
           <hr className="divider" />
-          <form onSubmit={handleSubmitPassword}>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="currentPassword"><strong>Contraseña Actual: </strong> </label>
               <input

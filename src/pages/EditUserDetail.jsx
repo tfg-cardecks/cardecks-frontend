@@ -48,7 +48,7 @@ export default function EditUserDetail() {
     setErrors({});
   };
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
     try {
       const token = localStorage.getItem('access_token');

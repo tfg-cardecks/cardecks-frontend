@@ -44,7 +44,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     saveCanvasState();
   }, [frontText, backElements]);
 
-  const isValidImageUrl = (url) => {
+  function isValidImageUrl(url) {
     return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
   };
 
@@ -64,7 +64,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     }
   };
 
-  const splitTextIntoLines = (text, maxCharsPerLine) => {
+  function splitTextIntoLines(text, maxCharsPerLine) {
     const words = text.split(' ');
     const lines = [];
     let currentLine = '';
@@ -85,7 +85,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     return lines;
   };
 
-  const validateParagraph = (text, maxCharsPerLine, maxTotalChars) => {
+  function validateParagraph (text, maxCharsPerLine, maxTotalChars) {
     const lines = text.split('\n');
     let totalChars = 0;
     for (let line of lines) {
@@ -147,7 +147,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     }
   };
 
-  const handleDragEnd = (e) => {
+  function handleDragEnd (e) {
     const { x, y } = e.target.position();
     if (side === 'front') {
       setFrontText({ ...frontText, x, y });

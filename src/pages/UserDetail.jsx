@@ -65,7 +65,7 @@ export default function UserDetail() {
     fetchUserData();
   }, [authenticated]);
 
-  const handleResetGamesCompleted = async (gameType) => {
+  async function handleResetGamesCompleted(gameType) {
     try {
       const token = localStorage.getItem('access_token');
       const response = await axios.patch(

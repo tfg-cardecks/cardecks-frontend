@@ -15,7 +15,7 @@ export default function WordSearchGame() {
   const [allWordsFound, setAllWordsFound] = useState(false);
   const [time, setTime] = useState(0);
 
-  const fetchGameData = async () => {
+  async function fetchGameData() {
     try {
       const token = localStorage.getItem('access_token');
       const response = await axios.get(`${API_URL}/api/wordSearchGame/${wordSearchGameId}`, {
@@ -54,13 +54,13 @@ export default function WordSearchGame() {
     return () => clearInterval(interval);
   }, []);
 
-  const isAdjacent = (cell1, cell2) => {
+  function isAdjacent(cell1, cell2) {
     const rowDiff = Math.abs(cell1.row - cell2.row);
     const colDiff = Math.abs(cell1.col - cell2.col);
     return (rowDiff <= 1 && colDiff <= 1) && !(rowDiff === 0 && colDiff === 0);
   };
 
-  const isContinuousDirection = (cells) => {
+  function isContinuousDirection(cells) {
     if (cells.length < 2) return true;
     const direction = {
       row: cells[1].row - cells[0].row,
@@ -78,7 +78,7 @@ export default function WordSearchGame() {
     return true;
   };
 
-  const handleCellClick = (rowIndex, cellIndex) => {
+  function handleCellClick(rowIndex, cellIndex) {
     const newCell = { row: rowIndex, col: cellIndex };
     if (selectedCells.length === 0 || (isAdjacent(selectedCells[selectedCells.length - 1], newCell) && isContinuousDirection([...selectedCells, newCell]))) {
       const newSelectedCells = [...selectedCells, newCell];
@@ -119,7 +119,7 @@ export default function WordSearchGame() {
     }
   }, [foundWords, gameData]);
 
-  const handleNextGame = async () => {
+  async function handleNextGame() {
     try {
       const token = localStorage.getItem('access_token');
       const cleanedFoundWords = foundWords.map((word) => separateWord(word, gameData.words));
@@ -153,7 +153,7 @@ export default function WordSearchGame() {
     }
   };
 
-  const handleForceComplete = async () => {
+  async function handleForceComplete() {
     try {
       const token = localStorage.getItem('access_token');
       const response = await axios.post(`${API_URL}/api/currentWordSearchGame/${wordSearchGameId}`, { forceComplete: true, foundWords }, {

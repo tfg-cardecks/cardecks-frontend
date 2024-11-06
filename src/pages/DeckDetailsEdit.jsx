@@ -118,7 +118,6 @@ export default function DeckDetailsEdit() {
       [e.target.name]: e.target.value
     });
   };
-
   const handleCardSelection = (cardId) => {
     setFormData((prevFormData) => {
       const newCards = prevFormData.cards.includes(cardId)

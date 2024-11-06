@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import FormTextInputCreate from '../components/FormTextInputCreate'; 
+import FormTextInputCreate from '../components/FormTextInputCreate';
 
 export default function PreviewFormCard() {
   const [title, setTitle] = useState('');
@@ -31,7 +31,7 @@ export default function PreviewFormCard() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
     if (validate()) {
       navigate(`/create-card/${cardType}`, { state: { title, theme, cardType, userId: id } });
@@ -39,10 +39,10 @@ export default function PreviewFormCard() {
   };
 
   const handleCancel = () => {
-    navigate('/'); 
+    navigate('/');
   };
 
-  const onInputChange = (e) => {
+  function onInputChange(e) {
     const { name, value } = e.target;
     if (name === 'title') {
       setTitle(value);

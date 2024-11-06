@@ -160,7 +160,6 @@ export default function DeckDetails() {
       setErrors({ message: 'Error al exportar el mazo' });
     }
   }
-
   const handleImageError = (cardId, side) => {
     setImageErrors((prevErrors) => ({
       ...prevErrors,

@@ -13,7 +13,7 @@ export default function CardDetailsEdit() {
   const [imageUrl, setImageUrl] = useState('');
   const [side, setSide] = useState('front');
   const [errorMessage, setErrorMessage] = useState('');
-  
+
   const fetchCard = async () => {
     try {
       const token = localStorage.getItem('access_token');
@@ -39,9 +39,9 @@ export default function CardDetailsEdit() {
     fetchCard();
   }, [id]);
 
-  const isValidImageUrl = (url) => {
+  function isValidImageUrl(url) {
     return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
-  };
+  }
 
   const handleImageUrlUpload = () => {
     if (!imageUrl) {
@@ -68,7 +68,7 @@ export default function CardDetailsEdit() {
     }
   };
 
-  const validateParagraph = (text, maxCharsPerLine, maxTotalChars) => {
+  function validateParagraph(text, maxCharsPerLine, maxTotalChars) {
     const lines = text.split('\n');
     let totalChars = 0;
     for (let line of lines) {
@@ -79,8 +79,7 @@ export default function CardDetailsEdit() {
     }
     return totalChars <= maxTotalChars;
   };
-
-  const handleTextChange = (e) => {
+  function handleTextChange(e) {
     const newText = e.target.value;
     if (side === 'back' && !validateParagraph(newText, 25, 200)) {
       setErrorMessage('El párrafo tiene líneas que exceden el número máximo de caracteres permitidos 25');

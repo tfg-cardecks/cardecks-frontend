@@ -90,7 +90,7 @@ export default function SelectDeckGame() {
     setSelectedDeck(deckId);
   };
 
-  const handleStartGame = async () => {
+  async function handleStartGame() {
     if (selectedDeck) {
       try {
         setIsCreating(true);
