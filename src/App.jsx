@@ -26,6 +26,7 @@ import WordSearchGame from "./pages/WordSearchGame";
 import RememberPassword from "./pages/RememberPassword";
 import EditUserDetail from "./pages/EditUserDetail"; 
 import EditUserPassword from "./pages/EditUserPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/terms-of-use' element={<TermsOfUse />} />
           <Route path='/remember-password' element={<RememberPassword />} />
+          <Route path='/reset-password/:token' element={<ResetPassword />} /> 
           {/* RUTAS PRIVADAS */}
           <Route path='/user/details' element={<UserDetail />} />
           <Route path='/user/:id/my-cards' element={<MyCards />} />
