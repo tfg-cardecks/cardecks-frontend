@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import MainButton from '../components/mainButton.jsx';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { API_URL } from '../config';
+import '../styles/UserDetailStyles.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function RememberPassword() {
   const [form, setForm] = useState({
@@ -10,14 +11,16 @@ export default function RememberPassword() {
   });
   const { email } = form;
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
-  function handleInputChange(e) {
+  const handleInputChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
     setErrors({});
   };
+
   async function handleForgotPassword(e) {
     e.preventDefault();
     const validationErrors = validateForm();
@@ -37,13 +40,9 @@ export default function RememberPassword() {
         case 200:
           Swal.fire({
             icon: 'success',
-            title: 'You have 15 minutes to change your password. If you don\'t receive the email, please check your spam folder',
+            title: 'Tienes 15 minutos para cambiar tu contraseña. Si no recibes el correo, por favor revisa tu carpeta de spam',
             showConfirmButton: true,
-            confirmButtonColor: 'var(--talent-highlight)',
-            allowOutsideClick: false,
-            background: 'var(--talent-secondary)',
-            color: 'white',
-            timer: 4500,
+            timer: 3500,
           });
           break;
         case 404:
@@ -58,7 +57,7 @@ export default function RememberPassword() {
   };
 
   function getRequiredFieldMessage(fieldName) {
-    return `The ${fieldName} field is required`;
+    return `El campo ${fieldName} es obligatorio`;
   }
 
   function validateForm() {
@@ -70,87 +69,41 @@ export default function RememberPassword() {
   }
 
   return (
-    <div
-      className='flex flex-col justify-center'
-      style={{
-        height: '100vh',
-        backgroundAttachment: 'fixed',
-        backgroundImage: `url(${MainButton})`,
-        backgroundSize: 'cover',
-      }}
-    >
-      <div
-        className='h-100 rounded shadow-md flex flex-col justify-between'
-        style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          width: '100%',
-          maxWidth: '48rem',
-          padding: '2rem',
-          margin: '1rem',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          borderColor: 'var(--talent-secondary)',
-          borderWidth: '1px',
-        }}
-      >
-        <div>
-          <h2
-            className='font-bold text-center text-white'
-            style={{
-              fontSize: '4rem',
-              marginTop: '2rem',
-              marginBottom: '4rem',
-            }}
-          >
-            Request to change password
-          </h2>
+    <div className="flex items-center justify-center">
+      <div className="container">
+        <div className="card" style={{marginTop:"5%", marginBottom:"5%"}}>
+          {errors.message && (
+            <p className='text-red-500'>{errors.message}</p>
+          )}
+          <h2 className="title">Solicitud para cambiar la contraseña</h2>
+          <hr className="divider" />
           <form onSubmit={handleForgotPassword}>
-            <div
-              className='flex'
-              style={{
-                marginBottom: '1rem',
-              }}
-            >
-              <label
-                htmlFor='Username'
-                className='block text-lg font-bold text-white self-center'
-                style={{
-                  marginBottom: '1rem',
-                  marginRight: '2rem',
-                  marginLeft: '4rem',
-                }}
-              >
-                Email
-              </label>
-              <div
-                className='flex-grow'
-                style={{
-                  marginRight: '8rem',
-                }}
-              >
-                <input
-                  type='text'
-                  className='leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
-                  style={{
-                    width: '100%',
-                    padding: '0.5rem 0.75rem',
-                  }}
-                  placeholder='Write your email'
-                  name='email'
-                  value={email}
-                  onChange={handleInputChange}
-                />
-                {errors.message && (
-                  <p className='text-yellow-300'>{errors.message}</p>
-                )}
-              </div>
+            <div className="form-group">
+              <label htmlFor="email"><strong>Email: </strong> </label>
+              <input
+                style={{ borderBottom: '1px solid #000', marginLeft: "1%" }}
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={handleInputChange}
+                className="form-control"
+                required
+              />
             </div>
-            <div
-              className='flex justify-center items-center'
-              style={{ marginTop: '1rem' }}
-            >
-              <button type='submit'>
-                {MainButton('Send email', '/', handleForgotPassword)}
+            <div className="flex justify-center mt-4 space-x-4">
+              <button
+                type="submit"
+                className="bg-gradient-to-r from-green-200 to-green-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
+              >
+                Enviar correo
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate('/login')}
+                className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
+              >
+                Cancelar
               </button>
             </div>
           </form>
