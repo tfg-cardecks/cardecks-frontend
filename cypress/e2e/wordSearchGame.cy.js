@@ -137,7 +137,7 @@ describe("testing the first game", () => {
       .children()
       .next()
       .get("button")
-      .contains("Resetear Contador de Juego")
+      .contains("Resetear Contador")
       .click()
       .wait(1000)
       .then(() => {
