@@ -89,7 +89,6 @@ export default function ResetPassword() {
                 value={newPassword2}
                 onChange={(e) => setNewPassword2(e.target.value)}
                 className="form-control"
-                required
               />
             </div>
             <div className="flex justify-center mt-4 space-x-4">
