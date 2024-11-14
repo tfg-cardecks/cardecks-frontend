@@ -21,12 +21,14 @@ import PrivacyNotice from "./pages/PrivacyNotice";
 import Contact from "./pages/Contact";
 import TermsOfUse from "./pages/TermsOfUse";
 import LobbyGames from "./pages/LobbyGames";
-import SelectDeckGame from "./pages/SelectDeckGame";
-import WordSearchGame from "./pages/WordSearchGame";
+import WordSearchGame from "./pages/games/WordSearchGame";
 import RememberPassword from "./pages/RememberPassword";
 import EditUserDetail from "./pages/EditUserDetail"; 
 import EditUserPassword from "./pages/EditUserPassword";
 import ResetPassword from "./pages/ResetPassword";
+import HangmanGame from "./pages/games/HangmanGame"; 
+
+import SelectDeckGame from "./pages/SelectDeckGame"; // Import the SelectDeckGame wrapper component
 
 export default function App() {
   return (
@@ -58,8 +60,11 @@ export default function App() {
           <Route path="/create-card/txtImg" element={<CreateTxtImgCard />} />
           <Route path="/create-card/txtTxt" element={<CreateTxtTxtCard />} />
           <Route path="/lobby" element={<LobbyGames />} />
-          <Route path="/selectDeckGame/:gameType/:id" element={<SelectDeckGame />} />
           <Route path="/wordSearchGame/:wordSearchGameId" element={<WordSearchGame />} />
+
+          {/* Specific Game Routes */}
+          <Route path="/selectDeckGame/:gameType/:id" element={<SelectDeckGame />} /> {/* Use the wrapper component */}
+          <Route path="/hangmanGame/:hangmanGameId" element={<HangmanGame />} />
         </Routes>
         <Footer />
       </AuthContextProvider>

@@ -15,15 +15,15 @@ import speedMemoryImageGame from '../icon/guesstheimage.png';
 
 const gameTypes = [
   { type: 'WordSearchGame', name: 'Sopa de Letras', icon: wordsearch },
-  { type: 'GuessTheWordGame', name: 'Adivina la Palabra', icon: guesstheword },
-  { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
-  { type: 'GuessTheTextGame', name: 'Adivina el Texto', icon: guessthetext },
-  { type: 'MemoryGame', name: 'Juego de Memoria', icon: memoryGame },
-  { type: 'StrokeOrderGame', name: 'Orden de trazos', icon: strokeOrderGame },
-  { type: 'MatchingGame', name: 'Juego de Relacionar', icon: matchingGame },
+  // { type: 'GuessTheWordGame', name: 'Adivina la Palabra', icon: guesstheword },
+  // { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
+  // { type: 'GuessTheTextGame', name: 'Adivina el Texto', icon: guessthetext },
+  // { type: 'MemoryGame', name: 'Juego de Memoria', icon: memoryGame },
+  // { type: 'StrokeOrderGame', name: 'Orden de trazos', icon: strokeOrderGame },
+  // { type: 'MatchingGame', name: 'Juego de Relacionar', icon: matchingGame },
   { type: 'HangmanGame', name: 'Juego del Ahorcado', icon: hangmanGame },
-  { type: 'SpeedMemoryWordGame', name: 'Juego de Memorización Rápida de Palabra', icon: speedMemoryWordGame },
-  { type: 'SpeedMemoryImageGame', name: 'Juego de Memorización Rápida de Imagen', icon: speedMemoryImageGame },
+  // { type: 'SpeedMemoryWordGame', name: 'Juego de Memorización Rápida de Palabra', icon: speedMemoryWordGame },
+  // { type: 'SpeedMemoryImageGame', name: 'Juego de Memorización Rápida de Imagen', icon: speedMemoryImageGame },
 ];
 
 export default function LobbyGames() {
