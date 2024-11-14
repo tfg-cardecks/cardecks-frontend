@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { API_URL } from '../config';
+import { API_URL } from '../../config';
 import Swal from 'sweetalert2';
 
 export default function WordSearchGame() {
@@ -20,7 +20,7 @@ export default function WordSearchGame() {
       const token = localStorage.getItem('access_token');
       const response = await axios.get(`${API_URL}/api/wordSearchGame/${wordSearchGameId}`, {
         headers: {
-          Authorization: `${token}`,
+          Authorization: ` ${token}`,
         },
       });
       switch (response.status) {
@@ -41,7 +41,7 @@ export default function WordSearchGame() {
     } catch (error) {
       setErrorMessage('Error al cargar la sopa de letras');
     }
-  };
+  }
 
   useEffect(() => {
     fetchGameData();
@@ -58,7 +58,7 @@ export default function WordSearchGame() {
     const rowDiff = Math.abs(cell1.row - cell2.row);
     const colDiff = Math.abs(cell1.col - cell2.col);
     return (rowDiff <= 1 && colDiff <= 1) && !(rowDiff === 0 && colDiff === 0);
-  };
+  }
 
   function isContinuousDirection(cells) {
     if (cells.length < 2) return true;
@@ -76,7 +76,7 @@ export default function WordSearchGame() {
       }
     }
     return true;
-  };
+  }
 
   function handleCellClick(rowIndex, cellIndex) {
     const newCell = { row: rowIndex, col: cellIndex };
@@ -90,7 +90,7 @@ export default function WordSearchGame() {
     } else {
       setSelectedCells([]);
     }
-  };
+  }
 
   useEffect(() => {
     if (selectedCells.length > 1) {
@@ -149,16 +149,16 @@ export default function WordSearchGame() {
           break;
       }
     } catch (error) {
-      setErrorMessage('No hay suficientes palabras válidas para encajar en la siguiente cuadrícula. por favor, añada cartas al mazo para poder crear un nuevo juego.');
+      setErrorMessage('No hay suficientes palabras válidas para encajar en la siguiente cuadrícula. Por favor, añada cartas al mazo para poder crear un nuevo juego.');
     }
-  };
+  }
 
   async function handleForceComplete() {
     try {
       const token = localStorage.getItem('access_token');
       const response = await axios.post(`${API_URL}/api/currentWordSearchGame/${wordSearchGameId}`, { forceComplete: true, foundWords }, {
         headers: {
-          Authorization: `${token}`,
+          Authorization: ` ${token}`,
         },
       });
       switch (response.status) {
@@ -180,7 +180,7 @@ export default function WordSearchGame() {
     } catch (error) {
       setErrorMessage('Error al forzar la finalización de la sopa de letras');
     }
-  };
+  }
 
   const renderGrid = () => {
     if (!gameData || !gameData.grid) return null;
