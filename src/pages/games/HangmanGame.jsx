@@ -30,13 +30,13 @@ export default function HangmanGame() {
   async function fetchGameData() {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await axios.get(`${API_URL}/api/hangmanGame/${hangmanGameId}`, {
+      const response = await fetch(`${API_URL}/api/hangmanGame/${hangmanGameId}`, {
+        method: 'GET',
         headers: {
           Authorization: `${token}`,
         },
       });
-      const data = response.data;
-
+      const data = await response.json();
       switch (response.status) {
         case 200:
           setGameData(data);
@@ -112,29 +112,34 @@ export default function HangmanGame() {
   async function handleNextGame(countAsCompleted = true) {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await axios.post(
-        `${API_URL}/api/currentHangmanGame/${hangmanGameId}`,
-        { guessedLetters, wrongLetters, countAsCompleted, timeTaken: time },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `${token}`,
-          },
-        }
-      );
-      const data = response.data;
+      const response = await fetch(
+        `${API_URL}/api/currentHangmanGame/${hangmanGameId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`,
+        },
+        body: JSON.stringify({ guessedLetters, wrongLetters, countAsCompleted, timeTaken: time }),
+      });
+      const data = await response.json();
       switch (response.status) {
         case 201:
           const newHangmanGameId = data.hangmanGameId;
           navigate(`/hangmanGame/${newHangmanGameId}`);
           break;
         case 200:
-          navigate('/user/details');
+          Swal.fire({
+            icon: 'success',
+            title: 'Juego completado',
+            text: 'Has completado 25 juegos de ahorcado.',
+          }).then(() => {
+            navigate('/user/details');
+          });
           break;
         case 401:
         case 404:
         case 400:
-          setErrorMessage(data.message);
+          setErrorMessage(data.error);
           break;
         default:
           break;
