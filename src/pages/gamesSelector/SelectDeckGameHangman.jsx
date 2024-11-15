@@ -104,7 +104,6 @@ export default function SelectDeckGameHangman() {
             },
           }
         );
-        console.log("response", response);
         switch (response.status) {
           case 201:
             Swal.fire({
@@ -143,7 +142,6 @@ export default function SelectDeckGameHangman() {
   }
 
   const handleResumeGame = () => {
-    console.log("inProgressGameId", inProgressGameId);
     if (inProgressGameId) {
       navigate(`/hangmanGame/${inProgressGameId}`);
     }

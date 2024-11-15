@@ -30,13 +30,12 @@ export default function HangmanGame() {
   async function fetchGameData() {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await fetch(`${API_URL}/api/hangmanGame/${hangmanGameId}`, {
-        method: 'GET',
+      const response = await axios.get(`${API_URL}/api/hangmanGame/${hangmanGameId}`, {
         headers: {
-          Authorization: ` ${token}`,
+          Authorization: `${token}`,
         },
       });
-      const data = await response.json();
+      const data = response.data;
 
       switch (response.status) {
         case 200:
@@ -113,21 +112,21 @@ export default function HangmanGame() {
   async function handleNextGame(countAsCompleted = true) {
     try {
       const token = localStorage.getItem('access_token');
-      console.log('countAsCompleted', token);
-      const response = await fetch(`${API_URL}/api/currentHangmanGame/${hangmanGameId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `${token}`,
-        },
-        body: JSON.stringify({ guessedLetters, wrongLetters, countAsCompleted, timeTaken: time }),
-      });
-      const data = await response.json();
-      console.log("data");
+      const response = await axios.post(
+        `${API_URL}/api/currentHangmanGame/${hangmanGameId}`,
+        { guessedLetters, wrongLetters, countAsCompleted, timeTaken: time },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${token}`,
+          },
+        }
+      );
+      const data = response.data;
       switch (response.status) {
         case 201:
           const newHangmanGameId = data.hangmanGameId;
-          window.location.href = `/hangmanGame/${newHangmanGameId}`;
+          navigate(`/hangmanGame/${newHangmanGameId}`);
           break;
         case 200:
           navigate('/user/details');
@@ -150,7 +149,7 @@ export default function HangmanGame() {
       const token = localStorage.getItem('access_token');
       const response = await axios.post(`${API_URL}/api/currentHangmanGame/${hangmanGameId}`, { forceComplete: true, timeTaken: time }, {
         headers: {
-          Authorization: ` ${token}`,
+          Authorization: `${token}`,
         },
       });
       switch (response.status) {
@@ -176,6 +175,17 @@ export default function HangmanGame() {
     }
   }
 
+  useEffect(() => {
+    if (gameData) {
+      setGuessedLetters([]);
+      setWrongLetters([]);
+      setRemainingAttempts(6);
+      setGameLost(false);
+      setGameWon(false);
+      setTime(0);
+    }
+  }, [gameData]);
+
   const renderWord = () => {
     if (!gameData) return null;
 
@@ -200,7 +210,7 @@ export default function HangmanGame() {
         <p>Cargando...</p>
       ) : (
         <div className="flex">
-          <div >
+          <div>
             {renderImage()}
           </div>
           <div>
