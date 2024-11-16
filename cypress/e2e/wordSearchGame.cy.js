@@ -57,7 +57,7 @@ describe("testing the first game", () => {
     cy.get("button").contains("Importar Carta a Mazo").click().wait(2000);
 
     cy.visit("http://localhost:5173/lobby").wait(2000);
-    cy.get(".game-type-list").click().wait(2000);
+    cy.get(".game-type-list").find("img[alt='Sopa de Letras']").click().wait(2000);
 
     cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
@@ -80,7 +80,7 @@ describe("testing the first game", () => {
     selectedFileToImportAndSubmit("cypress/e2e/json/nubosa.json");
 
     cy.visit("http://localhost:5173/lobby").wait(2000);
-    cy.get(".game-type-list").click().wait(2000);
+    cy.get(".game-type-list").find("img[alt='Sopa de Letras']").click().wait(2000);
 
     cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
@@ -112,7 +112,7 @@ describe("testing the first game", () => {
       .click()
       .wait(1000);
 
-    cy.get(".game-type-list").click().wait(2000);
+    cy.get(".game-type-list").find("img[alt='Sopa de Letras']").click().wait(2000);
 
     cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
@@ -147,7 +147,7 @@ describe("testing the first game", () => {
 
   it("can go to information wordsearch game", () => {
     cy.visit("http://localhost:5173/lobby").wait(2000);
-    cy.get(".game-type-list").click().wait(2000);
+    cy.get(".game-type-list").find("img[alt='Sopa de Letras']").click().wait(2000);
 
     cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
