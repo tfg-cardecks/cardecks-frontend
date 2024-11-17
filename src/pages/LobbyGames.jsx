@@ -9,7 +9,7 @@ import guessthetext from '../icon/guesstheimage.png';
 import memoryGame from '../icon/guesstheimage.png';
 import strokeOrderGame from '../icon/guesstheimage.png';
 import matchingGame from '../icon/guesstheimage.png';
-import hangmanGame from '../icon/guesstheimage.png';
+import hangmanGame from '../icon/hangman.png';
 import speedMemoryWordGame from '../icon/guesstheimage.png';
 import speedMemoryImageGame from '../icon/guesstheimage.png';
 
@@ -40,7 +40,7 @@ export default function LobbyGames() {
       <div className="game-type-list">
         {gameTypes.map((game) => (
           <div key={game.type} className="game-type-item" onClick={() => handleGameTypeClick(game.type)}>
-            <img src={game.icon} alt={game.name} />
+            <img src={game.icon} style={{ width: '145px', height: '115px' }} alt={game.name} />
             <div className="game-type-info">
               <h2>{game.name}</h2>
             </div>
