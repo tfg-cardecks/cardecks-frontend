@@ -36,7 +36,10 @@ function playGame() {
   selectedFileToImportAndSubmit("cypress/e2e/json/nubosa.json"); // n u b o s a (6 letters)
 
   cy.visit("http://localhost:5173/lobby").wait(2000);
-  cy.get(".game-type-list").find("img[alt='Juego del Ahorcado']").click().wait(2000);
+  cy.get(".game-type-list")
+    .find("img[alt='Juego del Ahorcado']")
+    .click()
+    .wait(2000);
 
   cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
@@ -49,37 +52,55 @@ function playGame() {
 function guessWord() {
   // Obtener el elemento HTML que contiene la palabra a adivinar usando JQuery y Cypress
   cy.get(".word").then(($word) => {
-
     // Obtener la longitud de la palabra
     const wordLength = $word.text().length;
 
     // Letras adivinadas
-    const guessedLetters = ["n", "u", "b", "a", "e", "i", "s", "c", "d", "h", "o", "j", "l", "v"];
+    const guessedLetters = [
+      "n",
+      "u",
+      "b",
+      "a",
+      "e",
+      "i",
+      "s",
+      "c",
+      "d",
+      "h",
+      "o",
+      "j",
+      "l",
+      "v",
+    ];
 
     // Palabras posibles a adivinar según la longitud de la palabra
     const possibleWords = {
       5: ["nubes", "hojas"],
       6: ["lluvia", "nubosa"],
-      7: ["cascade"]
+      7: ["cascade"],
     };
 
     // Adivina algunas letras iniciales de la palabra hasta llegar a quedar 1 intento restante
     for (let i = 0; i < 6; i++) {
       cy.get("input").type(guessedLetters[i]);
-      cy.get("button").contains("Confirmar").click().wait(500);
+      cy.get("button").contains("Confirmar").click().wait(1000);
     }
 
     // Identifica la palabra correcta de la lista proporcionada
     cy.get(".word").then(($updatedWord) => {
       let currentWord = $updatedWord.text();
-      const correctWord = possibleWords[wordLength].filter(word => {
-        return word.split('').every((char, index) => {
-          return currentWord[index] === '_' || currentWord[index].toLowerCase() === char;
+      cy.log("Palabra actualizada: " + currentWord);
+      const correctWord = possibleWords[wordLength]?.filter((word) => {
+        return word.split("").every((char, index) => {
+          return (
+            currentWord[index] === "_" ||
+            currentWord[index].toLowerCase() === char
+          );
         });
       })[0];
 
       // Adivina las letras restantes de la palabra
-      let guessedLetters = new Set(currentWord.toLowerCase());
+      let guessedLetters = new Set(currentWord.toLowerCase().replace(/_/g, ""));
       let remainingLetters = "";
 
       for (let letter of correctWord.toLowerCase()) {
@@ -92,7 +113,7 @@ function guessWord() {
       // Escribe las letras restantes de la palabra
       for (let i = 0; i < remainingLetters.length; i++) {
         cy.get("input").type(remainingLetters[i]);
-        cy.get("button").contains("Confirmar").click().wait(500);
+        cy.get("button").contains("Confirmar").click().wait(1000);
       }
     });
   });
@@ -122,7 +143,10 @@ describe("testing hangmanGame", () => {
     cy.get("button").contains("Importar Carta a Mazo").click().wait(2000);
 
     cy.visit("http://localhost:5173/lobby").wait(2000);
-    cy.get(".game-type-list").find("img[alt='Juego del Ahorcado']").click().wait(2000);
+    cy.get(".game-type-list")
+      .find("img[alt='Juego del Ahorcado']")
+      .click()
+      .wait(2000);
 
     cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
@@ -147,7 +171,10 @@ describe("testing hangmanGame", () => {
       .click()
       .wait(1000);
 
-    cy.get(".game-type-list").find("img[alt='Juego del Ahorcado']").click().wait(2000);
+    cy.get(".game-type-list")
+      .find("img[alt='Juego del Ahorcado']")
+      .click()
+      .wait(2000);
 
     cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
@@ -169,17 +196,23 @@ describe("testing hangmanGame", () => {
   it("can play hangmanGame (show Juego completado alert)", () => {
     playGame();
 
-    for (let i = 0; i <= 25; i++) {
+    let i;
+    for (i = 0; i <= 25; i++) {
       cy.log("Intento: " + i);
       guessWord();
     }
 
-    cy.get(".swal2-confirm").click();
+    if (i === 26) {
+      cy.get(".swal2-confirm").click();
+    }
   });
 
   it("can go to information hangmanGame", () => {
     cy.visit("http://localhost:5173/lobby").wait(2000);
-    cy.get(".game-type-list").find("img[alt='Juego del Ahorcado']").click().wait(2000);
+    cy.get(".game-type-list")
+      .find("img[alt='Juego del Ahorcado']")
+      .click()
+      .wait(2000);
 
     cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
