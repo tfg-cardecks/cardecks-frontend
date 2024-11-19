@@ -20,9 +20,6 @@ export default function Contact() {
           <p className="text-lg text-gray-600">
             Twitter: <a href="https://twitter.com" className="text-blue-500 hover:underline">@cardeck</a>
           </p>
-          <p className="text-lg text-gray-600">
-            Facebook: <a href="https://facebook.com" className="text-blue-500 hover:underline">facebook.com/cardeck</a>
-          </p>
         </section>
 
         <section className="md:col-span-2">
