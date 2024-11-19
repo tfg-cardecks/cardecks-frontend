@@ -33,6 +33,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
 
   useEffect(() => {
     loadCanvasState();
+    saveCanvasState();
   }, []);
 
   const saveCanvasState = () => {
