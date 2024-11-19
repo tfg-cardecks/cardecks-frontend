@@ -34,6 +34,8 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
   useEffect(() => {
     loadCanvasState();
     saveCanvasState();
+    localStorage.removeItem('frontCanvasState');
+    localStorage.removeItem('backCanvasState');
   }, []);
 
   const saveCanvasState = () => {
