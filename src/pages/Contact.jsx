@@ -32,7 +32,7 @@ export default function Contact() {
             Algunos problemas habituales pueden resolverse en línea:
           </p>
           <ul className="list-disc list-inside text-lg text-gray-600 mb-4">
-            <li><a href="/forgot-password" className="text-blue-500 hover:underline">Olvidé la contraseña</a></li>
+            <li><a href="/remember-password" className="text-blue-500 hover:underline">Olvidé la contraseña</a></li>
             {authenticated && (
               <li><a href="/user/edit" className="text-blue-500 hover:underline">Editar detalles personales</a></li>
             )}
