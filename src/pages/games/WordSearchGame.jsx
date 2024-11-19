@@ -249,12 +249,14 @@ export default function WordSearchGame() {
             </button>
           )}
           <div className="flex space-x-4 mt-4">
-            <button
-              className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-red-200 to-red-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none w-48 duration-300"
-              onClick={handleForceComplete}
-            >
-              Forzar Completado
-            </button>
+            {!allWordsFound && (
+              <button
+                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-red-200 to-red-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none w-48 duration-300"
+                onClick={handleForceComplete}
+              >
+                Forzar Completado
+              </button>
+            )}
             <button
               className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
               onClick={() => navigate('/lobby')}
