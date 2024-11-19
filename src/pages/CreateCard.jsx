@@ -43,9 +43,9 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     localStorage.setItem('backCanvasState', JSON.stringify(backElements));
   };
 
-  useEffect(() => {
-    saveCanvasState();
-  }, [frontText, backElements]);
+  // useEffect(() => {
+  //   saveCanvasState();
+  // }, [frontText, backElements]);
 
   function isValidImageUrl(url) {
     return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
