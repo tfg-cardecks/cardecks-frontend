@@ -167,7 +167,13 @@ export default function WordSearchGame() {
           window.location.href = `/wordSearchGame/${newWordSearchGameId}`;
           break;
         case 200:
-          navigate('/user/details');
+          Swal.fire({
+            icon: 'success',
+            title: 'Juego completado',
+            text: 'Has completado 25 juegos de sopa de letras.',
+          }).then(() => {
+            navigate('/user/details');
+          });
           break;
         case 401:
         case 404:
