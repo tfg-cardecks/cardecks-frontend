@@ -183,7 +183,7 @@ export default function Register() {
               <span className="ml-2 text-white">
                 Acepto los{" "}
                 <button
-                  ç type="button"
+                  type="button"
                   className="text-green-400 hover:text-green-200 underline"
                   onClick={showTerms}
                 >
