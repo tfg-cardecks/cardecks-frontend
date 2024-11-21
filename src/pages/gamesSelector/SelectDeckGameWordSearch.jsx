@@ -5,15 +5,6 @@ import { API_URL } from '../../config';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import wordsearch from '../../icon/wordsearch.png';
-import guesstheword from '../../icon/guesstheword.png';
-import guesstheimage from '../../icon/guesstheimage.png';
-import guessthetext from '../../icon/guesstheimage.png';
-import memoryGame from '../../icon/guesstheimage.png';
-import strokeOrderGame from '../../icon/guesstheimage.png';
-import matchingGame from '../../icon/guesstheimage.png';
-import hangmanGame from '../../icon/guesstheimage.png';
-import speedMemoryWordGame from '../../icon/guesstheimage.png';
-import speedMemoryImageGame from '../../icon/guesstheimage.png';
 
 export default function SelectDeckGameWordSearch() {
   const { authenticated } = useAuthContext();
@@ -28,32 +19,43 @@ export default function SelectDeckGameWordSearch() {
 
   const gameTypes = [
     { type: 'WordSearchGame', name: 'Sopa de Letras', icon: wordsearch },
-    { type: 'GuessTheWordGame', name: 'Adivina la Palabra', icon: guesstheword },
-    { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
-    { type: 'GuessTheTextGame', name: 'Adivina el Texto', icon: guessthetext },
-    { type: 'MemoryGame', name: 'Juego de Memoria', icon: memoryGame },
-    { type: 'StrokeOrderGame', name: 'Orden de trazos', icon: strokeOrderGame },
-    { type: 'MatchingGame', name: 'Juego de Relacionar', icon: matchingGame },
-    { type: 'HangmanGame', name: 'Juego del Ahorcado', icon: hangmanGame },
-    { type: 'SpeedMemoryWordGame', name: 'Juego de Memorización Rápida de Palabra', icon: speedMemoryWordGame },
-    { type: 'SpeedMemoryImageGame', name: 'Juego de Memorización Rápida de Imagen', icon: speedMemoryImageGame },
   ];
 
   const gameInfo = {
-    numberOfCards: 5,
-    numberOfWordsToSearch: 4,
-    wordSize: 'Entre 2 y 10 caracteres',
-    allowedWordTypes: [
-      'Palabras con espacios: Se limpian a letras concatenadas. Ejemplo: "MI CASA" se convierte en "MICASA".',
-      'Palabras con acentos: Se eliminan los acentos. Ejemplo: "CAFÉ" se convierte en "CAFE".',
-      'Palabras con caracteres especiales o números: Se eliminan caracteres especiales y números. Ejemplo: "CÓDIGO! 123" se convierte en "CODIGO".',
-      'Palabras con letras mayúsculas y minúsculas: Se convierten a mayúsculas. Ejemplo: "Hola Mundo" se convierte en "HOLAMUNDO".'
+    title: "Sopa de Letras",
+    description:
+      "Un juego interactivo donde debes encontrar palabras ocultas en una cuadrícula de letras.",
+    rules: [
+      "El juego selecciona 4 palabras aleatorias de las cartas del mazo elegido.",
+      "Las palabras deben tener entre 2 y 10 caracteres después de limpiarlas (remover espacios, caracteres especiales, etc.).",
+      "Encuentra todas las palabras ocultas en la cuadrícula para completar el juego.",
+      "Tienes un número limitado de intentos incorrectos para completar todas las palabras del juego.",
+      "Puedes jugar hasta 25 juegos antes de reiniciar el contador de juegos completados.",
     ],
-    notAllowedWordTypes: [
-      'Palabras que, una vez limpiadas, no contengan letras. Ejemplo: "123!!!" se convierte en "" (no permitida porque no contiene letras).',
-      'Palabras que queden vacías tras el proceso de limpieza. Ejemplo: "!!!" se convierte en "" (queda vacía, no permitida).'
+    wordProcessing: {
+      allowedWordTypes: [
+        "Palabras con espacios: Se limpian y se concatenan. Ejemplo: 'MI CASA' → 'MICASA'.",
+        "Palabras con acentos: Se eliminan los acentos. Ejemplo: 'CAFÉ' → 'CAFE'.",
+        "Palabras con caracteres especiales o números: Se eliminan. Ejemplo: 'CÓDIGO! 123' → 'CODIGO'.",
+        "Palabras en minúsculas y mayúsculas: Se convierten a mayúsculas. Ejemplo: 'Hola Mundo' → 'HOLAMUNDO'.",
+      ],
+      notAllowedWordTypes: [
+        "Palabras que, tras el proceso de limpieza, no contengan letras. Ejemplo: '123!!!' → ''.",
+        "Palabras que queden vacías tras el proceso de limpieza. Ejemplo: '!!!' → ''.",
+      ],
+    },
+    gameOverConditions: [
+      "Encuentra todas las palabras para completar el juego.",
+      "Si fallas demasiadas veces, perderás la partida.",
+      "Puedes forzar la finalización de un juego en progreso, pero no contará como completado.",
     ],
-    totalGamesBeforeReset: 25,
+    tips: [
+      "Usa mazos con palabras relevantes y de tamaño adecuado para obtener una mejor experiencia.",
+      "Evita palabras con caracteres especiales o demasiados números.",
+      "Busca patrones y palabras comunes primero.",
+    ],
+    maxGames: 25,
+    icon: wordsearch,
   };
 
   async function fetchDecks() {
@@ -139,7 +141,7 @@ export default function SelectDeckGameWordSearch() {
         text: 'Por favor, selecciona un mazo antes de continuar.',
       });
     }
-  };
+  }
 
   const handleResumeGame = () => {
     if (inProgressGameId) {
@@ -174,14 +176,20 @@ export default function SelectDeckGameWordSearch() {
       </div>
       {showInfo ? (
         <div className="bg-blue-100 p-4 rounded-lg shadow-lg mb-4">
-          <h2 className="text-2xl font-bold mb-2">Información del Juego</h2>
-          <p className="mb-2">Número de Cartas mínimo: {gameInfo.numberOfCards}</p>
-          <p className="mb-2">Número de Palabras a Buscar: {gameInfo.numberOfWordsToSearch}</p>
-          <p className="mb-2">Tamaño de las Palabras: {gameInfo.wordSize}</p>
+          <h2 className="text-2xl font-bold mb-2">{gameInfo.title}</h2>
+          <p className="mb-2">{gameInfo.description}</p>
+          <div className="mb-2">
+            <h3 className="font-bold">Reglas:</h3>
+            <ul className="list-disc list-inside">
+              {gameInfo.rules.map((rule, index) => (
+                <li key={index}>{rule}</li>
+              ))}
+            </ul>
+          </div>
           <div className="mb-2">
             <h3 className="font-bold">Tipos de Palabras Permitidas:</h3>
             <ul className="list-disc list-inside">
-              {gameInfo.allowedWordTypes.map((type, index) => (
+              {gameInfo.wordProcessing.allowedWordTypes.map((type, index) => (
                 <li key={index}>{type}</li>
               ))}
             </ul>
@@ -189,12 +197,28 @@ export default function SelectDeckGameWordSearch() {
           <div className="mb-2">
             <h3 className="font-bold">Tipos de Palabras No Permitidas:</h3>
             <ul className="list-disc list-inside">
-              {gameInfo.notAllowedWordTypes.map((type, index) => (
+              {gameInfo.wordProcessing.notAllowedWordTypes.map((type, index) => (
                 <li key={index}>{type}</li>
               ))}
             </ul>
           </div>
-          <p className="mb-2">Número Total de Juegos hasta Reiniciar: {gameInfo.totalGamesBeforeReset}</p>
+          <div className="mb-2">
+            <h3 className="font-bold">Condiciones de Fin del Juego:</h3>
+            <ul className="list-disc list-inside">
+              {gameInfo.gameOverConditions.map((condition, index) => (
+                <li key={index}>{condition}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="mb-2">
+            <h3 className="font-bold">Consejos:</h3>
+            <ul className="list-disc list-inside">
+              {gameInfo.tips.map((tip, index) => (
+                <li key={index}>{tip}</li>
+              ))}
+            </ul>
+          </div>
+          <p className="mb-2">Número Total de Juegos hasta Reiniciar: {gameInfo.maxGames}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ marginTop: "1%" }}>
