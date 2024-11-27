@@ -27,7 +27,7 @@ export default function SelectDeckGameWordSearch() {
       "Un juego interactivo donde debes encontrar palabras ocultas en una cuadrícula de letras.",
     rules: [
       "El juego selecciona 4 palabras aleatorias de las cartas del mazo elegido.",
-      "Las palabras deben tener entre 2 y 10 caracteres después de limpiarlas (remover espacios, caracteres especiales, etc.).",
+      "Las palabras deben tener entre 2 y 9 caracteres después de limpiarlas (remover espacios, caracteres especiales, etc.).",
       "Encuentra todas las palabras ocultas en la cuadrícula para completar el juego.",
       "Tienes un número limitado de intentos incorrectos para completar todas las palabras del juego.",
       "Puedes jugar hasta 25 juegos antes de reiniciar el contador de juegos completados.",
