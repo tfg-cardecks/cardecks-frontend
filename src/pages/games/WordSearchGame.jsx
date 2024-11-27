@@ -138,7 +138,13 @@ export default function WordSearchGame() {
           window.location.href = `/wordSearchGame/${newWordSearchGameId}`;
           break;
         case 200:
-          navigate('/user/details');
+          Swal.fire({
+            icon: 'success',
+            title: 'Juego completado',
+            text: 'Has completado 25 juegos de ahorcado.',
+          }).then(() => {
+            navigate('/user/details');
+          });
           break;
         case 401:
         case 404:
@@ -169,10 +175,10 @@ export default function WordSearchGame() {
         case 200:
           Swal.fire({
             icon: 'success',
-            title: 'Juego completado',
-            text: 'Has completado 25 juegos de sopa de letras.',
+            title: 'Juego completado forzosamente',
+            text: 'El juego ha sido completado forzosamente.',
           }).then(() => {
-            navigate('/user/details');
+            navigate('/lobby');
           });
           break;
         case 401:
