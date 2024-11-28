@@ -14,6 +14,12 @@ import img6 from '../../images/imagesHangman/6.png';
 
 const images = [img0, img1, img2, img3, img4, img5, img6];
 
+function cleanWord(word) {
+  const withoutSpaces = word.replace(/\s+/g, '');
+  const withoutAccents = withoutSpaces.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
+  return withoutAccents.replace(/[^A-Z]/gi, '').toUpperCase();
+}
+
 export default function HangmanGame() {
   const { hangmanGameId } = useParams();
   const navigate = useNavigate();
@@ -76,7 +82,9 @@ export default function HangmanGame() {
       return;
     }
 
-    if (gameData.words[gameData.currentWordIndex].includes(letter)) {
+    const cleanedWord = cleanWord(gameData.words[gameData.currentWordIndex]);
+
+    if (cleanedWord.includes(letter)) {
       setGuessedLetters([...guessedLetters, letter]);
     } else {
       setWrongLetters([...wrongLetters, letter]);
@@ -98,7 +106,7 @@ export default function HangmanGame() {
   }, [remainingAttempts, gameData]);
 
   useEffect(() => {
-    if (gameData && gameData.words[gameData.currentWordIndex].split('').every(letter => guessedLetters.includes(letter))) {
+    if (gameData && cleanWord(gameData.words[gameData.currentWordIndex]).split('').every(letter => guessedLetters.includes(letter))) {
       Swal.fire({
         icon: 'success',
         title: '¡Has completado la palabra!',
@@ -195,8 +203,8 @@ export default function HangmanGame() {
     if (!gameData) return null;
 
     return gameData.words[gameData.currentWordIndex].split('').map((letter, index) => (
-      <span key={index} className="letter" style={{ marginRight: "10%", fontSize: '2.5rem' }}>
-        {guessedLetters.includes(letter) ? letter : '_'}
+      <span key={index} className="letter" style={{ marginRight: "7%", fontSize: '2.5rem' }}>
+        {guessedLetters.includes(cleanWord(letter)) ? letter : '_'}
       </span>
     ));
   };
@@ -218,7 +226,7 @@ export default function HangmanGame() {
           <div>
             {renderImage()}
           </div>
-          <div>
+          <div className='mr-6'>
             <div className="word">{renderWord()}</div>
             <div className="guess-input mt-4">
               <input
@@ -258,7 +266,7 @@ export default function HangmanGame() {
                 </div>
               </div>
             </div>
-            {gameLost || gameWon || gameData.words[gameData.currentWordIndex].split('').every(letter => guessedLetters.includes(letter)) ? (
+            {gameLost || gameWon || cleanWord(gameData.words[gameData.currentWordIndex]).split('').every(letter => guessedLetters.includes(letter)) ? (
               <button
                 className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none mt-4"
                 onClick={() => handleNextGame(!gameLost)}

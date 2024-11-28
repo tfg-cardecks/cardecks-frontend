@@ -16,7 +16,7 @@ import speedMemoryImageGame from '../icon/guesstheimage.png';
 const gameTypes = [
   { type: 'WordSearchGame', name: 'Sopa de Letras', icon: wordsearch },
   // { type: 'GuessTheWordGame', name: 'Adivina la Palabra', icon: guesstheword },
-  // { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
+  { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
   // { type: 'GuessTheTextGame', name: 'Adivina el Texto', icon: guessthetext },
   // { type: 'MemoryGame', name: 'Juego de Memoria', icon: memoryGame },
   // { type: 'StrokeOrderGame', name: 'Orden de trazos', icon: strokeOrderGame },
@@ -40,7 +40,7 @@ export default function LobbyGames() {
       <div className="game-type-list">
         {gameTypes.map((game) => (
           <div key={game.type} className="game-type-item" onClick={() => handleGameTypeClick(game.type)}>
-            <img src={game.icon} style={{ width: '145px', height: '115px' }} alt={game.name} />
+            <img src={game.icon} style={{ width: '145px', height: '125px' }} alt={game.name} />
             <div className="game-type-info">
               <h2>{game.name}</h2>
             </div>
