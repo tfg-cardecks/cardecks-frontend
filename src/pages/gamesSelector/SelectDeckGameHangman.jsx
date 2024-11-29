@@ -26,8 +26,7 @@ export default function SelectDeckGameHangman() {
     description:
       "Un juego interactivo donde debes adivinar palabras seleccionadas de las cartas de un mazo antes de que se complete la figura del ahorcado.",
     rules: [
-      "El juego selecciona 5 palabras aleatorias de las cartas del mazo elegido.",
-      "Las palabras deben tener entre 2 y 10 caracteres después de limpiarlas (remover espacios, caracteres especiales, etc.).",
+      "Las palabras deben tener entre 2 y 10 caracteres.",
       "Cada palabra debe ser adivinada letra por letra antes de pasar a la siguiente.",
       "Tienes un número limitado de intentos incorrectos para completar todas las palabras del juego.",
       "Puedes jugar hasta 25 juegos antes de reiniciar el contador de juegos completados.",
@@ -45,7 +44,7 @@ export default function SelectDeckGameHangman() {
       ],
     },
     gameOverConditions: [
-      "Adivina todas las palabras para completar el juego.",
+      "Adivina todas las letras para completar el juego.",
       "Si fallas demasiadas letras, perderás la partida.",
       "Puedes forzar la finalización de un juego en progreso, pero no contará como completado.",
     ],

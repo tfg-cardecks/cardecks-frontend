@@ -26,15 +26,13 @@ export default function SelectDeckGameGuessTheImage() {
     description:
       "Un juego interactivo donde debes acertar el nombre de la imagen.",
     rules: [
+      "Se selecciona una imagen aleatoria de las cartas del mazo elegido.",
       "El juego selecciona una imagen aleatoria del mazo elegido.",
       "Puedes jugar hasta 25 juegos antes de reiniciar el contador de juegos completados.",
     ],
     wordProcessing: {
       allowedWordTypes: [
-        "Palabras con espacios: Se limpian y se concatenan. Ejemplo: 'MI CASA' → 'MICASA'.",
-        "Palabras con acentos: Se eliminan los acentos. Ejemplo: 'CAFÉ' → 'CAFE'.",
         "Palabras con caracteres especiales o números: Se eliminan. Ejemplo: 'CÓDIGO! 123' → 'CODIGO'.",
-        "Palabras en minúsculas y mayúsculas: Se convierten a mayúsculas. Ejemplo: 'Hola Mundo' → 'HOLAMUNDO'.",
       ],
       notAllowedWordTypes: [
         "Palabras que, tras el proceso de limpieza, no contengan letras. Ejemplo: '123!!!' → ''.",
@@ -43,17 +41,17 @@ export default function SelectDeckGameGuessTheImage() {
     },
     gameOverConditions: [
       "Adivina correctamente el nombre de la imagen para completar el juego.",
-      "Si fallas demasiadas veces, perderás la partida.",
       "Puedes forzar la finalización de un juego en progreso, pero no contará como completado.",
     ],
     tips: [
       "Usa mazos con imágenes relevantes y de alta calidad para obtener una mejor experiencia.",
       "Evita imágenes con demasiados detalles o elementos confusos.",
       "Observa las pistas cuidadosamente y piensa en posibles respuestas antes de adivinar.",
+      "Practica con diferentes mazos para mejorar tus habilidades y aprender nuevas palabras.",
     ],
     maxGames: 25,
-    icon: guesstheimage, // Sustituye este valor con la referencia al ícono que uses.
-  };  
+    icon: guesstheimage,
+  };
 
   async function fetchDecks() {
     try {
@@ -90,7 +88,7 @@ export default function SelectDeckGameGuessTheImage() {
   };
 
   async function handleStartGame() {
-    
+
     if (selectedDeck) {
       try {
         setIsCreating(true);

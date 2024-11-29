@@ -17,21 +17,23 @@ export default function GuessTheImageGame() {
   async function fetchGameData() {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await axios.get(`${API_URL}/api/guessTheImageGame/${guessTheImageGameId}`, {
+      const response = await fetch(`${API_URL}/api/guessTheImageGame/${guessTheImageGameId}`, {
+        method: 'GET',
         headers: {
-          Authorization: ` ${token}`,
+          Authorization: `${token}`,
         },
       });
+      const data = await response.json();
       switch (response.status) {
         case 200:
-          setGameData(response.data);
+          setGameData(data);
           setSelectedAnswer('');
           setAnswerSubmitted(false);
           setIsCorrect(false);
           break;
         case 401:
         case 404:
-          setErrorMessage(response.data.message);
+          setErrorMessage(data.message);
           break;
         default:
           break;
@@ -55,18 +57,23 @@ export default function GuessTheImageGame() {
   async function handleAnswerSubmit() {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await axios.post(
+      const response = await fetch(
         `${API_URL}/api/currentGuessTheImageGame/${guessTheImageGameId}`,
         { selectedAnswer, timeTaken: time },
         {
+          method: 'POST',
           headers: {
+            'Content-Type': 'application/json',
             Authorization: `${token}`,
           },
+          body: JSON.stringify({ selectedAnswer, timeTaken: time }),
         }
       );
+      const data = await response.json();
+
       switch (response.status) {
         case 201:
-          const newGuessTheImageGameId = response.data.guessTheImageGameId;
+          const newGuessTheImageGameId = data.guessTheImageGameId;
           navigate(`/guessTheImageGame/${newGuessTheImageGameId}`);
           break;
         case 200:
@@ -81,7 +88,7 @@ export default function GuessTheImageGame() {
         case 401:
         case 404:
         case 400:
-          setErrorMessage(response.data.message);
+          setErrorMessage(data.message);
           break;
         default:
           break;
@@ -130,7 +137,7 @@ export default function GuessTheImageGame() {
     if (!gameData || !gameData.image) return null;
 
     return (
-      <div className="image-container" style={{ maxWidth: '500px', margin: '0 auto'}}>
+      <div className="image-container" style={{ maxWidth: '500px', margin: '0 auto' }}>
         <img src={gameData.image} alt="Adivina la imagen" className="w-full h-auto" />
         <p className="mt-4 text-center">{time} segundos</p>
       </div>
