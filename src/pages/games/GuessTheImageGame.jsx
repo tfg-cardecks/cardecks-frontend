@@ -59,7 +59,6 @@ export default function GuessTheImageGame() {
       const token = localStorage.getItem('access_token');
       const response = await fetch(
         `${API_URL}/api/currentGuessTheImageGame/${guessTheImageGameId}`,
-        { selectedAnswer, timeTaken: time },
         {
           method: 'POST',
           headers: {
