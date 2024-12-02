@@ -32,6 +32,7 @@ export default function HangmanGame() {
   const [gameLost, setGameLost] = useState(false);
   const [gameWon, setGameWon] = useState(false);
   const [time, setTime] = useState(0);
+  const [deckName, setDeckName] = useState('');
 
   async function fetchGameData() {
     try {
@@ -65,9 +66,39 @@ export default function HangmanGame() {
     }
   }
 
+  async function fetchDeck() {
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await axios.get(`${API_URL}/api/deck/${gameData.deck}`, {
+        headers: {
+          Authorization: ` ${token}`,
+        },
+      });
+      switch (response.status) {
+        case 200:
+          setDeckName(response.data.name.replace(/(-[a-z0-9]{6,})+$/, ''));
+          break;
+        case 401:
+        case 404:
+          setErrorMessage(response.data.message);
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      setErrorMessage('Error al cargar la baraja');
+    }
+  }
+
   useEffect(() => {
     fetchGameData();
   }, [hangmanGameId]);
+
+  useEffect(() => {
+    if (gameData) {
+      fetchDeck();
+    }
+  }, [gameData]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -217,6 +248,7 @@ export default function HangmanGame() {
   return (
     <div className="container mx-auto p-4 flex flex-col items-center">
       <h1 className="text-3xl font-bold mb-4 text-center">Juego del Ahorcado</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center">Mazo: {deckName}</h1>
       {errorMessage ? (
         <p className="text-red-600">{errorMessage}</p>
       ) : !gameData ? (
