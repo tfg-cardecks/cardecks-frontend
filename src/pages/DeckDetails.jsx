@@ -174,7 +174,7 @@ export default function DeckDetails() {
     deck ? (
       <div className="container mx-auto p-4 w-4/5">
         <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-6">
-          <h1 className="text-3xl font-bold mb-4">{deck.name}</h1>
+          <h1 className="text-3xl font-bold mb-4">{deck.name.replace(/(-[a-z0-9]{6,})+$/, '')}</h1>
           {error && <p className="text-red-600 mb-4">{error}</p>}
 
           <p className="mb-2">{deck.description}</p>
@@ -219,7 +219,7 @@ export default function DeckDetails() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {deck.cards.map((card) => (
                 <Link to={`/card/${card._id}`} key={card._id} className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <h2 className="text-xl font-bold mb-2">{card.title}</h2>
+                  <h2 className="text-xl font-bold mb-2">{card.title.replace(/(-[a-z0-9]{6,})+$/, '')}</h2>
                   <p className="mb-2">{card.description}</p>
                   <p className="text-gray-500">Tema: {card.theme}</p>
                   <p className="text-gray-500">Fecha de creación: {new Date(card.createdAt).toLocaleDateString()}</p>

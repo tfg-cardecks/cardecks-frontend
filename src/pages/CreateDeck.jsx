@@ -78,16 +78,25 @@ export default function CreateDeck() {
     });
   }
 
+  function capitalizeAfterHyphen(str) {
+    return str.replace(/-./g, match => match.toUpperCase());
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     const token = localStorage.getItem('access_token');
+    const modifiedForm = {
+      ...form,
+      name: capitalizeAfterHyphen(form.name)
+    };
+
     const res = await fetch(`${API_URL}/api/decks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `${token}`,
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify(modifiedForm),
     });
     const data = await res.json();
     switch (res.status) {
@@ -329,7 +338,7 @@ export default function CreateDeck() {
                 value={cardsPerPage}
                 onChange={(e) => {
                   setCardsPerPage(Number(e.target.value));
-                  setCurrentPage(1); 
+                  setCurrentPage(1);
                 }}
                 className="border p-2 rounded w-full"
               >

@@ -311,7 +311,7 @@ export default function MyCards() {
             className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
             onClick={() => navigate(`/card/${card._id}`)}
           >
-            <h2 className="text-xl font-bold mb-2">{card.title}</h2>
+            <h2 className="text-xl font-bold mb-2">{card.title.replace(/(-[a-z0-9]{6,})+$/, '')}</h2>
             <p className="mb-2">{card.description}</p>
             <p className="text-gray-500">Tema: {card.theme}</p>
             <p className="text-gray-500">Fecha de creación: {new Date(card.createdAt).toLocaleDateString()}</p>

@@ -277,7 +277,7 @@ export default function MyDecks() {
             onClick={() => navigate(`/deck/${deck._id}`)}
           >
             <h2 className="text-xl font-bold mb-2">
-              {deck.name}
+              {deck.name.replace(/(-[a-z0-9]{6,})+$/, '')}
             </h2>
             <p className="mb-2">{deck.description}</p>
             <p className="text-gray-500">Tema: {deck.theme}</p>

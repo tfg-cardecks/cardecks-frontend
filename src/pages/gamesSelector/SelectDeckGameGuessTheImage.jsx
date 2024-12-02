@@ -224,7 +224,7 @@ export default function SelectDeckGameGuessTheImage() {
               className={`border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer ${selectedDeck === deck._id ? 'bg-blue-100' : 'bg-white'}`}
               onClick={() => handleDeckClick(deck._id)}
             >
-              <h2 className="text-xl font-bold mb-2 text-center">{deck.name}</h2>
+              <h2 className="text-xl font-bold mb-2 text-center">{deck.name.replace(/(-[a-z0-9]{6,})+$/, '')}</h2>
               <p className="mb-2 text-center">{deck.description}</p>
               <button
                 onClick={() => handleDeckClick(deck._id)}

@@ -31,10 +31,14 @@ export default function PreviewFormCard() {
     return Object.keys(newErrors).length === 0;
   };
 
+  function capitalizeAfterHyphen(str) {
+    return str.replace(/-./g, match => match.toUpperCase());
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     if (validate()) {
-      navigate(`/create-card/${cardType}`, { state: { title, theme, cardType, userId: id } });
+      navigate(`/create-card/${cardType}`, { state: { title: capitalizeAfterHyphen(title), theme, cardType, userId: id } });
     }
   };
 
