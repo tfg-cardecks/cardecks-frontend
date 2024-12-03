@@ -71,7 +71,7 @@ export default function GuessTheImageGame() {
   useEffect(() => {
     fetchGameData();
   }, [guessTheImageGameId]);
-  
+
   useEffect(() => {
     if (gameData) {
       fetchDeck();
@@ -214,8 +214,10 @@ export default function GuessTheImageGame() {
 
   return (
     <div className="container mx-auto p-4 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-10 text-center">Adivina la Imagen</h1>
-      <h1 className="text-3xl font-bold mb-4 text-center">Mazo: {deckName}</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Adivina la Imagen</h1>
+      <h2 className="text-2xl font-semibold mb-6 text-center text-gray-700">
+        Mazo: {deckName}
+      </h2>
       {errorMessage ? (
         <p className="text-red-600">{errorMessage}</p>
       ) : !gameData ? (

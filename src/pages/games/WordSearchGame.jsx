@@ -239,7 +239,7 @@ export default function WordSearchGame() {
                 <div
                   key={cellIndex}
                   className={`border p-2 text-center cursor-pointer ${isSelected || isHighlighted ? 'bg-yellow-300' : ''}`}
-                  style={{ width: '30px', height: '30px' }}
+                  style={{ width: '30px', height: '30px', lineHeight: '20px', paddingTop: '5px' }}
                   onClick={() => handleCellClick(rowIndex, cellIndex)}
                 >
                   {cell}
@@ -278,8 +278,12 @@ export default function WordSearchGame() {
       ) : (
         <>
           <div>
-            <h1 className="text-3xl font-bold mb-4 text-center">Sopa de Letras</h1>
-            <h1 className="text-3xl font-bold mb-4 text-center">Mazo: {deckName}</h1>
+            <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-600">
+              Sopa de Letras
+            </h1>
+            <h2 className="text-2xl font-semibold mb-6 text-center text-gray-700">
+              Mazo: {deckName}
+            </h2>
             {renderGrid()}
           </div>
           <p className="mt-4">{time} segundos</p>
