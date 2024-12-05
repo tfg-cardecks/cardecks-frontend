@@ -85,7 +85,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     return lines;
   };
 
-  function validateParagraph (text, maxCharsPerLine, maxTotalChars) {
+  function validateParagraph(text, maxCharsPerLine, maxTotalChars) {
     const lines = text.split('\n');
     let totalChars = 0;
     for (let line of lines) {
@@ -147,7 +147,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
     }
   };
 
-  function handleDragEnd (e) {
+  function handleDragEnd(e) {
     const { x, y } = e.target.position();
     if (side === 'front') {
       setFrontText({ ...frontText, x, y });
@@ -252,153 +252,156 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
 
   return (
     <div className="create-card-container">
-      <h1 className="text-3xl font-bold mb-8">Crear Carta</h1>
-      {errorMessage && (
-        <pre className="text-red-500 whitespace-pre-wrap" style={{ marginBottom: "2%" }}>{errorMessage}</pre>
-      )}
-      <div className="card-info bg-gray-100 p-4 rounded-lg shadow-md mb-8">
-        <div className="card-info-item">
-          <span className="font-bold text-lg">Título:</span>
-          <span className="text-lg ml-2">{title}</span>
+      <div className="left-content ml-12">
+        <h1 className="text-3xl font-bold mb-8" style={{ marginLeft: "40%" }}>Crear Carta</h1>
+        {errorMessage && (
+          <pre className="text-red-500 whitespace-pre-wrap" style={{ marginBottom: "2%" }}>{errorMessage}</pre>
+        )}
+        <div className="card-info bg-gray-100 p-4 rounded-lg shadow-md mb-8">
+          <div className="card-info-item">
+            <span className="font-bold text-lg">Título:</span>
+            <span className="text-lg ml-2">{title}</span>
+          </div>
+          <div className="card-info-item">
+            <span className="font-bold text-lg">Tema:</span>
+            <span className="text-lg ml-2">{theme}</span>
+          </div>
+          <div className="card-info-item">
+            <span className="font-bold text-lg">Tipo de Carta:</span>
+            <span className="text-lg ml-2">{cardType === 'txtImg' ? 'Texto e Imagen' : 'Texto y Texto'}</span>
+          </div>
         </div>
-        <div className="card-info-item">
-          <span className="font-bold text-lg">Tema:</span>
-          <span className="text-lg ml-2">{theme}</span>
-        </div>
-        <div className="card-info-item">
-          <span className="font-bold text-lg">Tipo de Carta:</span>
-          <span className="text-lg ml-2">{cardType === 'txtImg' ? 'Texto e Imagen' : 'Texto y Texto'}</span>
-        </div>
-      </div>
-      <div className="toolbar bg-white p-4 rounded-lg shadow-md mb-8">
-        {(cardType !== 'txtImg' || side !== 'back') && (
-          <div className="toolbar-group mb-4">
-            <label className="block font-bold mb-2">Texto:</label>
-            <textarea
-              value={text}
-              onChange={(e) => {
-                setText(e.target.value);
-                setErrorMessage('');
-              }}
-              onKeyDown={handleKeyDown}
-              className="border p-2 rounded w-full"
-              rows="4"
-            />
-            <div className="flex space-x-2 mt-2">
-              <button
-                onClick={side === 'front' ? handleAddFrontText : handleAddBackText}
-                disabled={(side === 'front' && frontText !== null) || (side === 'back' && backText !== null && cardType === 'txtTxt')}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-              >
-                Añadir Texto
-              </button>
-              {((side === 'front' && frontText) || (side === 'back' && backElements.length > 0)) && (
+        <div className="toolbar bg-white p-4 rounded-lg shadow-md mb-8">
+          {(cardType !== 'txtImg' || side !== 'back') && (
+            <div className="toolbar-group mb-4">
+              <label className="block font-bold mb-2">Texto:</label>
+              <textarea
+                value={text}
+                onChange={(e) => {
+                  setText(e.target.value);
+                  setErrorMessage('');
+                }}
+                onKeyDown={handleKeyDown}
+                className="border p-2 rounded w-full"
+                rows="4"
+              />
+              <div className="flex space-x-2 mt-2">
                 <button
-                  onClick={() => {
-                    if (side === 'front') {
-                      setFrontText(null);
-                    } else if (side === 'back') {
-                      setBackText(null);
-                      setBackElements(backElements.filter(el => el.type !== 'text'));
-                    }
-                  }}
-                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+                  onClick={side === 'front' ? handleAddFrontText : handleAddBackText}
+                  disabled={(side === 'front' && frontText !== null) || (side === 'back' && backText !== null && cardType === 'txtTxt')}
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
                 >
-                  Eliminar Texto
+                  Añadir Texto
                 </button>
-              )}
+                {((side === 'front' && frontText) || (side === 'back' && backElements.length > 0)) && (
+                  <button
+                    onClick={() => {
+                      if (side === 'front') {
+                        setFrontText(null);
+                      } else if (side === 'back') {
+                        setBackText(null);
+                        setBackElements(backElements.filter(el => el.type !== 'text'));
+                      }
+                    }}
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+                  >
+                    Eliminar Texto
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
-        )}
-        {(cardType !== 'txtImg' || side !== 'back') && (
+          )}
+          {(cardType !== 'txtImg' || side !== 'back') && (
+            <div className="toolbar-group mb-4">
+              <label className="block font-bold mb-2">Tamaño de fuente:</label>
+              <input
+                type="number"
+                value={fontSize}
+                onChange={(e) => {
+                  setFontSize(parseInt(e.target.value));
+                  setErrorMessage("")
+                }}
+                className="border p-2 rounded w-full"
+              />
+            </div>
+          )}
+          {(cardType !== 'txtImg' || side !== 'back') && (
+            <div className="toolbar-group mb-4">
+              <label className="block font-bold mb-2">Color:</label>
+              <input
+                type="color"
+                value={color}
+                onChange={(e) => {
+                  setColor(e.target.value);
+                  setErrorMessage('');
+                }}
+                className="border p-2 rounded w-full"
+              />
+            </div>
+          )}
           <div className="toolbar-group mb-4">
-            <label className="block font-bold mb-2">Tamaño de fuente:</label>
-            <input
-              type="number"
-              value={fontSize}
+            <label className="block font-bold mb-2">Parte:</label>
+            <select
+              value={side}
               onChange={(e) => {
-                setFontSize(parseInt(e.target.value));
-                setErrorMessage("")
-              }}
-              className="border p-2 rounded w-full"
-            />
-          </div>
-        )}
-        {(cardType !== 'txtImg' || side !== 'back') && (
-          <div className="toolbar-group mb-4">
-            <label className="block font-bold mb-2">Color:</label>
-            <input
-              type="color"
-              value={color}
-              onChange={(e) => {
-                setColor(e.target.value);
+                setSide(e.target.value);
                 setErrorMessage('');
               }}
               className="border p-2 rounded w-full"
-            />
+            >
+              <option value="front">Delantera</option>
+              <option value="back">Trasera</option>
+            </select>
           </div>
-        )}
-        <div className="toolbar-group mb-4">
-          <label className="block font-bold mb-2">Parte:</label>
-          <select
-            value={side}
-            onChange={(e) => {
-              setSide(e.target.value);
-              setErrorMessage('');
-            }}
-            className="border p-2 rounded w-full"
+          {cardType === 'txtImg' && side === 'back' && (
+            <div className="toolbar-group mb-4">
+              <label className="block font-bold mb-2">URL de la Imagen:</label>
+              <input
+                type="text"
+                value={imageUrl}
+                onChange={(e) => {
+                  setImageUrl(e.target.value);
+                  setErrorMessage('');
+                }}
+                className="border p-2 rounded w-full"
+              />
+              <div className="flex space-x-2 mt-2">
+                <button
+                  onClick={handleImageUrlUpload}
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                >
+                  Cargar Imagen
+                </button>
+                {backElements.some(el => el.type === 'image') && (
+                  <button
+                    onClick={handleDeleteImage}
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+                  >
+                    Eliminar Imagen
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="flex justify-center mt-4 mb-4 space-x-4">
+          <button
+            className="bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none w-full"
+            onClick={handleCreateCard}
           >
-            <option value="front">Delantera</option>
-            <option value="back">Trasera</option>
-          </select>
+            Crear Carta
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none w-full"
+          >
+            Cancelar
+          </button>
         </div>
-        {cardType === 'txtImg' && side === 'back' && (
-          <div className="toolbar-group mb-4">
-            <label className="block font-bold mb-2">URL de la Imagen:</label>
-            <input
-              type="text"
-              value={imageUrl}
-              onChange={(e) => {
-                setImageUrl(e.target.value);
-                setErrorMessage('');
-              }}
-              className="border p-2 rounded w-full"
-            />
-            <div className="flex space-x-2 mt-2">
-              <button
-                onClick={handleImageUrlUpload}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-              >
-                Cargar Imagen
-              </button>
-              {backElements.some(el => el.type === 'image') && (
-                <button
-                  onClick={handleDeleteImage}
-                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
-                >
-                  Eliminar Imagen
-                </button>
-              )}
-            </div>
-          </div>
-        )}
+
       </div>
-      <div className="flex justify-center mt-4 space-x-4">
-        <button
-          className="bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none w-full"
-          onClick={handleCreateCard}
-        >
-          Crear Carta
-        </button>
-        <button
-          type="button"
-          onClick={() => navigate('/')}
-          className="bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none w-full"
-        >
-          Cancelar
-        </button>
-      </div>
-      <div className="canvas-container">
+      <div className="canvas-container mt-12">
         <Stage width={300} height={500} className="card-canvas">
           <Layer>
             {side === 'front' && (

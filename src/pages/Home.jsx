@@ -56,7 +56,7 @@ export default function Home() {
             <div className="flex flex-col items-start justify-between">
               <div className="flex flex-row w-full p-4">
                 <div className="w-1/2 p-2">
-                  <h3 className="text-4xl font-bold mt-20">¡Crea tus propias FlashCards y toma el control de tu aprendizaje!</h3>
+                  <h3 className="text-4xl font-bold mt-4">¡Crea tus propias FlashCards y toma el control de tu aprendizaje!</h3>
                   <br />
                   <p className="text-lg">Con Cardecks, puedes diseñar tarjetas de estudio personalizadas para hacer que el aprendizaje sea más atractivo y efectivo. ¡Adapta tus sesiones de estudio a tus necesidades y objetivos personales!</p>
                   <p className="text-lg">¡Recuerda, es tu estudio, tu estilo!</p>
@@ -70,7 +70,7 @@ export default function Home() {
             <div className="flex flex-col items-start justify-between">
               <div className="flex flex-row w-full p-4">
                 <div className="w-1/2 p-2">
-                  <h3 className="text-4xl font-bold mt-20">¡Aprende cualquier cosa mientras te diviertes jugando!</h3>
+                  <h3 className="text-4xl font-bold mt-4">¡Aprende cualquier cosa mientras te diviertes jugando!</h3>
                   <br />
                   <p className="text-lg">Descubre una nueva forma de aprender cualquier tema mientras te diviertes. Personaliza tus cartas y participa en juegos interactivos que te ayudarán a mejorar tus conocimientos de manera entretenida y eficaz.</p>
                   <p className="text-lg">¡Aprender nunca ha sido tan entretenido!</p>
@@ -84,7 +84,7 @@ export default function Home() {
             <div className="flex flex-col items-start justify-between">
               <div className="flex flex-row w-full p-4">
                 <div className="w-1/2 p-2">
-                  <h3 className="text-4xl font-bold mt-16">Convierte el estudio en un juego: ¡Descarga nuestros manuales y empieza ahora!</h3>
+                  <h3 className="text-4xl font-bold mt-4">Convierte el estudio en un juego: ¡Descarga nuestros manuales y empieza ahora!</h3>
                   <br />
                   <p className="text-lg">Accede a una colección de cuadernos diseñados para hacer que el aprendizaje sea más divertido y efectivo. Con nuestras guías interactivas, aprenderás a tu propio ritmo mientras disfrutas de cada paso del camino.</p>
                   <p className="text-lg">¡Es hora de convertir el estudio en una aventura que no querrás dejar!</p>
