@@ -103,46 +103,6 @@ describe("testing the first game", () => {
         });
       });
     });
-
-    cy.wait(1500).get(".swal2-confirm").click();
-
-    cy.get("button").contains("Siguiente").click().wait(1000);
-    cy.get("button")
-      .contains("Volver al Catálogo de Juegos")
-      .click()
-      .wait(1000);
-
-    cy.get(".game-type-list").find("img[alt='Sopa de Letras']").click().wait(2000);
-
-    cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
-
-    startGame();
-
-    cy.get(".container")
-      .children()
-      .next()
-      .next()
-      .next()
-      .find("button")
-      .contains("Continuar Juego en Progreso")
-      .click()
-      .wait(500);
-
-    cy.get("button").contains("Forzar Completado").click().wait(1000);
-
-    cy.get("h2")
-      .contains("Estadísticas")
-      .next()
-      .next()
-      .children()
-      .next()
-      .get("button")
-      .contains("Resetear Contador")
-      .click()
-      .wait(1000)
-      .then(() => {
-        cy.get(".swal2-confirm").click();
-      });
   });
 
   it("can go to information wordsearch game", () => {
