@@ -40,7 +40,10 @@ function clickToCorrectAnswer(jsonImages, jsonContents) {
           });
       });
     });
-  cy.get("button").contains("Enviar Respuesta").click({ force: true }).wait(500);
+  cy.get("button")
+    .contains("Enviar Respuesta")
+    .click({ force: true })
+    .wait(500);
   cy.get(".swal2-confirm").click();
   cy.get("button").contains("Siguiente").click({ force: true }).wait(1000);
 }
@@ -80,35 +83,34 @@ beforeEach(() => {
   setupToPlayGames();
 });
 
-// describe("testing guessTheImageGame", () => {
-//   it("can`t play guessTheImageGame (not enought cards)", () => {
-//     clickToNavElement("Mazos");
-//     cy.get("a").contains("Crear Mazo").click().wait(2000);
+describe("testing guessTheImageGame", () => {
+  it("can`t play guessTheImageGame (not enought cards)", () => {
+    clickToNavElement("Mazos");
+    cy.get("a").contains("Crear Mazo").click().wait(2000);
 
-//     typeAndAssert("input[name='name']", generateRandomText());
-//     typeAndAssert("input[name='description']", generateRandomText());
-//     typeAndAssert("input[name='theme']", generateRandomText());
-//     cy.get("button").contains("Crear Mazo").click().wait(2000);
+    typeAndAssert("input[name='name']", generateRandomText());
+    typeAndAssert("input[name='description']", generateRandomText());
+    typeAndAssert("input[name='theme']", generateRandomText());
+    cy.get("button").contains("Crear Mazo").click().wait(2000);
 
-//     cy.get("h2")
-//       .contains("Cartas")
-//       .next()
-//       .find('input[type="file"]')
-//       .selectFile("cypress/e2e/json/cascada.json");
-//     cy.get("button").contains("Importar Carta a Mazo").click().wait(2000);
+    cy.get("h2")
+      .contains("Cartas")
+      .next()
+      .find('input[type="file"]')
+      .selectFile("cypress/e2e/json/cascada.json");
+    cy.get("button").contains("Importar Carta a Mazo").click().wait(2000);
 
-//     cy.visit("http://localhost:5173/lobby").wait(2000);
-//     cy.get(".game-type-list")
-//       .find("img[alt='Adivina la Imagen']")
-//       .click()
-//       .wait(2000);
+    cy.visit("http://localhost:5173/lobby").wait(2000);
+    cy.get(".game-type-list")
+      .find("img[alt='Adivina la Imagen']")
+      .click()
+      .wait(2000);
 
-//     cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
+    cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
-//     startGame();
-//   });
-
-// });
+    startGame();
+  });
+});
 
 describe("testing guessTheImageGame", () => {
   it("can play guessTheImageGame and complete the game", () => {

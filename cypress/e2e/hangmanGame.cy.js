@@ -16,7 +16,7 @@ function startGame() {
     .next()
     .find("button")
     .contains("Iniciar Juego")
-    .click()
+    .click({ force: true })
     .wait(500);
 }
 

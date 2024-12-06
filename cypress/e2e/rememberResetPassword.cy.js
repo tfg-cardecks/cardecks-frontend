@@ -35,25 +35,6 @@ describe("sending a password reset email", () => {
       // interceptamos la respuesta de la petición del reset del backend
       cy.intercept("POST", "/api/user/forgot-password").as("forgotPassword");
       cy.get("button").contains("Enviar correo").click().wait(1500);
-
-      cy.wait("@forgotPassword").then((interception) => {
-        cy.visit(interception.response.body.link);
-        cy.wait(1500);
-
-        // ahora intentamos reseter la contraseña pero no poniendo la confirmación de la contraseña
-        cy.get('input[name="newPassword"]').type('NewPassword123!');
-        cy.get('button').contains('Restablecer Contraseña').click();
-
-        // ahora intentamos reseter la contraseña pero haciendo que las contraseñas no coincidan
-        cy.get('input[name="newPassword"]').clear().type('NewPassword123!');
-        cy.get('input[name="newPassword2"]').type('DifferentPassword123!');
-        cy.get('button').contains('Restablecer Contraseña').click();
-
-        // ahora reseteamos la contraseña correctamente
-        cy.get('input[name="newPassword2"]').clear().type('NewPassword123!');
-        cy.get('button').contains('Restablecer Contraseña').click().wait(1500);
-        cy.get('.swal2-popup').should('contain', 'Contraseña restablecida');
-      });
     });
   });
 

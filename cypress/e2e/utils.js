@@ -111,11 +111,11 @@ export function setupToPlayGames() {
 }
 
 export function generateRandomText() {
-  return `Test Deck ${Math.floor(Math.random() * 1000)}`;
+  return `Test Deck ${Math.floor(Math.random() * 100000)}`;
 }
 
 export function generateRandomTextCard() {
-  return `Test Card3 ${Math.floor(Math.random() * 1000)}`;
+  return `Test Card3 ${Math.floor(Math.random() * 100000)}`;
 }
 
 export function selectedFileToImportAndSubmit(path) {
