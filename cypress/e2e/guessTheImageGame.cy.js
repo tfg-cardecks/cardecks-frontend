@@ -171,37 +171,38 @@ describe("testing guessTheImageGame", () => {
     goToCatalogoDeJuegos();
   });
 
-  // it("can play guessTheImageGame and show ¡Incorrecto! error and then ff game", () => {
-  //   clickToNavElement("Mazos");
-  //   cy.get("a").contains("Crear Mazo").click().wait(2000);
+  it("can play guessTheImageGame and show ¡Incorrecto! error and then ff game", () => {
+    clickToNavElement("Mazos");
+    cy.get("a").contains("Crear Mazo").click().wait(2000);
 
-  //   typeAndAssert("input[name='name']", generateRandomText());
-  //   typeAndAssert("input[name='description']", generateRandomText());
-  //   typeAndAssert("input[name='theme']", generateRandomText());
-  //   cy.get("button").contains("Crear Mazo").click().wait(2000);
+    typeAndAssert("input[name='name']", generateRandomText());
+    typeAndAssert("input[name='description']", generateRandomText());
+    typeAndAssert("input[name='theme']", generateRandomText());
+    cy.get("button").contains("Crear Mazo").click().wait(2000);
 
-  //   selectedFileToImportAndSubmit("cypress/e2e/json/nubes.json");
-  //   selectedFileToImportAndSubmit("cypress/e2e/json/cascada.json");
-  //   selectedFileToImportAndSubmit("cypress/e2e/json/hojas.json");
-  //   selectedFileToImportAndSubmit("cypress/e2e/json/lluvia.json");
-  //   selectedFileToImportAndSubmit("cypress/e2e/json/arbol.json");
+    selectedFileToImportAndSubmit("cypress/e2e/json/nubes.json");
+    selectedFileToImportAndSubmit("cypress/e2e/json/cascada.json");
+    selectedFileToImportAndSubmit("cypress/e2e/json/hojas.json");
+    selectedFileToImportAndSubmit("cypress/e2e/json/lluvia.json");
+    selectedFileToImportAndSubmit("cypress/e2e/json/arbol.json");
 
-  //   cy.visit("http://localhost:5173/lobby").wait(2000);
-  //   cy.get(".game-type-list")
-  //     .find("img[alt='Adivina la Imagen']")
-  //     .click()
-  //     .wait(2000);
+    cy.visit("http://localhost:5173/lobby").wait(2000);
+    cy.get(".game-type-list")
+      .find("img[alt='Adivina la Imagen']")
+      .click()
+      .wait(2000);
 
-  //   cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
+    cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
-  //   startGame();
-  //   cy.get(".swal2-confirm").click();
+    startGame();
+    cy.get(".swal2-confirm").click();
 
-  //   cy.wait(2000);
+    cy.wait(2000);
 
-  //   cy.get('.options-container button').eq(0).click().wait(500);
-  //   cy.get("button").contains("Enviar Respuesta").click().wait(500);
-  //   cy.get(".swal2-confirm").click();
-  //   cy.get("button").contains("Forzar Completado").click().wait(500);
-  // });
+    cy.get('.options-container button').eq(0).click().wait(500);
+    cy.get("button").contains("Enviar Respuesta").click().wait(500);
+    cy.get(".swal2-confirm").click();
+    cy.get("button").contains("Forzar Completado").click().wait(500);
+    cy.get(".swal2-confirm").click();
+  });
 });

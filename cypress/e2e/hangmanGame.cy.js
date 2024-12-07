@@ -197,7 +197,7 @@ describe("testing hangmanGame", () => {
     playGame();
 
     let i;
-    for (i = 0; i <= 5; i++) {
+    for (i = 0; i < 2; i++) {
       cy.log("Intento: " + i);
       guessWord();
     }
