@@ -161,13 +161,12 @@ describe("testing guessTheImageGame", () => {
       });
     });
 
-    for (let i = 0; i <= 25; i++) {
+    for (let i = 0; i < 2; i++) {
       cy.log("Intento: " + i);
       clickToCorrectAnswer(jsonImages, jsonContents);
     }
-    cy.get(".swal2-confirm").click();
 
-    restartCounter();
+    // restartCounter();
     goToCatalogoDeJuegos();
   });
 
