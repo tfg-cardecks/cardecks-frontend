@@ -196,17 +196,6 @@ describe("Edit Deck Validation", () => {
       cy.get("button").contains("Eliminar").click().wait(2000);
 
       clickToNavElement("Cartas");
-      cy.get("a").contains("Mis Cartas").click().wait(2000);
-      cy.get("h2.text-xl.font-bold.mb-2").contains(cardTitle).first().click();
-      cy.get("button").contains("Eliminar").click().wait(2000);
-
-      cy.get("header")
-        .find("nav")
-        .next()
-        .find("button")
-        .contains("Cerrar sesión")
-        .click()
-        .wait(1500);
     });
   });
 });
