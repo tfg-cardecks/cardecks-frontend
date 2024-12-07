@@ -48,22 +48,6 @@ function clickToCorrectAnswer(jsonImages, jsonContents) {
   cy.get("button").contains("Siguiente").click({ force: true }).wait(1000);
 }
 
-function restartCounter() {
-  cy.get("h2")
-    .contains("Estadísticas")
-    .next()
-    .next()
-    .children()
-    .next()
-    .get("button")
-    .contains("Resetear Contador")
-    .click()
-    .wait(1000)
-    .then(() => {
-      cy.get(".swal2-confirm").click();
-    });
-}
-
 function goToCatalogoDeJuegos() {
   cy.visit("http://localhost:5173/lobby").wait(2000);
   cy.get(".game-type-list")
@@ -74,8 +58,7 @@ function goToCatalogoDeJuegos() {
   cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
   startGame();
-  cy.get(".swal2-confirm").click();
-  cy.wait(2000);
+  cy.get("button").contains("Continuar Juego en Progreso").click().wait(500);
   cy.get("button").contains("Volver al Catálogo de Juegos").click().wait(2000);
 }
 
@@ -166,7 +149,6 @@ describe("testing guessTheImageGame", () => {
       clickToCorrectAnswer(jsonImages, jsonContents);
     }
 
-    // restartCounter();
     goToCatalogoDeJuegos();
   });
 
