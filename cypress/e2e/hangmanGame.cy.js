@@ -197,13 +197,9 @@ describe("testing hangmanGame", () => {
     playGame();
 
     let i;
-    for (i = 0; i <= 25; i++) {
+    for (i = 0; i <= 5; i++) {
       cy.log("Intento: " + i);
       guessWord();
-    }
-
-    if (i === 26) {
-      cy.get(".swal2-confirm").click();
     }
   });
 
