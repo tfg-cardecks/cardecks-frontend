@@ -36,7 +36,7 @@ describe("testing the create card text", () => {
 
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
-      cy.get("button").contains("Iniciar sesión").click().wait(2000);
+      cy.get("button").contains("Iniciar").click().wait(2000);
 
       clickToNavElement("Cartas");
       cy.get("a").contains("Crear Carta").click().wait(1500);
@@ -89,7 +89,7 @@ describe("testing the create card text", () => {
 
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
-      cy.get("button").contains("Iniciar sesión").click().wait(2000);
+      cy.get("button").contains("Iniciar").click().wait(2000);
 
       clickToNavElement("Cartas");
       cy.get("a").contains("Crear Carta").click().wait(1500);
@@ -149,7 +149,7 @@ describe("testing the create card functionality error", () => {
 
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
-      cy.get("button").contains("Iniciar sesión").click().wait(2000);
+      cy.get("button").contains("Iniciar").click().wait(2000);
 
       clickToNavElement("Cartas");
       cy.get("a").contains("Crear Carta").click().wait(1500);
@@ -200,7 +200,7 @@ describe("testing the create card functionality error", () => {
 
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
-      cy.get("button").contains("Iniciar sesión").click().wait(3000);
+      cy.get("button").contains("Iniciar").click().wait(3000);
 
       clickToNavElement("Cartas");
       cy.get("a").contains("Crear Carta").click().wait(1500);

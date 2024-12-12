@@ -35,7 +35,7 @@ describe("testing the navigation bar", () => {
 
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
-      cy.get("button").contains("Iniciar sesión").click().wait(3000);
+      cy.get("button").contains("Iniciar").click().wait(3000);
 
       clickToNavElement("Cartas");
       clickToNavElement("Mazos");

@@ -48,7 +48,7 @@ describe("Edit Deck Functionality", () => {
 
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
-      cy.get("button").contains("Iniciar sesión").click().wait(2000);
+      cy.get("button").contains("Iniciar").click().wait(2000);
 
       clickToNavElement("Cartas");
       cy.get("a").contains("Crear Carta").click().wait(1500);
@@ -149,7 +149,7 @@ describe("Edit Deck Validation", () => {
 
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
-      cy.get("button").contains("Iniciar sesión").click().wait(2000);
+      cy.get("button").contains("Iniciar").click().wait(2000);
 
       clickToNavElement("Cartas");
       cy.get("a").contains("Crear Carta").click().wait(1500);

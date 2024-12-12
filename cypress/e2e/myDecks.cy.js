@@ -48,7 +48,7 @@ describe("testing the my deck functionality", () => {
 
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
-      cy.get("button").contains("Iniciar sesión").click().wait(2000);
+      cy.get("button").contains("Iniciar").click().wait(2000);
 
       clickToNavElement("Mazos");
       cy.get("a").contains("Mis Mazo").click().wait(1500);
