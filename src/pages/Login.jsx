@@ -47,7 +47,24 @@ export default function Login() {
             timer: 1500,
           }).then(() => {
             login(data.token, data.role, data.id);
-            navigate("/user/details");
+            if (data.isNewUser) {
+              Swal.fire({
+                icon: "success",
+                title: "¡Bienvenido!",
+                text: "¿Quieres ir a crear una carta para poder empezar a jugar los juegos?",
+                showCancelButton: true,
+                confirmButtonText: "Sí",
+                cancelButtonText: "No",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate(`/user/${data.id}/preview`);
+                } else {
+                  navigate("/user/details");
+                }
+              });
+            } else {
+              navigate("/user/details");
+            }
           });
           break;
         case 404:
@@ -103,13 +120,12 @@ export default function Login() {
               }}
             >
               Usuario
-              <br></br>o email
             </label>
-            <div className="flex-grow" style={{ marginRight: "8rem" }}>
+            <div className="flex-grow" style={{ marginRight: "10.2rem" }}>
               <input
                 type="text"
                 className="leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                style={{ width: "100%", padding: "0.5rem 0.75rem" }}
+                style={{ width: "100%", padding: "0.5rem 0.75rem", marginLeft: "2.2rem" }}
                 placeholder="Escribe tu nombre de usuario"
                 name="emailOrUsername"
                 value={emailOrUsername}
@@ -163,7 +179,7 @@ export default function Login() {
               className="flex justify-center"
               style={{ marginLeft: "10px", marginTop: "2%" }}
             >
-              {MainButton("Iniciar sesión", "/", handleSubmit)}
+              {MainButton("Iniciar", "/", handleSubmit)}
               {SecondaryButton("Cancelar", "/")}
             </div>
           </div>
