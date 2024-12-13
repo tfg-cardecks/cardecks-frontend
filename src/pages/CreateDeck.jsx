@@ -5,6 +5,7 @@ import { useAuthContext } from '../context/authContext';
 import CardSelector from '../components/CardSelector';
 import FormTextInputCreate from '../components/FormTextInputCreate.jsx';
 import Swal from 'sweetalert2';
+import { FaTimes } from 'react-icons/fa';
 
 export default function CreateDeck() {
   const [form, setForm] = useState({
@@ -28,6 +29,12 @@ export default function CreateDeck() {
   const { id } = useParams();
   const [cardsPerPage, setCardsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showFilters, setShowFilters] = useState(false);
+  const [showThemeFilter, setShowThemeFilter] = useState(false);
+  const [showStartDateFilter, setShowStartDateFilter] = useState(false);
+  const [showEndDateFilter, setShowEndDateFilter] = useState(false);
+  const [showTypeFilter, setShowTypeFilter] = useState(false);
+  const [showSortOption, setShowSortOption] = useState(false);
 
   async function fetchUserCards() {
     try {
@@ -204,113 +211,131 @@ export default function CreateDeck() {
           </div>
         </form>
         <div>
-          <h2 className="text-xl font-bold mb-2">Selecciona Cartas</h2>
-          <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="mb-2">
-              <label className="block mb-1">
-                Título:
-                <input
-                  type="text"
-                  value={titleFilter}
-                  onChange={(e) => setTitleFilter(e.target.value)}
-                  className="border p-2 rounded w-full"
-                />
-              </label>
-              <button
-                onClick={() => setTitleFilter('')}
-                className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
-              >
-                Limpiar
-              </button>
-            </div>
-            <div className="mb-2">
-              <label className="block mb-1">
-                Tema:
-                <input
-                  type="text"
-                  value={themeFilter}
-                  onChange={(e) => setThemeFilter(e.target.value)}
-                  className="border p-2 rounded w-full"
-                />
-              </label>
-              <button
-                onClick={() => setThemeFilter('')}
-                className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
-              >
-                Limpiar
-              </button>
-            </div>
-            <div className="mb-2">
-              <label className="block mb-1">
-                Fecha de Inicio:
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="border p-2 rounded w-full"
-                />
-              </label>
-              <button
-                onClick={() => setStartDate('')}
-                className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
-              >
-                Limpiar
-              </button>
-            </div>
-            <div className="mb-2">
-              <label className="block mb-1">
-                Fecha de Fin:
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="border p-2 rounded w-full"
-                />
-              </label>
-              <button
-                onClick={() => setEndDate('')}
-                className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
-              >
-                Limpiar
-              </button>
-            </div>
-            <div className="mb-2">
-              <label className="block mb-1">
-                Tipo de Carta:
-                <select
-                  value={typeFilter}
-                  onChange={(e) => setTypeFilter(e.target.value)}
-                  className="border p-2 rounded w-full"
-                >
-                  <option value="">Todos</option>
-                  <option value="Texto e Imagen">Texto e Imagen</option>
-                  <option value="Texto y Texto">Texto y Texto</option>
-                </select>
-              </label>
-              <button
-                onClick={() => setTypeFilter('')}
-                className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
-              >
-                Limpiar
-              </button>
-            </div>
-            <div className="mb-2">
-              <label className="block mb-1">
-                Ordenar por:
-                <select
-                  value={sortOption}
-                  onChange={(e) => setSortOption(e.target.value)}
-                  className="border p-2 rounded w-full"
-                >
-                  <option value="">Seleccionar</option>
-                  <option value="name-asc">Nombre (A-Z)</option>
-                  <option value="name-desc">Nombre (Z-A)</option>
-                  <option value="createdAt-asc">Fecha de creación (más antiguas)</option>
-                  <option value="createdAt-desc">Fecha de creación (más recientes)</option>
-                </select>
-              </label>
-            </div>
+          <h2 className="text-xl font-bold mb-2 text-center">Selecciona las Cartas</h2>
+          <div className="flex justify-center items-center mb-4">
+            <input
+              type="text"
+              placeholder="Título"
+              value={titleFilter}
+              onChange={(e) => setTitleFilter(e.target.value)}
+              className="border p-2 rounded w-40"
+            />
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="bg-blue-500 text-white px-4 py-2 rounded ml-2 flex items-center"
+            >
+              <FaTimes className={`transition-transform ${showFilters ? 'rotate-45' : ''}`} />
+            </button>
           </div>
+          {showFilters && (
+            <div className="mb-4 flex justify-center">
+              <div className="flex flex-wrap justify-center gap-4">
+                <div className="mb-2">
+                  <label className="block mb-1">
+                    <input
+                      type="checkbox"
+                      checked={showThemeFilter}
+                      onChange={() => setShowThemeFilter(!showThemeFilter)}
+                      className="mr-2"
+                    />
+                    Tema
+                  </label>
+                  {showThemeFilter && (
+                    <input
+                      type="text"
+                      value={themeFilter}
+                      onChange={(e) => setThemeFilter(e.target.value)}
+                      className="border p-2 rounded w-full"
+                    />
+                  )}
+                </div>
+                <div className="mb-2">
+                  <label className="block mb-1">
+                    <input
+                      type="checkbox"
+                      checked={showStartDateFilter}
+                      onChange={() => setShowStartDateFilter(!showStartDateFilter)}
+                      className="mr-2"
+                    />
+                    Fecha de Inicio
+                  </label>
+                  {showStartDateFilter && (
+                    <input
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                      className="border p-2 rounded w-full"
+                    />
+                  )}
+                </div>
+                <div className="mb-2">
+                  <label className="block mb-1">
+                    <input
+                      type="checkbox"
+                      checked={showEndDateFilter}
+                      onChange={() => setShowEndDateFilter(!showEndDateFilter)}
+                      className="mr-2"
+                    />
+                    Fecha de Fin
+                  </label>
+                  {showEndDateFilter && (
+                    <input
+                      type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                      className="border p-2 rounded w-full"
+                    />
+                  )}
+                </div>
+                <div className="mb-2">
+                  <label className="block mb-1">
+                    <input
+                      type="checkbox"
+                      checked={showTypeFilter}
+                      onChange={() => setShowTypeFilter(!showTypeFilter)}
+                      className="mr-2"
+                    />
+                    Tipo de Carta
+                  </label>
+                  {showTypeFilter && (
+                    <select
+                      value={typeFilter}
+                      onChange={(e) => setTypeFilter(e.target.value)}
+                      className="border p-2 rounded w-full"
+                    >
+                      <option value="">Todos</option>
+                      <option value="Texto e Imagen">Texto e Imagen</option>
+                      <option value="Texto y Texto">Texto y Texto</option>
+                    </select>
+                  )}
+                </div>
+                <div className="mb-2">
+                  <label className="block mb-1">
+                    <input
+                      type="checkbox"
+                      checked={showSortOption}
+                      onChange={() => setShowSortOption(!showSortOption)}
+                      className="mr-2"
+                    />
+                    Ordenar por
+                  </label>
+                  {showSortOption && (
+                    <select
+                      value={sortOption}
+                      onChange={(e) => setSortOption(e.target.value)}
+                      className="border p-2 rounded w-full"
+                    >
+                      <option value="">Seleccionar</option>
+                      <option value="name-asc">Nombre (A-Z)</option>
+                      <option value="name-desc">Nombre (Z-A)</option>
+                      <option value="createdAt-asc">Fecha de creación (más antiguas)</option>
+                      <option value="createdAt-desc">Fecha de creación (más recientes)</option>
+                    </select>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
           <div className="mb-4 flex justify-center">
             <div className="flex flex-wrap justify-center">
               {alphabet.map(letter => (
@@ -349,17 +374,7 @@ export default function CreateDeck() {
               </select>
             </label>
           </div>
-          {sortedCards.length === 0 && !errors && (
-            <p className="text-gray-500">No hay cartas disponibles.</p>
-          )}
-          <div className="h-96 overflow-y-auto border p-4 rounded-lg">
-            <CardSelector
-              allCards={currentCards}
-              selectedCards={cards}
-              onCardSelection={onCardSelect}
-            />
-          </div>
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mb-4">
             {Array.from({ length: Math.ceil(sortedCards.length / cardsPerPage) }, (_, index) => (
               <button
                 key={index + 1}
@@ -369,6 +384,17 @@ export default function CreateDeck() {
                 {index + 1}
               </button>
             ))}
+          </div>
+
+          {sortedCards.length === 0 && !errors && (
+            <p className="text-gray-500">No hay cartas disponibles.</p>
+          )}
+          <div className="h-96 p-4 rounded-lg">
+            <CardSelector
+              allCards={currentCards}
+              selectedCards={cards}
+              onCardSelection={onCardSelect}
+            />
           </div>
         </div>
       </div>

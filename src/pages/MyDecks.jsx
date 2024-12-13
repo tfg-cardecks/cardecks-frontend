@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { API_URL } from '../config';
 import { useAuthContext } from '../context/authContext';
 import Swal from 'sweetalert2';
+import { FaTimes } from 'react-icons/fa';
 
 export default function MyDecks() {
   const { authenticated } = useAuthContext();
@@ -19,6 +20,11 @@ export default function MyDecks() {
   const [file, setFile] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [decksPerPage, setDecksPerPage] = useState(10);
+  const [showFilters, setShowFilters] = useState(false);
+  const [showThemeFilter, setShowThemeFilter] = useState(false);
+  const [showStartDateFilter, setShowStartDateFilter] = useState(false);
+  const [showEndDateFilter, setShowEndDateFilter] = useState(false);
+  const [showSortOption, setShowSortOption] = useState(false);
 
   async function fetchDecks() {
     try {
@@ -46,7 +52,7 @@ export default function MyDecks() {
     } catch (err) {
       setError(err.message);
     }
-  };
+  }
 
   useEffect(() => {
     fetchDecks();
@@ -130,97 +136,116 @@ export default function MyDecks() {
   return (
     <div className="container mx-auto p-4 w-4/5">
       <h1 className="text-3xl font-bold mb-4">
-        Mis Mazos ({sortedDecks.length})
+        Mis Mazos
+      </h1>
+      <h1 className="text-3xl font-bold mb-4">
+        Número de Mazos: {sortedDecks.length}
       </h1>
       {error && <p className="text-red-500">{error}</p>}
-      <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="mb-2">
-          <label className="block mb-1">
-            Nombre:
-            <input
-              type="text"
-              value={nameFilter}
-              onChange={(e) => setNameFilter(e.target.value)}
-              className="border p-2 rounded w-full"
-            />
-          </label>
-          <button
-            onClick={() => setNameFilter('')}
-            className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
-          >
-            Limpiar
-          </button>
-        </div>
-        <div className="mb-2">
-          <label className="block mb-1">
-            Tema:
-            <input
-              type="text"
-              value={themeFilter}
-              onChange={(e) => setThemeFilter(e.target.value)}
-              className="border p-2 rounded w-full"
-            />
-          </label>
-          <button
-            onClick={() => setThemeFilter('')}
-            className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
-          >
-            Limpiar
-          </button>
-        </div>
-        <div className="mb-2">
-          <label className="block mb-1">
-            Fecha de Inicio:
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              className="border p-2 rounded w-full"
-            />
-          </label>
-          <button
-            onClick={() => setStartDate('')}
-            className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
-          >
-            Limpiar
-          </button>
-        </div>
-        <div className="mb-2">
-          <label className="block mb-1">
-            Fecha de Fin:
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className="border p-2 rounded w-full"
-            />
-          </label>
-          <button
-            onClick={() => setEndDate('')}
-            className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
-          >
-            Limpiar
-          </button>
-        </div>
-        <div className="mb-2">
-          <label className="block mb-1">
-            Ordenar por:
-            <select
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-              className="border p-2 rounded w-full"
-            >
-              <option value="">Seleccionar</option>
-              <option value="name-asc">Nombre (A-Z)</option>
-              <option value="name-desc">Nombre (Z-A)</option>
-              <option value="createdAt-asc">Fecha de creación (más antiguas)</option>
-              <option value="createdAt-desc">Fecha de creación (más recientes)</option>
-            </select>
-          </label>
-        </div>
+      <div className="flex items-center mb-4">
+        <input
+          type="text"
+          placeholder="Nombre"
+          value={nameFilter}
+          onChange={(e) => setNameFilter(e.target.value)}
+          className="border p-2 rounded w-full"
+        />
+        <button
+          onClick={() => setShowFilters(!showFilters)}
+          className="bg-blue-500 text-white px-4 py-2 rounded ml-2 flex items-center"
+        >
+          <FaTimes className={`transition-transform ${showFilters ? 'rotate-45' : ''}`} />
+        </button>
       </div>
+      {showFilters && (
+        <div className="mb-4 flex justify-center">
+          <div className="flex flex-wrap justify-center gap-4">
+            <div className="mb-2">
+              <label className="block mb-1">
+                <input
+                  type="checkbox"
+                  checked={showThemeFilter}
+                  onChange={() => setShowThemeFilter(!showThemeFilter)}
+                  className="mr-2"
+                />
+                Tema
+              </label>
+              {showThemeFilter && (
+                <input
+                  type="text"
+                  value={themeFilter}
+                  onChange={(e) => setThemeFilter(e.target.value)}
+                  className="border p-2 rounded w-full"
+                />
+              )}
+            </div>
+            <div className="mb-2">
+              <label className="block mb-1">
+                <input
+                  type="checkbox"
+                  checked={showStartDateFilter}
+                  onChange={() => setShowStartDateFilter(!showStartDateFilter)}
+                  className="mr-2"
+                />
+                Fecha de Inicio
+              </label>
+              {showStartDateFilter && (
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="border p-2 rounded w-full"
+                />
+              )}
+            </div>
+            <div className="mb-2">
+              <label className="block mb-1">
+                <input
+                  type="checkbox"
+                  checked={showEndDateFilter}
+                  onChange={() => setShowEndDateFilter(!showEndDateFilter)}
+                  className="mr-2"
+                />
+                Fecha de Fin
+              </label>
+              {showEndDateFilter && (
+                <input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="border p-2 rounded w-full"
+                />
+              )}
+            </div>
+            <div className="mb-2">
+              <label className="block mb-1">
+                <input
+                  type="checkbox"
+                  checked={showSortOption}
+                  onChange={() => setShowSortOption(!showSortOption)}
+                  className="mr-2"
+                />
+                Ordenar por
+              </label>
+              {showSortOption && (
+                <select
+                  value={sortOption}
+                  onChange={(e) => setSortOption(e.target.value)}
+                  className="border p-2 rounded w-full"
+                >
+                  <option value="">Seleccionar</option>
+                  <option value="name-asc">Nombre (A-Z)</option>
+                  <option value="name-desc">Nombre (Z-A)</option>
+                  <option value="createdAt-asc">Fecha de creación (más antiguas)</option>
+                  <option value="createdAt-desc">Fecha de creación (más recientes)</option>
+                </select>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       <div className="mb-4">
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap justify-center">
           {alphabet.map(letter => (
             <button
               key={letter}
@@ -266,6 +291,18 @@ export default function MyDecks() {
           </select>
         </label>
       </div>
+      <div className="flex justify-center mb-4">
+        {Array.from({ length: Math.ceil(sortedDecks.length / decksPerPage) }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={`px-3 py-1 mx-1 rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+
       {sortedDecks.length === 0 && !error && (
         <p className="text-gray-500">No hay mazos disponibles.</p>
       )}
@@ -283,17 +320,6 @@ export default function MyDecks() {
             <p className="text-gray-500">Tema: {deck.theme}</p>
             <p className="text-gray-500">Fecha de creación: {new Date(deck.createAt).toLocaleDateString()}</p>
           </div>
-        ))}
-      </div>
-      <div className="flex justify-center mt-4">
-        {Array.from({ length: Math.ceil(sortedDecks.length / decksPerPage) }, (_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => paginate(index + 1)}
-            className={`px-3 py-1 mx-1 rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-          >
-            {index + 1}
-          </button>
         ))}
       </div>
     </div>
