@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import UserDetail from "./pages/UserDetail";
+import UserDetailStatistics from "./pages/UserDetailStatistics";
 import MyCards from "./pages/MyCards";
 import MyDecks from "./pages/MyDecks";
 import CreateDeck from "./pages/CreateDeck";
@@ -47,6 +48,7 @@ export default function App() {
           <Route path='/reset-password/:token' element={<ResetPassword />} />
           {/* RUTAS PRIVADAS */}
           <Route path='/user/details' element={<UserDetail />} />
+          <Route path='/user/statistics' element={<UserDetailStatistics />} />
           <Route path='/user/:id/my-cards' element={<MyCards />} />
           <Route path='/user/:id/my-decks' element={<MyDecks />} />
           <Route path="/user/edit" element={<EditUserDetail />} />

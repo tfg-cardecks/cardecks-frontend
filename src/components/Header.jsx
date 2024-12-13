@@ -8,11 +8,11 @@ export default function Header() {
   const { authenticated, userId, logout } = useAuthContext();
   const [isCardsDropdownOpen, setIsCardsDropdownOpen] = useState(false);
   const [isDecksDropdownOpen, setIsDecksDropdownOpen] = useState(false);
-  const [isGamesDropdownOpen, setIsGamesDropdownOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const cardsDropdownRef = useRef(null);
   const decksDropdownRef = useRef(null);
-  const gamesDropdownRef = useRef(null);
+  const userDropdownRef = useRef(null);
 
   const handleLogout = () => {
     logout();
@@ -80,8 +80,12 @@ export default function Header() {
         }
       });
     } else {
-      setIsGamesDropdownOpen(!isGamesDropdownOpen);
+      navigate('/lobby');
     }
+  };
+
+  const handleUserClick = () => {
+    setIsUserDropdownOpen(!isUserDropdownOpen);
   };
 
   const handleClickOutside = (event) => {
@@ -91,13 +95,13 @@ export default function Header() {
     if (decksDropdownRef.current && !decksDropdownRef.current.contains(event.target)) {
       setIsDecksDropdownOpen(false);
     }
-    if (gamesDropdownRef.current && !gamesDropdownRef.current.contains(event.target)) {
-      setIsGamesDropdownOpen(false);
+    if (userDropdownRef.current && !userDropdownRef.current.contains(event.target)) {
+      setIsUserDropdownOpen(false);
     }
   };
 
   useEffect(() => {
-    if (isCardsDropdownOpen || isDecksDropdownOpen || isGamesDropdownOpen) {
+    if (isCardsDropdownOpen || isDecksDropdownOpen || isUserDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -106,12 +110,12 @@ export default function Header() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isCardsDropdownOpen, isDecksDropdownOpen, isGamesDropdownOpen]);
+  }, [isCardsDropdownOpen, isDecksDropdownOpen, isUserDropdownOpen]);
 
   const handleOptionClick = () => {
     setIsCardsDropdownOpen(false);
     setIsDecksDropdownOpen(false);
-    setIsGamesDropdownOpen(false);
+    setIsUserDropdownOpen(false);
   };
 
   return (
@@ -183,29 +187,41 @@ export default function Header() {
               </div>
             )}
           </div>
-          <div className="relative" ref={gamesDropdownRef}>
+          <div className="relative">
             <button
               onClick={handleGamesClick}
               className="mr-5 hover:text-gray-900"
             >
               Juegos
             </button>
-            {authenticated && isGamesDropdownOpen && (
-              <div className="absolute left-0 mt-2 w-48 bg-white border rounded shadow-lg">
-                <Link
-                  to={`/lobby`}
-                  className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                  onClick={handleOptionClick}
-                >
-                  Ver Juegos
-                </Link>
-              </div>
-            )}
           </div>
           {authenticated && (
-            <Link to="/user/details" className="mr-5 hover:text-gray-900">
-              Usuario
-            </Link>
+            <div className="relative" ref={userDropdownRef}>
+              <button
+                onClick={handleUserClick}
+                className="mr-5 hover:text-gray-900"
+              >
+                Usuario
+              </button>
+              {isUserDropdownOpen && (
+                <div className="absolute left-0 mt-2 w-48 bg-white border rounded shadow-lg">
+                  <Link
+                    to="/user/details"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    onClick={handleOptionClick}
+                  >
+                    Detalles
+                  </Link>
+                  <Link
+                    to="/user/statistics"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    onClick={handleOptionClick}
+                  >
+                    Estadísticas
+                  </Link>
+                </div>
+              )}
+            </div>
           )}
         </nav>
         <div className="md:ml-auto flex items-center">
