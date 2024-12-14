@@ -12,7 +12,6 @@ export default function SelectDeckGameGuessTheImage() {
   const [decks, setDecks] = useState([]);
   const [selectedDeck, setSelectedDeck] = useState(null);
   const [inProgressGameId, setInProgressGameId] = useState(null);
-  const [showInfo, setShowInfo] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [isCreating, setIsCreating] = useState(false);
@@ -20,38 +19,6 @@ export default function SelectDeckGameGuessTheImage() {
   const gameTypes = [
     { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
   ];
-
-  const gameInfo = {
-    title: "Adivina la Imagen",
-    description:
-      "Un juego interactivo donde debes acertar el nombre de la imagen.",
-    rules: [
-      "Se selecciona una imagen aleatoria de las cartas del mazo elegido.",
-      "El juego selecciona una imagen aleatoria del mazo elegido.",
-      "Puedes jugar hasta 25 juegos antes de reiniciar el contador de juegos completados.",
-    ],
-    wordProcessing: {
-      allowedWordTypes: [
-        "Palabras con caracteres especiales o números: Se eliminan. Ejemplo: 'CÓDIGO! 123' → 'CODIGO'.",
-      ],
-      notAllowedWordTypes: [
-        "Palabras que, tras el proceso de limpieza, no contengan letras. Ejemplo: '123!!!' → ''.",
-        "Palabras que queden vacías tras el proceso de limpieza. Ejemplo: '!!!' → ''.",
-      ],
-    },
-    gameOverConditions: [
-      "Adivina correctamente el nombre de la imagen para completar el juego.",
-      "Puedes forzar la finalización de un juego en progreso, pero no contará como completado.",
-    ],
-    tips: [
-      "Usa mazos con imágenes relevantes y de alta calidad para obtener una mejor experiencia.",
-      "Evita imágenes con demasiados detalles o elementos confusos.",
-      "Observa las pistas cuidadosamente y piensa en posibles respuestas antes de adivinar.",
-      "Practica con diferentes mazos para mejorar tus habilidades y aprender nuevas palabras.",
-    ],
-    maxGames: 25,
-    icon: guesstheimage,
-  };
 
   async function fetchDecks() {
     try {
@@ -88,7 +55,6 @@ export default function SelectDeckGameGuessTheImage() {
   };
 
   async function handleStartGame() {
-
     if (selectedDeck) {
       try {
         setIsCreating(true);
@@ -145,12 +111,8 @@ export default function SelectDeckGameGuessTheImage() {
     }
   };
 
-  const handleCancel = () => {
+  const handleReturn = () => {
     navigate('/lobby');
-  };
-
-  const toggleInfo = () => {
-    setShowInfo(!showInfo);
   };
 
   const getGameName = (type) => {
@@ -162,80 +124,24 @@ export default function SelectDeckGameGuessTheImage() {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Selecciona un Mazo para {getGameName(gameType)}</h1>
       {error && <p className="text-red-500 text-center" style={{ marginBottom: "1%" }}>{error}</p>}
-      <div className="flex justify-center mb-4">
-        <button
-          onClick={toggleInfo}
-          className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-blue-200 to-blue-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none w-32 duration-300"
-        >
-          {showInfo ? 'Ocultar Información' : 'Información'}
-        </button>
-      </div>
-      {showInfo ? (
-        <div className="bg-blue-100 p-4 rounded-lg shadow-lg mb-4">
-          <h2 className="text-2xl font-bold mb-2">{gameInfo.title}</h2>
-          <p className="mb-2">{gameInfo.description}</p>
-          <div className="mb-2">
-            <h3 className="font-bold">Reglas:</h3>
-            <ul className="list-disc list-inside">
-              {gameInfo.rules.map((rule, index) => (
-                <li key={index}>{rule}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="mb-2">
-            <h3 className="font-bold">Tipos de Palabras Permitidas:</h3>
-            <ul className="list-disc list-inside">
-              {gameInfo.wordProcessing.allowedWordTypes.map((type, index) => (
-                <li key={index}>{type}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="mb-2">
-            <h3 className="font-bold">Tipos de Palabras No Permitidas:</h3>
-            <ul className="list-disc list-inside">
-              {gameInfo.wordProcessing.notAllowedWordTypes.map((type, index) => (
-                <li key={index}>{type}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="mb-2">
-            <h3 className="font-bold">Condiciones de Fin del Juego:</h3>
-            <ul className="list-disc list-inside">
-              {gameInfo.gameOverConditions.map((condition, index) => (
-                <li key={index}>{condition}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="mb-2">
-            <h3 className="font-bold">Consejos:</h3>
-            <ul className="list-disc list-inside">
-              {gameInfo.tips.map((tip, index) => (
-                <li key={index}>{tip}</li>
-              ))}
-            </ul>
-          </div>
-          <p className="mb-2">Número Total de Juegos hasta Reiniciar: {gameInfo.maxGames}</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ marginTop: "1%" }}>
-          {decks.map((deck) => (
-            <div
-              key={deck._id}
-              className={`border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer ${selectedDeck === deck._id ? 'bg-blue-100' : 'bg-white'}`}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ marginTop: "1%" }}>
+        {decks.map((deck) => (
+          <div
+            key={deck._id}
+            className={`border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer ${selectedDeck === deck._id ? 'bg-blue-100' : 'bg-white'}`}
+            onClick={() => handleDeckClick(deck._id)}
+          >
+            <h2 className="text-xl font-bold mb-2 text-center">{deck.name.replace(/(-[a-z0-9]{6,})+$/, '')}</h2>
+            <p className="mb-2 text-center">{deck.description}</p>
+            <button
               onClick={() => handleDeckClick(deck._id)}
+              className="bg-blue-500 text-white px-4 py-2 rounded mt-2 w-full hover:bg-blue-600 transition-colors duration-300"
             >
-              <h2 className="text-xl font-bold mb-2 text-center">{deck.name.replace(/(-[a-z0-9]{6,})+$/, '')}</h2>
-              <p className="mb-2 text-center">{deck.description}</p>
-              <button
-                onClick={() => handleDeckClick(deck._id)}
-                className="bg-blue-500 text-white px-4 py-2 rounded mt-2 w-full hover:bg-blue-600 transition-colors duration-300"
-              >
-                Seleccionar
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
+              Seleccionar
+            </button>
+          </div>
+        ))}
+      </div>
       <div className="flex justify-center mt-6 space-x-4">
         <button
           onClick={handleStartGame}
@@ -245,10 +151,10 @@ export default function SelectDeckGameGuessTheImage() {
           {isCreating ? 'Creando...' : 'Iniciar Juego'}
         </button>
         <button
-          onClick={handleCancel}
+          onClick={handleReturn}
           className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-red-200 to-red-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none w-32 duration-300"
         >
-          Cancelar
+          Volver
         </button>
       </div>
       {inProgressGameId && (
