@@ -53,7 +53,7 @@ export default function Login() {
                 title: "¡Bienvenido!",
                 text: "¿Quieres ir a crear una carta para poder empezar a jugar los juegos?",
                 showCancelButton: true,
-                confirmButtonText: "Sí",
+                confirmButtonText: "Si",
                 cancelButtonText: "No",
               }).then((result) => {
                 if (result.isConfirmed) {

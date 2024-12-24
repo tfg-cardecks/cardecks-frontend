@@ -51,7 +51,7 @@ export default function UserDetail() {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminar',
+        confirmButtonText: 'Si, eliminar',
         cancelButtonText: 'Cancelar',
         timer: 5000,
       });

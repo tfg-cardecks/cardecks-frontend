@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../../config';
@@ -7,15 +7,18 @@ import Swal from 'sweetalert2';
 export default function GuessTheImageGame() {
   const { guessTheImageGameId } = useParams();
   const navigate = useNavigate();
-  const [gameData, setGameData] = useState(null);
+  const [guessTheImageGame, setGuessTheImageGame] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedAnswer, setSelectedAnswer] = useState('');
-  const [time, setTime] = useState(0);
   const [answerSubmitted, setAnswerSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [deckName, setDeckName] = useState('');
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [gameLost, setGameLost] = useState(false);
+  const [gameWon, setGameWon] = useState(false);
+  const timerRef = useRef(null);
 
-  async function fetchGameData() {
+  async function fetchGuessTheImageGame() {
     try {
       const token = localStorage.getItem('access_token');
       const response = await fetch(`${API_URL}/api/guessTheImageGame/${guessTheImageGameId}`, {
@@ -27,10 +30,13 @@ export default function GuessTheImageGame() {
       const data = await response.json();
       switch (response.status) {
         case 200:
-          setGameData(data);
+          setGuessTheImageGame(data);
           setSelectedAnswer('');
           setAnswerSubmitted(false);
           setIsCorrect(false);
+          setGameLost(false);
+          setGameWon(false);
+          setTimeLeft(data.duration);
           break;
         case 401:
         case 404:
@@ -47,7 +53,7 @@ export default function GuessTheImageGame() {
   async function fetchDeck() {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await axios.get(`${API_URL}/api/deck/${gameData.deck}`, {
+      const response = await axios.get(`${API_URL}/api/deck/${guessTheImageGame?.deck}`, {
         headers: {
           Authorization: ` ${token}`,
         },
@@ -69,38 +75,77 @@ export default function GuessTheImageGame() {
   }
 
   useEffect(() => {
-    fetchGameData();
+    if (guessTheImageGameId) {
+      fetchGuessTheImageGame();
+    }
   }, [guessTheImageGameId]);
 
   useEffect(() => {
-    if (gameData) {
+    if (guessTheImageGame) {
       fetchDeck();
     }
-  }, [gameData]);
+  }, [guessTheImageGame]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(prevTime => prevTime + 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+    if (timeLeft > 0) {
+      timerRef.current = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+    } else if (timeLeft === 0 && guessTheImageGame) {
+      if (guessTheImageGame.game.currentGameCount >= guessTheImageGame.game.totalGames) {
+        handleForceCompleteFinalGame();
+      } else {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Tiempo agotado',
+          text: `Has perdido esta partida. La palabra era: ${guessTheImageGame.correctAnswer}`,
+        }).then(() => {
+          handleForceCompleteFirstGame();
+        });
+      }
+    }
+    return () => clearTimeout(timerRef.current);
+  }, [timeLeft, guessTheImageGame]);
 
-  async function handleAnswerSubmit() {
+  useEffect(() => {
+    if (gameLost) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Has perdido!',
+        text: `La respuesta correcta era: ${guessTheImageGame.correctAnswer}`,
+      }).then(() => {
+        setGameLost(true);
+        clearTimeout(timerRef.current); // Detener el tiempo
+        handleNextGame(true);
+      });
+    }
+  }, [gameLost, guessTheImageGame]);
+
+  useEffect(() => {
+    if (gameWon) {
+      Swal.fire({
+        icon: 'success',
+        title: '¡Correcto!',
+        text: `La respuesta era: ${guessTheImageGame.correctAnswer}`,
+      }).then(() => {
+        setGameWon(true);
+        clearTimeout(timerRef.current); // Detener el tiempo
+        handleNextGame(true);
+      });
+    }
+  }, [gameWon, guessTheImageGame]);
+
+  async function handleNextGame(countAsCompleted = true) {
     try {
       const token = localStorage.getItem('access_token');
       const response = await fetch(
-        `${API_URL}/api/currentGuessTheImageGame/${guessTheImageGameId}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `${token}`,
-          },
-          body: JSON.stringify({ selectedAnswer, timeTaken: time }),
-        }
-      );
+        `${API_URL}/api/currentGuessTheImageGame/${guessTheImageGameId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`,
+        },
+        body: JSON.stringify({ selectedAnswer, countAsCompleted }),
+      });
       const data = await response.json();
-
       switch (response.status) {
         case 201:
           const newGuessTheImageGameId = data.guessTheImageGameId;
@@ -110,25 +155,26 @@ export default function GuessTheImageGame() {
           Swal.fire({
             icon: 'success',
             title: 'Juego completado',
-            text: 'Has completado 25 juegos de adivinar la imagen.',
+            text: data.message,
           }).then(() => {
-            navigate('/user/details');
+            navigate('/lobby');
           });
           break;
         case 401:
         case 404:
         case 400:
-          setErrorMessage(data.message);
+          setErrorMessage(data.error);
           break;
         default:
+          setErrorMessage('Error al pasar a la siguiente partida');
           break;
       }
     } catch (error) {
-      setErrorMessage('Error al enviar la respuesta');
+      setErrorMessage('No hay suficientes imágenes válidas para encajar en la siguiente partida. Por favor, añade más imágenes al mazo para poder crear un nuevo juego.');
     }
   }
 
-  async function handleForceComplete() {
+  async function handleForceCompleteFirstGame() {
     try {
       const token = localStorage.getItem('access_token');
       const response = await axios.post(`${API_URL}/api/currentGuessTheImageGame/${guessTheImageGameId}`, { forceComplete: true, selectedAnswer }, {
@@ -142,10 +188,37 @@ export default function GuessTheImageGame() {
           navigate(`/guessTheImageGame/${newGuessTheImageGameId}`);
           break;
         case 200:
+          if (response.data.nextGame) {
+            handleNextGame();
+          }
+          break;
+        case 401:
+        case 404:
+        case 400:
+          setErrorMessage(response.data.message);
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      setErrorMessage('Error al forzar la finalización del juego');
+    }
+  }
+
+  async function handleForceCompleteFinalGame() {
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await axios.post(`${API_URL}/api/currentGuessTheImageGame/${guessTheImageGameId}`, { forceComplete: true, selectedAnswer }, {
+        headers: {
+          Authorization: ` ${token}`,
+        },
+      });
+      switch (response.status) {
+        case 200:
           Swal.fire({
-            icon: 'success',
-            title: 'Juego completado forzosamente',
-            text: 'El juego ha sido completado forzosamente.',
+            icon: 'error',
+            title: 'Tiempo agotado',
+            text: `Has perdido esta partida. La imagen era: ${guessTheImageGame.correctAnswer} y el juego ha sido completado.`,
           }).then(() => {
             navigate('/lobby');
           });
@@ -163,26 +236,35 @@ export default function GuessTheImageGame() {
     }
   }
 
+  useEffect(() => {
+    if (guessTheImageGame) {
+      setSelectedAnswer('');
+      setAnswerSubmitted(false);
+      setIsCorrect(false);
+      setGameLost(false);
+      setGameWon(false);
+    }
+  }, [guessTheImageGame]);
+
   const renderImage = () => {
-    if (!gameData || !gameData.image) return null;
+    if (!guessTheImageGame || !guessTheImageGame.image) return null;
 
     return (
       <div className="image-container" style={{ maxWidth: '500px', margin: '0 auto' }}>
-        <img src={gameData.image} alt="Adivina la imagen" className="w-full h-auto" />
-        <p className="mt-4 text-center">{time} segundos</p>
+        <img src={guessTheImageGame.image} alt="Adivina la imagen" className="w-full h-auto" />
       </div>
     );
   };
 
   const renderOptions = () => {
-    if (!gameData || !gameData.options) return null;
+    if (!guessTheImageGame || !guessTheImageGame.options) return null;
 
     return (
       <div className="options-container mt-4 grid grid-cols-2 gap-4">
-        {gameData.options.map((option, index) => (
+        {guessTheImageGame.options.map((option, index) => (
           <button
             key={index}
-            className={`option-button p-4 border rounded-lg text-center ${selectedAnswer === option ? 'bg-gray-300' : ''} ${answerSubmitted ? (option === gameData.correctAnswer ? 'bg-green-500' : (option === selectedAnswer ? 'bg-red-500' : '')) : ''}`}
+            className={`option-button p-4 border rounded-lg text-center ${selectedAnswer === option ? 'bg-gray-300' : ''} ${answerSubmitted ? (option === guessTheImageGame.correctAnswer ? 'bg-green-500' : (option === selectedAnswer ? 'bg-red-500' : '')) : ''}`}
             onClick={() => setSelectedAnswer(selectedAnswer === option ? '' : option)}
             disabled={answerSubmitted}
           >
@@ -193,22 +275,24 @@ export default function GuessTheImageGame() {
     );
   };
 
+  const handleGameCompletion = () => {
+    Swal.fire({
+      icon: 'success',
+      title: 'Juego completado',
+      text: '¡Has completado todas las partidas del juego!',
+    }).then(() => {
+      navigate('/user/details');
+    });
+  };
+
   const handleSubmit = () => {
     setAnswerSubmitted(true);
-    if (selectedAnswer === gameData.correctAnswer) {
+    if (selectedAnswer === guessTheImageGame.correctAnswer) {
       setIsCorrect(true);
-      Swal.fire({
-        icon: 'success',
-        title: '¡Correcto!',
-        text: 'Has acertado la respuesta.',
-      });
+      setGameWon(true);
     } else {
       setIsCorrect(false);
-      Swal.fire({
-        icon: 'error',
-        title: '¡Incorrecto!',
-        text: `La respuesta correcta era: ${gameData.correctAnswer}`,
-      });
+      setGameLost(true);
     }
   };
 
@@ -218,44 +302,53 @@ export default function GuessTheImageGame() {
       <h2 className="text-2xl font-semibold mb-6 text-center text-gray-700">
         Mazo: {deckName}
       </h2>
+      <h3 className="text-xl font-semibold mb-6 text-center text-red-600">
+        Tiempo restante: {timeLeft} segundos
+      </h3>
+      <h3 className="text-xl font-semibold mb-6 text-center text-green-600">
+        Partida: {guessTheImageGame?.game.currentGameCount}/{guessTheImageGame?.game.totalGames}
+      </h3>
       {errorMessage ? (
         <p className="text-red-600">{errorMessage}</p>
-      ) : !gameData ? (
+      ) : !guessTheImageGame ? (
         <p>Cargando...</p>
       ) : (
         <div className="flex">
           <div>
             {renderImage()}
           </div>
-          <div className="ml-32">
+          <div className="ml-32 mt-8">
             {renderOptions()}
             <button
               className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none mt-4 ml-8"
               onClick={handleSubmit}
               disabled={!selectedAnswer || answerSubmitted}
+              style={{marginLeft: "160px"}}
             >
               Enviar Respuesta
             </button>
-            {answerSubmitted && (
-              <button
-                className="bg-gradient-to-r from-green-200 to-green-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none mt-4 ml-4"
-                onClick={handleAnswerSubmit}
-              >
-                Siguiente
-              </button>
-            )}
+            {gameLost || gameWon || answerSubmitted ? (
+              guessTheImageGame.game.currentGameCount < guessTheImageGame.game.totalGames ? (
+                <button onClick={() => handleNextGame(!gameLost)} className="hidden">Siguiente Juego</button>
+              ) : (
+                handleGameCompletion()
+              )
+            ) : null}
+
             <div className="flex space-x-4 mt-4">
               <button
-                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-red-200 to-red-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none w-48 duration-300"
-                onClick={handleForceComplete}
-              >
-                Forzar Completado
-              </button>
-              <button
                 className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
+                style={{width: "240px"}}
                 onClick={() => navigate('/lobby')}
               >
                 Volver al Catálogo de Juegos
+              </button>
+              <button
+                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
+                style={{width: "240px"}}
+                onClick={() => navigate(`/selectDeckGame/GuessTheImageGame/${guessTheImageGame.user}`)}
+              >
+                Cambiar de Mazo
               </button>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../../config';
@@ -23,7 +23,7 @@ function cleanWord(word) {
 export default function HangmanGame() {
   const { hangmanGameId } = useParams();
   const navigate = useNavigate();
-  const [gameData, setGameData] = useState(null);
+  const [hangmanGame, setHangmanGame] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [wrongLetters, setWrongLetters] = useState([]);
@@ -31,10 +31,11 @@ export default function HangmanGame() {
   const [currentGuess, setCurrentGuess] = useState('');
   const [gameLost, setGameLost] = useState(false);
   const [gameWon, setGameWon] = useState(false);
-  const [time, setTime] = useState(0);
   const [deckName, setDeckName] = useState('');
+  const [timeLeft, setTimeLeft] = useState(0);
+  const timerRef = useRef(null);
 
-  async function fetchGameData() {
+  async function fetchHangmanGame() {
     try {
       const token = localStorage.getItem('access_token');
       const response = await fetch(`${API_URL}/api/hangmanGame/${hangmanGameId}`, {
@@ -46,13 +47,13 @@ export default function HangmanGame() {
       const data = await response.json();
       switch (response.status) {
         case 200:
-          setGameData(data);
+          setHangmanGame(data);
           setGuessedLetters([]);
           setWrongLetters([]);
           setRemainingAttempts(6);
           setGameLost(false);
           setGameWon(false);
-          setTime(0);
+          setTimeLeft(data.duration);
           break;
         case 401:
         case 404:
@@ -69,7 +70,7 @@ export default function HangmanGame() {
   async function fetchDeck() {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await axios.get(`${API_URL}/api/deck/${gameData.deck}`, {
+      const response = await axios.get(`${API_URL}/api/deck/${hangmanGame.deck}`, {
         headers: {
           Authorization: ` ${token}`,
         },
@@ -91,21 +92,33 @@ export default function HangmanGame() {
   }
 
   useEffect(() => {
-    fetchGameData();
+    fetchHangmanGame();
   }, [hangmanGameId]);
 
   useEffect(() => {
-    if (gameData) {
+    if (hangmanGame) {
       fetchDeck();
     }
-  }, [gameData]);
+  }, [hangmanGame]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(prevTime => prevTime + 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+    if (timeLeft > 0) {
+      timerRef.current = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+    } else if (timeLeft === 0 && hangmanGame) {
+      if (hangmanGame.game.currentGameCount >= hangmanGame.game.totalGames) {
+        handleForceCompleteFinalGame();
+      } else {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Tiempo agotado',
+          text: `Has perdido esta partida. La palabra era: ${hangmanGame.currentWord}`,
+        }).then(() => {
+          handleForceCompleteFirstGame();
+        });
+      }
+    }
+    return () => clearTimeout(timerRef.current);
+  }, [timeLeft, hangmanGame]);
 
   function handleGuess() {
     const letter = currentGuess.toUpperCase();
@@ -113,7 +126,7 @@ export default function HangmanGame() {
       return;
     }
 
-    const cleanedWord = cleanWord(gameData.words[gameData.currentWordIndex]);
+    const cleanedWord = cleanWord(hangmanGame.words[hangmanGame.currentWordIndex]);
 
     if (cleanedWord.includes(letter)) {
       setGuessedLetters([...guessedLetters, letter]);
@@ -129,24 +142,27 @@ export default function HangmanGame() {
       Swal.fire({
         icon: 'error',
         title: '¡Has perdido!',
-        text: `La palabra era: ${gameData.words[gameData.currentWordIndex]}`,
+        text: `La palabra era: ${hangmanGame.words[hangmanGame.currentWordIndex]}`,
       }).then(() => {
         setGameLost(true);
+        clearTimeout(timerRef.current); // Detener el tiempo
       });
     }
-  }, [remainingAttempts, gameData]);
+  }, [remainingAttempts, hangmanGame]);
 
   useEffect(() => {
-    if (gameData && cleanWord(gameData.words[gameData.currentWordIndex]).split('').every(letter => guessedLetters.includes(letter))) {
+    if (hangmanGame && cleanWord(hangmanGame.words[hangmanGame.currentWordIndex]).split('').every(letter => guessedLetters.includes(letter))) {
       Swal.fire({
         icon: 'success',
         title: '¡Has completado la palabra!',
-        text: `La palabra era: ${gameData.words[gameData.currentWordIndex]}`,
+        text: `La palabra era: ${hangmanGame.words[hangmanGame.currentWordIndex]}`,
       }).then(() => {
         setGameWon(true);
+        clearTimeout(timerRef.current); // Detener el tiempo
+        handleNextGame();
       });
     }
-  }, [guessedLetters, gameData]);
+  }, [guessedLetters, hangmanGame]);
 
   async function handleNextGame(countAsCompleted = true) {
     try {
@@ -158,7 +174,7 @@ export default function HangmanGame() {
           'Content-Type': 'application/json',
           Authorization: `${token}`,
         },
-        body: JSON.stringify({ guessedLetters, wrongLetters, countAsCompleted, timeTaken: time }),
+        body: JSON.stringify({ guessedLetters, wrongLetters, countAsCompleted }),
       });
       const data = await response.json();
       switch (response.status) {
@@ -170,9 +186,9 @@ export default function HangmanGame() {
           Swal.fire({
             icon: 'success',
             title: 'Juego completado',
-            text: 'Has completado 25 juegos de ahorcado.',
+            text: data.message,
           }).then(() => {
-            navigate('/user/details');
+            navigate('/lobby');
           });
           break;
         case 401:
@@ -188,20 +204,51 @@ export default function HangmanGame() {
     }
   }
 
-  async function handleForceComplete() {
+  async function handleForceCompleteFirstGame() {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await axios.post(`${API_URL}/api/currentHangmanGame/${hangmanGameId}`, { forceComplete: true, timeTaken: time }, {
+      const response = await axios.post(`${API_URL}/api/currentHangmanGame/${hangmanGameId}`, { forceComplete: true, guessedLetters, wrongLetters }, {
         headers: {
-          Authorization: `${token}`,
+          Authorization: ` ${token}`,
+        },
+      });
+      switch (response.status) {
+        case 201:
+          const newHangmanGameId = response.data.hangmanGameId;
+          navigate(`/hangmanGame/${newHangmanGameId}`);
+          break;
+        case 200:
+          if (response.data.nextGame) {
+            handleNextGame();
+          }
+          break;
+        case 401:
+        case 404:
+        case 400:
+          setErrorMessage(response.data.message);
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      setErrorMessage('Error al forzar la finalización del juego del ahorcado');
+    }
+  }
+
+  async function handleForceCompleteFinalGame() {
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await axios.post(`${API_URL}/api/currentHangmanGame/${hangmanGameId}`, { forceComplete: true, guessedLetters, wrongLetters }, {
+        headers: {
+          Authorization: ` ${token}`,
         },
       });
       switch (response.status) {
         case 200:
           Swal.fire({
-            icon: 'success',
-            title: 'Juego completado forzosamente',
-            text: 'El juego ha sido completado forzosamente.',
+            icon: 'error',
+            title: 'Tiempo agotado',
+            text: `Has perdido esta partida. La palabra era: ${hangmanGame.currentWord} y el juego ha sido completado.`,
           }).then(() => {
             navigate('/lobby');
           });
@@ -220,20 +267,19 @@ export default function HangmanGame() {
   }
 
   useEffect(() => {
-    if (gameData) {
+    if (hangmanGame) {
       setGuessedLetters([]);
       setWrongLetters([]);
       setRemainingAttempts(6);
       setGameLost(false);
       setGameWon(false);
-      setTime(0);
     }
-  }, [gameData]);
+  }, [hangmanGame]);
 
   const renderWord = () => {
-    if (!gameData) return null;
+    if (!hangmanGame) return null;
 
-    return gameData.words[gameData.currentWordIndex].split('').map((letter, index) => (
+    return hangmanGame.words[hangmanGame.currentWordIndex].split('').map((letter, index) => (
       <span key={index} className="letter" style={{ marginRight: "7%", fontSize: '2.5rem' }}>
         {guessedLetters.includes(cleanWord(letter)) ? letter : '_'}
       </span>
@@ -245,24 +291,40 @@ export default function HangmanGame() {
     return <img src={images[imageIndex]} alt={`Hangman step ${imageIndex}`} className="hangman-image" />;
   };
 
+  const handleGameCompletion = () => {
+    Swal.fire({
+      icon: 'success',
+      title: 'Juego completado',
+      text: '¡Has completado todas las partidas del juego!',
+    }).then(() => {
+      navigate('/user/details');
+    });
+  };
+
   return (
     <div className="container mx-auto p-4 flex flex-col items-center">
       <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-600">Juego del Ahorcado</h1>
       <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">
         Mazo: {deckName}
       </h2>
+      <h3 className="text-xl font-semibold mb-6 text-center text-red-600">
+        Tiempo restante: {timeLeft} segundos
+      </h3>
+      <h3 className="text-xl font-semibold mb-6 text-center text-green-600">
+        Partida: {hangmanGame?.game.currentGameCount}/{hangmanGame?.game.totalGames}
+      </h3>
       {errorMessage ? (
         <p className="text-red-600">{errorMessage}</p>
-      ) : !gameData ? (
+      ) : !hangmanGame ? (
         <p>Cargando...</p>
       ) : (
         <div className="flex">
           <div>
             {renderImage()}
           </div>
-          <div className='mr-6'>
+          <div className='ml-6'>
             <div className="word">{renderWord()}</div>
-            <div className="guess-input mt-4">
+            <div className="guess-input mt-4 flex items-center">
               <input
                 type="text"
                 value={currentGuess}
@@ -281,7 +343,6 @@ export default function HangmanGame() {
               </button>
             </div>
             <p className="mt-4">Intentos restantes: {remainingAttempts}</p>
-            <p className="mt-4">Tiempo transcurrido: {time} segundos</p>
             <div className="used-letters mt-4">
               <div className="guessed-letters">
                 <h2 className="text-xl font-bold">Letras adivinadas:</h2>
@@ -300,28 +361,27 @@ export default function HangmanGame() {
                 </div>
               </div>
             </div>
-            {gameLost || gameWon || cleanWord(gameData.words[gameData.currentWordIndex]).split('').every(letter => guessedLetters.includes(letter)) ? (
-              <button
-                className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none mt-4"
-                onClick={() => handleNextGame(!gameLost)}
-              >
-                Siguiente
-              </button>
+            {gameLost || gameWon || cleanWord(hangmanGame.words[hangmanGame.currentWordIndex]).split('').every(letter => guessedLetters.includes(letter)) ? (
+              hangmanGame.game.currentGameCount < hangmanGame.game.totalGames ? (
+                <button onClick={() => handleNextGame(!gameLost)} className="hidden">Siguiente Juego</button>
+              ) : (
+                handleGameCompletion()
+              )
             ) : null}
             <div className="flex space-x-4 mt-4">
-              {!gameLost && !gameWon && (
-                <button
-                  className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-red-200 to-red-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none w-48 duration-300"
-                  onClick={handleForceComplete}
-                >
-                  Forzar Completado
-                </button>
-              )}
               <button
                 className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
+                style={{ width: "240px" }}
                 onClick={() => navigate('/lobby')}
               >
                 Volver al Catálogo de Juegos
+              </button>
+              <button
+                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
+                style={{ width: "240px" }}
+                onClick={() => navigate(`/selectDeckGame/HangmanGame/${hangmanGame.user}`)}
+              >
+                Cambiar de Mazo
               </button>
             </div>
           </div>
