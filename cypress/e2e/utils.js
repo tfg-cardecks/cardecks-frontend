@@ -21,45 +21,45 @@ export function typeAndAssertIndex(selector, value, index = 0) {
 }
 
 export function applyTypeFilter(type) {
-  cy.get('label:contains("Tipo de Carta:")').find('select').select(type);
+  cy.get('label:contains("Tipo de Carta:")').find("select").select(type);
 }
 
 export function clearTypeFilter() {
-  cy.get('label:contains("Tipo de Carta:")').parent().find('button').contains("Limpiar").click().wait(500);
+  cy.get('label:contains("Tipo de Carta:")')
+    .parent()
+    .find("button")
+    .contains("Limpiar")
+    .click()
+    .wait(500);
 }
 
 export function applySortOption(sortOption) {
-  cy.get('label:contains("Ordenar por:")').find('select').select(sortOption);
+  cy.get('label:contains("Ordenar por:")').find("select").select(sortOption);
 }
 
 export function applyAlphabetFilter(letter) {
-  cy.get('button').contains(letter).click();
+  cy.get("button").contains(letter).click();
 }
 
 export function clearAlphabetFilter() {
-  cy.get('button').contains("Limpiar").click().wait(500);
+  cy.get("button").contains("Limpiar").click().wait(500);
 }
 
 export function selectCardsPerPageAndNavigateToPage(cardsPerPage) {
-  cy.get('#cardsPerPage').should("exist");
+  cy.get("#cardsPerPage").should("exist");
 
-  cy.get('#cardsPerPage').select(cardsPerPage.toString());
+  cy.get("#cardsPerPage").select(cardsPerPage.toString());
 
-  cy.get('#cardsPerPage').should("have.value", cardsPerPage.toString());
-
-  // cy.get("button").contains("1").click();
+  cy.get("#cardsPerPage").should("have.value", cardsPerPage.toString());
 }
 
 export function selectDecksPerPageAndNavigateToPage(decksPerPage) {
-  cy.get('#decksPerPage').should("exist");
+  cy.get("#decksPerPage").should("exist");
 
-  cy.get('#decksPerPage').select(decksPerPage.toString());
+  cy.get("#decksPerPage").select(decksPerPage.toString());
 
-  cy.get('#decksPerPage').should("have.value", decksPerPage.toString());
-
-  //cy.get("button").contains("1").click();
+  cy.get("#decksPerPage").should("have.value", decksPerPage.toString());
 }
-
 
 export function generateRandomUser() {
   return cy.request("https://randomuser.me/api/").then((response) => {
@@ -108,7 +108,6 @@ export function setupToPlayGames() {
     typeAndAssert("input[name='password']", "@Password1");
     cy.get("button").contains("Iniciar").click().wait(2000);
     cy.get("button").contains("Si").click().wait(2000);
-
   });
 }
 
@@ -139,7 +138,7 @@ export function getGrid() {
       }
       grid.push(row);
     }
-    return JSON.stringify(grid); // Devolver la matriz como una cadena JSON
+    return JSON.stringify(grid);
   });
 }
 
@@ -186,21 +185,40 @@ export function applyThemeFilter(theme) {
 }
 
 export function clearThemeFilter() {
-  cy.get('label:contains("Tema:")').parent().find('button').contains("Limpiar").click().wait(500);
+  cy.get('label:contains("Tema:")')
+    .parent()
+    .find("button")
+    .contains("Limpiar")
+    .click()
+    .wait(500);
 }
 
 export function applyStartDateFilter(date) {
-  cy.get('label:contains("Fecha de Inicio:")').find('input[type="date"]').type(date);
+  cy.get('label:contains("Fecha de Inicio:")')
+    .find('input[type="date"]')
+    .type(date);
 }
 
 export function clearStartDateFilter() {
-  cy.get('label:contains("Fecha de Inicio:")').parent().find('button').contains("Limpiar").click().wait(500);
+  cy.get('label:contains("Fecha de Inicio:")')
+    .parent()
+    .find("button")
+    .contains("Limpiar")
+    .click()
+    .wait(500);
 }
 
 export function applyEndDateFilter(date) {
-  cy.get('label:contains("Fecha de Fin:")').find('input[type="date"]').type(date);
+  cy.get('label:contains("Fecha de Fin:")')
+    .find('input[type="date"]')
+    .type(date);
 }
 
 export function clearEndDateFilter() {
-  cy.get('label:contains("Fecha de Fin:")').parent().find('button').contains("Limpiar").click().wait(500);
+  cy.get('label:contains("Fecha de Fin:")')
+    .parent()
+    .find("button")
+    .contains("Limpiar")
+    .click()
+    .wait(500);
 }

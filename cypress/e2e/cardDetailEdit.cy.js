@@ -255,7 +255,7 @@ describe("testing the edit card functionality with errors", () => {
 
       clickToNavElement("Cartas");
       cy.get("a").contains("Crear Carta").click().wait(1500);
-      
+
       typeAndAssert("input[name='title']", generateRandomTextCard());
       typeAndAssert("input[name='theme']", "Tema de prueba12");
       cy.get("select#cardType").select("Texto e Imagen").wait(1500);
@@ -272,7 +272,6 @@ describe("testing the edit card functionality with errors", () => {
       cy.get("button").contains("Cargar Imagen").click().wait(2000);
       cy.get("button").contains("Crear Carta").click().wait(2000);
 
-      // Hacer clic en el botón de exportar carta
       cy.get("button").contains("Actualizar").click();
 
       cy.get("select").select("Trasera").wait(1500);

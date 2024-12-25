@@ -6,16 +6,6 @@ import {
   typeAndAssert,
   goToHomePage,
   generateRandomUser,
-  getTemaLabel,
-  applyTitleFilter,
-  clearTitleFilter,
-  applyThemeFilter,
-  clearThemeFilter,
-  applyStartDateFilter,
-  clearStartDateFilter,
-  applyEndDateFilter,
-  clearEndDateFilter,
-  applySortOption,
   applyAlphabetFilter,
   clearAlphabetFilter,
   selectDecksPerPageAndNavigateToPage,
@@ -80,8 +70,6 @@ describe("testing the my deck functionality", () => {
 
       cy.get(".grid > div").first().click().wait(1500);
       cy.get("p").should("contain", "mazito");
-
-      cy.get("h2.text-xl.font-bold.mb-2").contains("mazito").first().click();
 
       cy.get("button").contains("Eliminar").click().wait(1000);
       clickToNavElement("Mazos");

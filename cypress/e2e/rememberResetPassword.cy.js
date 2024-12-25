@@ -32,7 +32,6 @@ describe("sending a password reset email", () => {
       cy.get("a").contains("¿Olvidaste tu contraseña?").click().wait(1500);
       typeAndAssert("input[name='email']", email);
 
-      // interceptamos la respuesta de la petición del reset del backend
       cy.intercept("POST", "/api/user/forgot-password").as("forgotPassword");
       cy.get("button").contains("Enviar correo").click().wait(1500);
     });

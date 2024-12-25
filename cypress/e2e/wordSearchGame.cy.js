@@ -14,14 +14,60 @@ import {
 } from "./utils";
 
 function startGame() {
-  cy.get(".container")
-    .children()
-    .next()
-    .next()
-    .find("button")
+  cy.get(
+    "button.px-4.py-2.rounded-lg.shadow-lg.bg-gradient-to-r.from-green-400.to-green-600.text-white"
+  )
     .contains("Iniciar Juego")
     .click()
     .wait(500);
+}
+
+function createDeck() {
+  clickToNavElement("Mazos");
+  cy.get("a").contains("Crear Mazo").click().wait(2000);
+
+  typeAndAssert("input[name='name']", generateRandomText());
+  typeAndAssert("input[name='description']", generateRandomText());
+  typeAndAssert("input[name='theme']", generateRandomText());
+  cy.get("button").contains("Crear Mazo").click().wait(2000);
+}
+
+function createWordSearchGame() {
+  cy.visit("http://localhost:5173/lobby").wait(2000);
+  cy.get(".game-type-list")
+    .find("img[alt='Sopa de Letras']")
+    .click()
+    .wait(2000);
+
+  cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
+
+  startGame();
+}
+
+function setUpGame() {
+  createDeck();
+
+  selectedFileToImportAndSubmit("cypress/e2e/json/nubes.json");
+  selectedFileToImportAndSubmit("cypress/e2e/json/cascada.json");
+  selectedFileToImportAndSubmit("cypress/e2e/json/hojas.json");
+  selectedFileToImportAndSubmit("cypress/e2e/json/lluvia.json");
+  selectedFileToImportAndSubmit("cypress/e2e/json/nubosa.json");
+
+  createWordSearchGame();
+  cy.get(".swal2-confirm").click();
+}
+
+function clickToButtonText(text) {
+  cy.get(".game-type-list")
+    .find("img[alt='Sopa de Letras']")
+    .click()
+    .wait(2000);
+  cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
+
+  startGame();
+  cy.get(".swal2-confirm").click();
+  cy.wait(2000);
+  cy.get("button").contains(text).click();
 }
 
 beforeEach(() => {
@@ -30,66 +76,18 @@ beforeEach(() => {
 
 describe("testing the first game", () => {
   it("can't play wordsearch game without a card", () => {
-    clickToNavElement("Mazos");
-    cy.get("a").contains("Crear Mazo").click().wait(2000);
-
-    typeAndAssert("input[name='name']", generateRandomText());
-    typeAndAssert("input[name='description']", generateRandomText());
-    typeAndAssert("input[name='theme']", generateRandomText());
-    cy.get("button").contains("Crear Mazo").click().wait(2000);
+    createDeck();
     cy.get("button").contains("Importar Carta a Mazo").click().wait(2000);
   });
 
-  it("can play wordsearch game (not enought cards)", () => {
-    clickToNavElement("Mazos");
-    cy.get("a").contains("Crear Mazo").click().wait(2000);
-
-    typeAndAssert("input[name='name']", generateRandomText());
-    typeAndAssert("input[name='description']", generateRandomText());
-    typeAndAssert("input[name='theme']", generateRandomText());
-    cy.get("button").contains("Crear Mazo").click().wait(2000);
-
-    cy.get("h2")
-      .contains("Cartas")
-      .next()
-      .find('input[type="file"]')
-      .selectFile("cypress/e2e/json/cascada.json");
-    cy.get("button").contains("Importar Carta a Mazo").click().wait(2000);
-
-    cy.visit("http://localhost:5173/lobby").wait(2000);
-    cy.get(".game-type-list").find("img[alt='Sopa de Letras']").click().wait(2000);
-
-    cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
-
-    startGame();
+  it("can't play wordsearch game (not enought cards)", () => {
+    createDeck();
+    selectedFileToImportAndSubmit("cypress/e2e/json/cascada.json");
+    createWordSearchGame();
   });
 
   it("can play wordsearch game", () => {
-    clickToNavElement("Mazos");
-    cy.get("a").contains("Crear Mazo").click().wait(2000);
-
-    typeAndAssert("input[name='name']", generateRandomText());
-    typeAndAssert("input[name='description']", generateRandomText());
-    typeAndAssert("input[name='theme']", generateRandomText());
-    cy.get("button").contains("Crear Mazo").click().wait(2000);
-
-    selectedFileToImportAndSubmit("cypress/e2e/json/nubes.json");
-    selectedFileToImportAndSubmit("cypress/e2e/json/cascada.json");
-    selectedFileToImportAndSubmit("cypress/e2e/json/hojas.json");
-    selectedFileToImportAndSubmit("cypress/e2e/json/lluvia.json");
-    selectedFileToImportAndSubmit("cypress/e2e/json/nubosa.json");
-
-    cy.visit("http://localhost:5173/lobby").wait(2000);
-    cy.get(".game-type-list").find("img[alt='Sopa de Letras']").click().wait(2000);
-
-    cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
-
-    cy.contains("button", "Información").click().wait(2000);
-
-    cy.contains("button", "Ocultar Información").click().wait(2000);
-
-    startGame();
-    cy.get(".swal2-confirm").click();
+    setUpGame();
 
     const words = ["cascade", "lluvia", "nubes", "hojas", "nubosa"];
 
@@ -104,15 +102,16 @@ describe("testing the first game", () => {
       });
     });
   });
+});
 
-  it("can go to information wordsearch game", () => {
-    cy.visit("http://localhost:5173/lobby").wait(2000);
-    cy.get(".game-type-list").find("img[alt='Sopa de Letras']").click().wait(2000);
+describe("testing the buttons", () => {
+  it("show `Tiempo agotado` alert and click to the buttons", () => {
+    setUpGame();
+    cy.wait(60000);
+    cy.get(".swal2-confirm").click();
 
-    cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
+    clickToButtonText("Volver al Catálogo de Juegos");
 
-    cy.contains("button", "Información").click().wait(2000);
-
-    cy.contains("button", "Ocultar Información").click().wait(2000);
+    clickToButtonText("Cambiar de Mazo");
   });
 });
