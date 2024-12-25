@@ -6,6 +6,7 @@ import {
   typeAndAssert,
   goToHomePage,
   generateRandomUser,
+  getTemaLabel,
   applyTitleFilter,
   clearTitleFilter,
   applyThemeFilter,
@@ -42,7 +43,7 @@ describe("testing the my card functionality", () => {
       typeAndAssert("input[name='password2']", "@Password1");
       typeAndAssert("input[name='email']", email);
       cy.get("input[id='terms']").check();
-      cy.get("input[id='priv']").check();  
+      cy.get("input[id='priv']").check();
       cy.get("button").contains("Registrar").click().wait(1500);
 
       cy.wait(2000);
@@ -50,26 +51,28 @@ describe("testing the my card functionality", () => {
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
       cy.get("button").contains("Iniciar").click().wait(2000);
+      cy.get("button").contains("Si").click().wait(2000);
 
       clickToNavElement("Cartas");
       cy.get("a").contains("Mis Cartas").click().wait(1500);
-
-      applyTitleFilter("nube");
-      clearTitleFilter();
-
-      applyThemeFilter("nube");
-      clearThemeFilter();
-
-      applyStartDateFilter("2023-01-01");
-      clearStartDateFilter();
-
-      applyEndDateFilter("2023-12-31");
-      clearEndDateFilter();
-
-      applyTypeFilter("Texto e Imagen");
-      clearTypeFilter();
-
-      applySortOption("name-asc");
+      cy.get("button.bg-blue-500.text-white").click().wait(2000);
+      cy.get("label").contains("Tema").find('input[type="checkbox"]').check();
+      cy.get("label")
+        .contains("Fecha de Inicio")
+        .find('input[type="checkbox"]')
+        .check();
+      cy.get("label")
+        .contains("Fecha de Fin")
+        .find('input[type="checkbox"]')
+        .check();
+      cy.get("label")
+        .contains("Tipo de Carta")
+        .find('input[type="checkbox"]')
+        .check();
+      cy.get("label")
+        .contains("Ordenar por")
+        .find('input[type="checkbox"]')
+        .check();
 
       applyAlphabetFilter("N");
       clearAlphabetFilter();

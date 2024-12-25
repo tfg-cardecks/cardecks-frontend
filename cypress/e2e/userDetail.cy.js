@@ -32,6 +32,8 @@ describe("testing the user details", () => {
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
       cy.get("button").contains("Iniciar").click().wait(2000);
+      cy.get("button").contains("Si").click().wait(2000);
+
       cy.get("button").contains("Editar Detalles").click().wait(2000);
 
       cy.get("input[name='username']").clear().type("newUsername");

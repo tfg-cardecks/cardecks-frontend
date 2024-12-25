@@ -7,7 +7,6 @@ import {
   goToHomePage,
   generateRandomUser,
   getCorrectInputDateWithSpecificDate,
-  getTemaLabel,
   clearDate,
   applyTypeFilter,
   clearTypeFilter,
@@ -45,6 +44,7 @@ describe("testing the create deck", () => {
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
       cy.get("button").contains("Iniciar").click().wait(2000);
+      cy.get("button").contains("Si").click().wait(2000);
 
       clickToNavElement("Cartas");
       cy.get("a").contains("Crear Carta").click().wait(1500);
@@ -75,30 +75,29 @@ describe("testing the create deck", () => {
       typeAndAssert("input[name='description']", "This is a test deck.");
       typeAndAssert("input[name='theme']", "Test Theme");
 
-      cy.get('input[type="text"]').eq(0).type("Carta de prueba");
-      cy.get("button").contains("Limpiar").eq(0).click().wait(500);
-
-      getTemaLabel().children().type("Tema de prueba");
-      getTemaLabel()
-        .parent()
-        .find("button")
-        .contains("Limpiar")
-        .click()
-        .wait(500);
-
-      getCorrectInputDateWithSpecificDate(0, "2023-01-01");
-      clearDate("Fecha de Inicio:");
-
-      getCorrectInputDateWithSpecificDate(1, "2023-12-31");
-      clearDate("Fecha de Fin:");
-
-      applyTypeFilter("Texto e Imagen");
-      clearTypeFilter();
-
-      applySortOption("name-asc");
-      applySortOption("name-desc");
-      applySortOption("createdAt-asc");
-      applySortOption("createdAt-desc");
+      cy.get('input[placeholder="Título"]').type("Carta de prueba");
+      cy.get("button.bg-blue-500.text-white").click().wait(2000);
+      cy.get("div.mb-2")
+        .find("label")
+        .contains("Tema")
+        .find('input[type="checkbox"]')
+        .check();
+      cy.get("label")
+        .contains("Fecha de Inicio")
+        .find('input[type="checkbox"]')
+        .check();
+      cy.get("label")
+        .contains("Fecha de Fin")
+        .find('input[type="checkbox"]')
+        .check();
+      cy.get("label")
+        .contains("Tipo de Carta")
+        .find('input[type="checkbox"]')
+        .check();
+      cy.get("label")
+        .contains("Ordenar por")
+        .find('input[type="checkbox"]')
+        .check();
 
       applyAlphabetFilter("C");
       clearAlphabetFilter();

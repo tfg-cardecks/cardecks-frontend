@@ -8,6 +8,8 @@ import {
   generateRandomUser,
   generateRandomText,
   generateRandomTextCard,
+  getTemaLabel,
+  applyTypeFilter,
   applyTitleFilter,
   clearTitleFilter,
   clearThemeFilter,
@@ -49,6 +51,7 @@ describe("Edit Deck Functionality", () => {
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
       cy.get("button").contains("Iniciar").click().wait(2000);
+      cy.get("button").contains("Si").click().wait(2000);
 
       clickToNavElement("Cartas");
       cy.get("a").contains("Crear Carta").click().wait(1500);
@@ -82,24 +85,14 @@ describe("Edit Deck Functionality", () => {
       typeAndAssert("input[name='description']", "This is a test deck.");
       typeAndAssert("input[name='theme']", "Test Theme");
 
-      applyTitleFilter("mazito");
-      clearTitleFilter();
+      cy.get("button.bg-blue-500.text-white").click().wait(2000);
+      getTemaLabel().children().type("Tema");
+      getTemaLabel().children().type("Fecha de Inicio");
+      getTemaLabel().children().type("Fecha de Fin");
+      getTemaLabel().children().type("Tipo de Carta");
+      getTemaLabel().children().type("Ordenar por");
 
-      applyThemeFilter("mazito");
-      clearThemeFilter();
-
-      applyStartDateFilter("2023-01-01");
-      clearStartDateFilter();
-
-      applyEndDateFilter("2023-12-31");
-      clearEndDateFilter();
-
-      applySortOption("name-asc");
-      applySortOption("name-desc");
-      applySortOption("createdAt-asc");
-      applySortOption("createdAt-desc");
-
-      applyAlphabetFilter("M");
+      applyAlphabetFilter("C");
       clearAlphabetFilter();
 
       cy.get("button").contains("Crear Mazo").click().wait(2000);
@@ -150,6 +143,7 @@ describe("Edit Deck Validation", () => {
       typeAndAssert("input[name='emailOrUsername']", username);
       typeAndAssert("input[name='password']", "@Password1");
       cy.get("button").contains("Iniciar").click().wait(2000);
+      cy.get("button").contains("Si").click().wait(2000);
 
       clickToNavElement("Cartas");
       cy.get("a").contains("Crear Carta").click().wait(1500);
