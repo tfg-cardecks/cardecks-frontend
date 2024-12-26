@@ -113,7 +113,7 @@ export default function GuessTheImageGame() {
         text: `La respuesta correcta era: ${guessTheImageGame.correctAnswer}`,
       }).then(() => {
         setGameLost(true);
-        clearTimeout(timerRef.current); // Detener el tiempo
+        clearTimeout(timerRef.current);
         handleNextGame(true);
       });
     }
@@ -127,7 +127,7 @@ export default function GuessTheImageGame() {
         text: `La respuesta era: ${guessTheImageGame.correctAnswer}`,
       }).then(() => {
         setGameWon(true);
-        clearTimeout(timerRef.current); // Detener el tiempo
+        clearTimeout(timerRef.current);
         handleNextGame(true);
       });
     }
@@ -323,7 +323,7 @@ export default function GuessTheImageGame() {
               className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none mt-4 ml-8"
               onClick={handleSubmit}
               disabled={!selectedAnswer || answerSubmitted}
-              style={{marginLeft: "160px"}}
+              style={{ marginLeft: "160px" }}
             >
               Enviar Respuesta
             </button>
@@ -338,14 +338,14 @@ export default function GuessTheImageGame() {
             <div className="flex space-x-4 mt-4">
               <button
                 className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
-                style={{width: "240px"}}
+                style={{ width: "240px" }}
                 onClick={() => navigate('/lobby')}
               >
                 Volver al Catálogo de Juegos
               </button>
               <button
                 className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
-                style={{width: "240px"}}
+                style={{ width: "240px" }}
                 onClick={() => navigate(`/selectDeckGame/GuessTheImageGame/${guessTheImageGame.user}`)}
               >
                 Cambiar de Mazo

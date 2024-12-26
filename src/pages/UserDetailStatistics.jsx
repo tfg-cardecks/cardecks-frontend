@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../context/authContext';
 import axios from 'axios';
 import { API_URL } from '../config';
-import { useNavigate } from 'react-router-dom';
 import '../styles/UserDetailStyles.css';
-import Swal from 'sweetalert2';
 import wordsearch from '../icon/wordsearch.png';
 import guesstheword from '../icon/guesstheword.png';
 import guesstheimage from '../icon/guesstheimage.png';
@@ -19,7 +17,8 @@ import speedMemoryImageGame from '../icon/guesstheimage.png';
 export default function UserDetailStatistics() {
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const [gameStats, setGameStats] = useState([]);
+  const [mostUsedDecks, setMostUsedDecks] = useState([]);
 
   const { authenticated } = useAuthContext();
 
@@ -61,48 +60,44 @@ export default function UserDetailStatistics() {
     }
   }
 
+  async function fetchGameStats() {
+    try {
+      const currentUserId = localStorage.getItem('userId');
+      const response = await axios.get(`${API_URL}/api/user/${currentUserId}/game-stats`);
+      setGameStats(response.data);
+    } catch (error) {
+      setErrors({ message: 'Error al obtener las estadísticas de juegos completados' });
+    }
+  }
+
+  async function fetchMostUsedDecks() {
+    try {
+      const currentUserId = localStorage.getItem('userId');
+      const response = await axios.get(`${API_URL}/api/user/${currentUserId}/most-used-decks`);
+      setMostUsedDecks(response.data);
+    } catch (error) {
+      setErrors({ message: 'Error al obtener las estadísticas de mazos más usados' });
+    }
+  }
+
   useEffect(() => {
     fetchUserData();
+    fetchGameStats();
+    fetchMostUsedDecks();
   }, [authenticated]);
-
-  async function handleResetGamesCompleted(gameType) {
-    try {
-      const token = localStorage.getItem('access_token');
-      const response = await axios.patch(
-        `${API_URL}/api/resetGamesCompletedByType`,
-        { gameType },
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
-      switch (response.status) {
-        case 200:
-          fetchUserData();
-          Swal.fire({
-            icon: 'success',
-            title: 'Contador Reseteado',
-            text: response.data.message,
-          });
-          break;
-        case 400:
-        case 401:
-        case 404:
-          setErrors(response.data.message);
-          break;
-        default:
-          break;
-      }
-    } catch (error) {
-      setErrors(error.response.data.message);
-    }
-  };
 
   const getGameName = (type) => {
     const game = gameTypes.find(game => game.type === type);
     return game ? game.name : type;
   };
+
+  const groupedDecks = mostUsedDecks.reduce((acc, stat) => {
+    if (!acc[stat.gameType]) {
+      acc[stat.gameType] = [];
+    }
+    acc[stat.gameType].push(stat);
+    return acc;
+  }, {});
 
   return (
     <div className="flex items-center justify-center">
@@ -114,37 +109,31 @@ export default function UserDetailStatistics() {
           <h2 className="title">Estadísticas del Usuario</h2>
           <hr className="divider" />
           <div className="stats">
-            <div className="flex justify-between">
-              <div className="w-1/2 pr-2">
-                <p><strong>Juegos Completados por Tipo sin forzar:</strong></p>
-                <ul className="statsList">
-                  {user.gamesCompletedByType && Object.entries(user.gamesCompletedByType).map(([type, count]) => (
-                    <li key={type} >
-                      {getGameName(type)}: {count}
-                      <button style={{
-                        marginLeft: '5px',
-                        border: '1px solid #000',
-                        padding: '1px 5px',
-                        borderRadius: '5px',
-                      }} onClick={() => handleResetGamesCompleted(type)}>Resetear Contador</button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="w-1/2 pl-8">
-                <p><strong>Total de Juegos Completados por Tipo:</strong></p>
-                <ul className="statsList">
-                  {user.totalGamesCompletedByType && Object.entries(user.totalGamesCompletedByType).map(([type, count]) => (
-                    <li key={type}>
-                      {getGameName(type)}: {count}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
             <p><strong>Total de Cartas Creadas:</strong> {user.cards && user.cards.length}</p>
             <p><strong>Total de Mazos Creados:</strong> {user.decks && user.decks.length}</p>
-            <p><strong>Total de Juegos Creados:</strong> {user.games && user.games.length}</p>
+            <p><strong>Total de Partidas Completadas por Tipo:</strong></p>
+            <ul className="statsList list-none">
+              {gameStats.map(stat => (
+                <li key={stat.gameType}>
+                  {getGameName(stat.gameType)}: {stat.totalCompleted}
+                </li>
+              ))}
+            </ul>
+            <p><strong>Mazos Más Usados por Tipo de Juego:</strong></p>
+            <div className="grid grid-cols-3 gap-4">
+              {Object.entries(groupedDecks).map(([gameType, decks]) => (
+                <div key={gameType} className="col-span-1">
+                  <h3>{getGameName(gameType)}</h3>
+                  <ul className="statsList list-none">
+                    {decks.slice(0, 3).map((stat, index) => (
+                      <li key={`${stat.gameType}-${stat.deckName}`}>
+                        {index + 1}º {stat.deckName.replace(/(-[a-z0-9]{6,})+$/, '')} ({stat.count} veces)
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
