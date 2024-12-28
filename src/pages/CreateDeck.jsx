@@ -35,6 +35,7 @@ export default function CreateDeck() {
   const [showEndDateFilter, setShowEndDateFilter] = useState(false);
   const [showTypeFilter, setShowTypeFilter] = useState(false);
   const [showSortOption, setShowSortOption] = useState(false);
+  const [themeSuggestions, setThemeSuggestions] = useState([]);
 
   async function fetchUserCards() {
     try {
@@ -132,6 +133,32 @@ export default function CreateDeck() {
     navigate('/');
   };
 
+  const handleThemeSearch = async (e) => {
+    const query = e.target.value;
+    setForm((prevForm) => ({ ...prevForm, theme: query }));
+    if (query.length > 2) {
+      try {
+        const token = localStorage.getItem('access_token');
+        const response = await fetch(`${API_URL}/api/deckAutocomplete?query=${query}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `${token}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setThemeSuggestions(data);
+        } else {
+          console.error("Error fetching theme suggestions:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching theme suggestions:", error);
+      }
+    } else {
+      setThemeSuggestions([]);
+    }
+  };
+
   const filteredCards = userCards.filter(card => {
     const matchesTitle = titleFilter ? card.title.toLowerCase().includes(titleFilter.toLowerCase()) : true;
     const matchesTheme = themeFilter ? card.theme.toLowerCase().includes(themeFilter.toLowerCase()) : true;
@@ -204,10 +231,23 @@ export default function CreateDeck() {
               placeholder='Introduce el tema del mazo'
               name='theme'
               value={theme}
-              onChange={(e) => onInputChange(e)}
+              onChange={handleThemeSearch}
               errors={errors}
               isMandatory
             />
+            {themeSuggestions.length > 0 && (
+              <ul className="mt-2 border border-gray-300 rounded-md max-h-40 overflow-auto">
+                {themeSuggestions.map((suggestion) => (
+                  <li
+                    key={suggestion}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-200"
+                    onClick={() => setForm((prevForm) => ({ ...prevForm, theme: suggestion }))}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </form>
         <div>

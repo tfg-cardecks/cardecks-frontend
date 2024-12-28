@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import FormTextInputCreate from '../components/FormTextInputCreate';
+import { API_URL } from '../config';
 
 export default function PreviewFormCard() {
   const [title, setTitle] = useState('');
@@ -9,6 +10,7 @@ export default function PreviewFormCard() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { id } = useParams();
+  const [themeSuggestions, setThemeSuggestions] = useState([]);
 
   const validate = () => {
     const newErrors = {};
@@ -55,6 +57,33 @@ export default function PreviewFormCard() {
     }
   };
 
+
+  const handleThemeSearch = async (e) => {
+    const query = e.target.value;
+    setTheme(query);
+    if (query.length > 2) {
+      try {
+        const token = localStorage.getItem('access_token');
+        const response = await fetch(`${API_URL}/api/cardAutocomplete?query=${query}`, {
+          method: 'GET',
+          headers: {
+            Authorization: ` ${token}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setThemeSuggestions(data);
+        } else {
+          console.error("Error fetching theme suggestions:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching theme suggestions:", error);
+      }
+    } else {
+      setThemeSuggestions([]);
+    }
+  };
+
   return (
     <div className="container mx-auto p-4 flex flex-col items-center mb-8">
       <div className="w-full md:w-4/5 flex-1 overflow-y-auto">
@@ -77,15 +106,28 @@ export default function PreviewFormCard() {
           </div>
           <div>
             <FormTextInputCreate
-              labelFor='theme'
-              labelText='Tema'
-              placeholder='Introduce el tema de la carta'
-              name='theme'
+              labelFor="theme"
+              labelText="Tema"
+              placeholder="Introduce el tema de la carta"
+              name="theme"
               value={theme}
-              onChange={onInputChange}
+              onChange={handleThemeSearch}
               errors={errors}
               isMandatory
             />
+            {themeSuggestions.length > 0 && (
+              <ul className="mt-2 border border-gray-300 rounded-md max-h-40 overflow-auto">
+                {themeSuggestions.map((suggestion) => (
+                  <li
+                    key={suggestion}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-200"
+                    onClick={() => setTheme(suggestion)}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="cardType" className="block mb-2 font-bold">
