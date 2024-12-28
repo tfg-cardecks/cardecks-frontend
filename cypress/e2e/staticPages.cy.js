@@ -20,3 +20,17 @@ describe("Terms of Use Page Tests", () => {
     cy.get("h1").should("contain", "Términos de Uso de Cardecks");
   });
 });
+
+describe("Error Page Tests", () => {
+  it("should render the error page", () => {
+    cy.visit("http://localhost:5173/non-existent-page", {
+      failOnStatusCode: false,
+    });
+    cy.get("h1").should("contain", "404 - Página no encontrada");
+    cy.get("p").should(
+      "contain",
+      "Lo sentimos, la página que estás buscando no existe."
+    );
+    cy.get("button").should("contain", "Volver al inicio");
+  });
+});

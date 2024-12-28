@@ -30,6 +30,7 @@ import SelectDeckGame from "./pages/SelectDeckGame";
 import WordSearchGame from "./pages/games/WordSearchGame";
 import HangmanGame from "./pages/games/HangmanGame";
 import GuessTheImageGame from "./pages/games/GuessTheImageGame";
+import ErrorPage from "./pages/ErrorPage";
 
 export default function App() {
   return (
@@ -66,6 +67,8 @@ export default function App() {
           <Route path="/wordSearchGame/:wordSearchGameId" element={<WordSearchGame />} />
           <Route path="/hangmanGame/:hangmanGameId" element={<HangmanGame />} />
           <Route path="/guessTheImageGame/:guessTheImageGameId" element={<GuessTheImageGame />} />
+          {/* Ruta para manejar URLs no válidas */}
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
         <Footer />
       </AuthContextProvider>
