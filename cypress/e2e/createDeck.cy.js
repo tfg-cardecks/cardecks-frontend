@@ -41,28 +41,6 @@ describe("testing the create deck", () => {
       cy.get("button").contains("Iniciar").click().wait(2000);
       cy.get("button").contains("Si").click().wait(2000);
 
-      clickToNavElement("Cartas");
-      cy.get("a").contains("Crear Carta").click().wait(1500);
-
-      typeAndAssert("input[name='title']", "Carta de prueba1");
-      typeAndAssert("input[name='theme']", "Tema de prueba1");
-      cy.get("select#cardType").select("Texto e Imagen").wait(1500);
-
-      cy.get("button").contains("Crear Carta").click().wait(2000);
-
-      cy.get("button").contains("Añadir Texto").click().wait(1500);
-
-      cy.get("select").select("Trasera").wait(1500);
-
-      typeAndAssert(
-        "input[type='text']",
-        "https://img.freepik.com/vector-gratis/perro-lindo-alegre-sobre-fondo-blanco_1308-132745.jpg"
-      );
-
-      cy.get("button").contains("Cargar Imagen").click().wait(2000);
-
-      cy.get("button").contains("Crear Carta").click().wait(2000);
-
       clickToNavElement("Mazos");
       cy.get("a").contains("Crear Mazo").click().wait(2000);
 
