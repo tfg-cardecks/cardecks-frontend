@@ -23,7 +23,6 @@ export default function MyCards() {
   const [file, setFile] = useState(null);
   const [imageErrors, setImageErrors] = useState({});
   const [showFilters, setShowFilters] = useState(false);
-  const [showTitleFilter, setShowTitleFilter] = useState(false);
   const [showThemeFilter, setShowThemeFilter] = useState(false);
   const [showStartDateFilter, setShowStartDateFilter] = useState(false);
   const [showEndDateFilter, setShowEndDateFilter] = useState(false);

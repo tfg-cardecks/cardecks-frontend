@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 export const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
-    const apiURL = import.meta.env.VITE_BACKEND_URL;
     const [authenticated, setAuthenticated] = useState(
         Boolean(localStorage.getItem('access_token'))
     );

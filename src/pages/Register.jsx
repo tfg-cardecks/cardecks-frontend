@@ -21,7 +21,7 @@ export default function Register() {
   });
 
   const [errors, setErrors] = useState({});
-  const { email, username, password, password2, role } = form;
+  const { email, username, password, password2 } = form;
   const [checkedTerms, setCheckedTerms] = useState(false);
   const [checkedPriv, setCheckedPriv] = useState(false);
 

@@ -151,6 +151,7 @@ export default function CardDetailsEdit() {
           break;
         case 500:
           setErrorMessage(data.message);
+          break;
         default:
           break;
       }
