@@ -4,9 +4,9 @@ import { useAuthContext } from '../../context/authContext';
 import { API_URL } from '../../config';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import hangmanGame from '../../icon/hangman.png';
+import matchingGame from '../../icon/matchingGame.jpg';
 
-export default function SelectDeckGameHangman() {
+export default function SelectDeckGameMatchingGame() {
   const { authenticated } = useAuthContext();
   const { gameType, id } = useParams();
   const [decks, setDecks] = useState([]);
@@ -14,6 +14,7 @@ export default function SelectDeckGameHangman() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [isCreating, setIsCreating] = useState(false);
+  const [maxWords, setMaxWords] = useState(2);
   const [duration, setDuration] = useState(60);
   const [totalGames, setTotalGames] = useState(1);
   const [nameFilter, setNameFilter] = useState('');
@@ -21,8 +22,9 @@ export default function SelectDeckGameHangman() {
   const [decksPerPage, setDecksPerPage] = useState(5);
 
   const gameTypes = [
-    { type: 'HangmanGame', name: 'Juego del Ahorcado', icon: hangmanGame },
+    { type: 'MatchingGame', name: 'Juego de Relacionar', icon: matchingGame },
   ];
+
 
   async function fetchDecks() {
     try {
@@ -64,8 +66,8 @@ export default function SelectDeckGameHangman() {
         setIsCreating(true);
         const token = localStorage.getItem('access_token');
         const response = await axios.post(
-          `${API_URL}/api/hangmanGames`,
-          { deckId: selectedDeck, settings: { duration, totalGames } },
+          `${API_URL}/api/matchingGames`,
+          { deckId: selectedDeck, settings: { maxWords, duration, totalGames } },
           {
             headers: {
               Authorization: `${token}`,
@@ -76,9 +78,9 @@ export default function SelectDeckGameHangman() {
           Swal.fire({
             icon: 'success',
             title: 'Juego Creado',
-            text: 'El juego de ahorcado se ha creado exitosamente.',
+            text: 'El juego de relacionar se ha creado exitosamente.',
           }).then(() => {
-            navigate(`/hangmanGame/${response.data.hangmanGame._id}`);
+            navigate(`/matchingGame/${response.data.matchingGame._id}`);
           });
         } else {
           setError(response.data.message);
@@ -161,7 +163,18 @@ export default function SelectDeckGameHangman() {
           </div>
         </div>
         <div>
-          <div className="flex flex-col items-center mb-4 mt-8">
+          <div className="flex flex-col items-center mb-4">
+            <label className="mb-2">Número de Palabras:</label>
+            <input
+              type="number"
+              value={maxWords}
+              onChange={(e) => setMaxWords(Number(e.target.value))}
+              min="2"
+              max="4"
+              className="border rounded px-2 py-1"
+            />
+          </div>
+          <div className="flex flex-col items-center mb-4">
             <label className="mb-2">Duración (segundos):</label>
             <input
               type="number"

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import SelectDeckGameWordSearch from './gamesSelector/SelectDeckGameWordSearch';
 import SelectDeckGameHangman from './gamesSelector/SelectDeckGameHangman';
 import SelectDeckGameGuessTheImage from './gamesSelector/SelectDeckGameGuessTheImage';
+import SelectDeckGameMatchingGame from './gamesSelector/SelectDeckGameMatchingGame';
 
 export default function SelectDeckGame() {
   const { gameType } = useParams();
@@ -14,6 +15,8 @@ export default function SelectDeckGame() {
       return <SelectDeckGameHangman />;
     case 'GuessTheImageGame':
       return <SelectDeckGameGuessTheImage />;
+    case 'MatchingGame':
+      return <SelectDeckGameMatchingGame />;
     default:
       return <div>Juego no encontrado</div>;
   }

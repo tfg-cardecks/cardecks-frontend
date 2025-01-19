@@ -5,12 +5,14 @@ import '../styles/LobbyGames.css';
 import wordsearch from '../icon/wordsearch.png';
 import guesstheimage from '../icon/guesstheimage.png';
 import hangmanGame from '../icon/hangman.png';
+import matchingGame from '../icon/matchingGame.jpg';
 import Swal from 'sweetalert2';
 
 const gameTypes = [
   { type: 'WordSearchGame', name: 'Sopa de Letras', icon: wordsearch },
   { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
   { type: 'HangmanGame', name: 'Juego del Ahorcado', icon: hangmanGame },
+  { type: 'MatchingGame', name: 'Juego de Relacionar', icon: matchingGame },
 ];
 
 const gameInfo = {
@@ -76,6 +78,8 @@ const gameInfo = {
     rules: [
       "Se selecciona una imagen aleatoria de las cartas del mazo elegido.",
       "Adivina correctamente el nombre de la imagen para completar la partida.",
+      "Tienes un tiempo limitado para completar la partida.",
+
     ],
     wordProcessing: {
       allowedWordTypes: [
@@ -124,7 +128,8 @@ const gameInfo = {
       "Selecciona una letra para adivinar la palabra oculta.",
       "Si adivinas una letra correcta, se revelará en la palabra.",
       "Si adivinas una letra incorrecta, se suma una parte al dibujo del ahorcado.",
-      "El juego termina si adivinas la palabra o si el ahorcado se completa."
+      "El juego termina si adivinas la palabra o si el ahorcado se completa.",
+      "Tienes un tiempo limitado para completar la partida."
     ],
     wordProcessing: {
       allowedWordTypes: [
@@ -164,7 +169,59 @@ const gameInfo = {
         max: 25,
       }
     }
+  },
+
+  MatchingGame: {
+    title: "Juego de Relacionar",
+    description: "Un juego interactivo donde debes relacionar palabras con sus definiciones.",
+    rules: [
+      "Relaciona cada palabra con su significado correcto.",
+      "Tienes un tiempo limitado para completar el juego.",
+      "No puedes usar cartas con el mismo texto en la parte delantera o trasera.",
+      "Cada intento incorrecto reducirá tus puntos.",
+      "Completa el juego antes de que se acabe el tiempo para ganar."
+    ],
+    wordProcessing: {
+      allowedWordTypes: [
+        "Palabras sin espacios: Se consideran como una única palabra.",
+        "Palabras sin acentos: Los acentos son ignorados en la palabra.",
+        "Palabras en mayúsculas: Las letras se manejan en mayúsculas para la comparación.",
+      ],
+      notAllowedWordTypes: [
+        "Palabras con caracteres especiales: No se permiten en este juego.",
+        "Palabras vacías o que solo contengan caracteres no alfabéticos.",
+      ],
+    },
+    gameOverConditions: [
+      "El tiempo se ha agotado.",
+      "Se han utilizado todos los intentos.",
+      "Todas las palabras han sido correctamente relacionadas."
+    ],
+    tips: [
+      "Lee cuidadosamente cada palabra y su significado.",
+      "Intenta recordar las palabras y sus significados para relacionarlas más rápido.",
+      "No te apresures, pero tampoco te tomes demasiado tiempo en una sola palabra.",
+      "Si no estás seguro, pasa a la siguiente palabra y vuelve más tarde.",
+      "Practica con diferentes mazos para mejorar tu memoria y velocidad."
+    ],
+    maxGames: 25,
+    icon: hangmanGame,
+    settings: {
+      duration: {
+        label: "Duración (segundos)",
+        type: "number",
+        min: 5,
+        max: 300,
+      },
+      totalGames: {
+        label: "Total de Partidas",
+        type: "number",
+        min: 1,
+        max: 25,
+      }
+    }
   }
+
 };
 
 export default function LobbyGames() {
@@ -215,7 +272,7 @@ export default function LobbyGames() {
 
   return (
     <div>
-      <h1 className="lobby-title">Catálogo de Juegos</h1>
+      <h1 className="lobby-title mb-8 mt-8">Catálogo de Juegos</h1>
       <div className="game-type-list">
         {gameTypes.map((game) => (
           <div key={game.type} className="game-type-item">
