@@ -19,7 +19,7 @@ export default function SelectDeckGameWordSearch() {
   const [totalGames, setTotalGames] = useState(1);
   const [nameFilter, setNameFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [decksPerPage, setDecksPerPage] = useState(5); // Inicializar con 5
+  const [decksPerPage, setDecksPerPage] = useState(5);
 
   const gameTypes = [
     { type: 'WordSearchGame', name: 'Sopa de Letras', icon: wordsearch },

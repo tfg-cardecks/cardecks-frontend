@@ -281,7 +281,7 @@ export default function GuessTheImageGame() {
       title: 'Juego completado',
       text: '¡Has completado todas las partidas del juego!',
     }).then(() => {
-      navigate('/user/details');
+      navigate('/lobby');
     });
   };
 

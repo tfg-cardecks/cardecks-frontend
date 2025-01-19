@@ -145,7 +145,7 @@ export default function HangmanGame() {
         text: `La palabra era: ${hangmanGame.words[hangmanGame.currentWordIndex]}`,
       }).then(() => {
         setGameLost(true);
-        clearTimeout(timerRef.current); // Detener el tiempo
+        clearTimeout(timerRef.current);
       });
     }
   }, [remainingAttempts, hangmanGame]);
@@ -158,7 +158,7 @@ export default function HangmanGame() {
         text: `La palabra era: ${hangmanGame.words[hangmanGame.currentWordIndex]}`,
       }).then(() => {
         setGameWon(true);
-        clearTimeout(timerRef.current); // Detener el tiempo
+        clearTimeout(timerRef.current);
         handleNextGame();
       });
     }
@@ -297,7 +297,7 @@ export default function HangmanGame() {
       title: 'Juego completado',
       text: '¡Has completado todas las partidas del juego!',
     }).then(() => {
-      navigate('/user/details');
+      navigate('/lobby');
     });
   };
 
