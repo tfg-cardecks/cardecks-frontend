@@ -1,0 +1,35 @@
+{
+  "frontSide": {
+    "text": [
+      {
+        "content": "Goma",
+        "fontSize": 20,
+        "color": "#000000",
+        "left": 50,
+        "top": 100,
+        "_id": "370315a6e57cb3a177eb7a18"
+      }
+    ]
+  },
+  "backSide": {
+    "text": [
+      {
+        "content": "Eraser",
+        "fontSize": 20,
+        "color": "#000000",
+        "left": 50,
+        "top": 100,
+        "_id": "37031ca6e57cb3a175eb7a19"
+      }
+    ]
+  },
+  "_id": "37031ca6e57cb3a177eb7a47",
+  "title": "Goma",
+  "cardWidth": 300,
+  "cardHeight": 500,
+  "theme": "Oficina",
+  "cardType": "txtTxt",
+  "createdAt": "2024-10-06T23:26:30.311Z",
+  "updatedAt": "2024-10-06T23:26:30.311Z",
+  "__v": 0
+}
