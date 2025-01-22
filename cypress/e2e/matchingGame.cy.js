@@ -88,52 +88,40 @@ function clickToIncorrectAnswer(jsonMeanings, jsonContents) {
         .then((meaningText) => {
           const meaningButtonText = meaningText.trim().toUpperCase();
           if (meaningButtonText !== meaning.toUpperCase()) {
-            console.log("meaningButtonText", meaningButtonText);
-            console.log("meaning");
             cy.wrap($meaningButton).click({ force: true }).wait(500);
-            return false; // Break the loop
+            return false;
           }
         });
     });
   };
 
-  const matchWordsIncorrectly = (attempts) => {
-    if (attempts <= 1) {
-      console.log("Final attempt, forcing error");
-      cy.get("button")
-        .contains("Enviar Respuesta")
-        .click({ force: true })
-        .wait(500);
-      return;
-    }
-
-    cy.get(".words-container button").each(($wordButton) => {
-      cy.wrap($wordButton)
-        .invoke("text")
-        .then((wordText) => {
-          const word = wordText.trim().toUpperCase();
-          const index = jsonContents.indexOf(word);
-          const meaning = index !== -1 ? jsonMeanings[index] : null;
-          if (meaning) {
-            console.log("meaning", meaning);
-            console.log("word", word);
-            console.log("attempts", attempts);
-            cy.wrap($wordButton).click({ force: true }).wait(500);
-            attemptIncorrectMatching(meaning).then(() => {
-              matchWordsIncorrectly(attempts - 1);
-            });
-            return false; // Break the loop
-          }
-        });
-    });
+  const matchWordsIncorrectly = () => {
+    cy.get(".words-container button")
+      .each(($wordButton) => {
+        cy.wrap($wordButton)
+          .invoke("text")
+          .then((wordText) => {
+            const word = wordText.trim().toUpperCase();
+            const index = jsonContents.indexOf(word);
+            const meaning = index !== -1 ? jsonMeanings[index] : null;
+            if (meaning) {
+              cy.wrap($wordButton).click({ force: true }).wait(500);
+              attemptIncorrectMatching(meaning);
+            }
+          });
+      })
+      .then(() => {
+        cy.get("button")
+          .contains("Enviar Respuesta")
+          .click({ force: true })
+          .wait(500);
+        cy.get(".swal2-icon-error").get("button").contains("OK").click();
+      });
   };
 
-  cy.get("h3.text-xl.font-semibold.mb-6.text-center.text-yellow-600")
-    .invoke("text")
-    .then((text) => {
-      const attempts = parseInt(text.match(/\d+/)[0], 10);
-      matchWordsIncorrectly(attempts);
-    });
+  for (let i = 0; i < 6; i++) {
+    matchWordsIncorrectly();
+  }
 }
 
 function setUpGame() {
@@ -163,12 +151,6 @@ function setUpGame() {
     .wait(2000);
 
   cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
-  cy.get("div.flex.flex-col.items-center.mb-4")
-    .contains("Duración (segundos):")
-    .parent()
-    .find('input[type="number"]')
-    .clear()
-    .type("30");
 
   startGame();
   cy.get(".swal2-confirm").click();
@@ -237,9 +219,8 @@ function completeOneIncorrectGame() {
   });
 
   clickToIncorrectAnswer(jsonMeanings, jsonContents);
-  console.log("clickToIncorrectAnswer");
-  console.log("clickToIncorrectAnswer");
-  console.log("clickToIncorrectAnswer");
+  cy.wait(1500);
+  cy.get(".swal2-icon-error").get("button").contains("OK").click();
 }
 
 function clickToButtonText(text) {
