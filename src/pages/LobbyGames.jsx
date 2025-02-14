@@ -6,6 +6,7 @@ import wordsearch from '../icon/wordsearch.png';
 import guesstheimage from '../icon/guesstheimage.png';
 import hangmanGame from '../icon/hangman.png';
 import matchingGame from '../icon/matchingGame.jpg';
+import letterOrder from '../icon/letterOrder.jpg';
 import Swal from 'sweetalert2';
 
 const gameTypes = [
@@ -13,6 +14,7 @@ const gameTypes = [
   { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
   { type: 'HangmanGame', name: 'Juego del Ahorcado', icon: hangmanGame },
   { type: 'MatchingGame', name: 'Juego de Relacionar', icon: matchingGame },
+  { type: 'LetterOrderGame', name: 'Ordenar las letras', icon: letterOrder },
 ];
 
 const gameInfo = {
@@ -38,6 +40,11 @@ const gameInfo = {
         "Palabras con caracteres especiales o números que no sean válidos tras la limpieza."
       ],
     },
+    allowedCardTypes: [
+      "Texto y Texto",
+      "Texto e Imagen",
+    ],
+
     gameOverConditions: [
       "Encuentra todas las palabras para completar la partida.",
       "Si se agota el tiempo, perderás la partida."
@@ -49,6 +56,7 @@ const gameInfo = {
       "Si te atascas, intenta concentrarte en las letras menos comunes de la lista."
     ],
     maxGames: 25,
+    minCards: 5,
     icon: wordsearch,
     settings: {
       maxWords: {
@@ -93,6 +101,10 @@ const gameInfo = {
         "Palabras que queden vacías tras el proceso de limpieza. Ejemplo: '!!!' → ''.",
       ],
     },
+    allowedCardTypes: [
+      "Texto e Imagen"
+    ],
+
     gameOverConditions: [
       "Adivina correctamente el nombre de la imagen para completar la partida.",
       "Si se agota el tiempo, perderás la partida."
@@ -104,6 +116,7 @@ const gameInfo = {
       "Practica con diferentes mazos para mejorar tus habilidades y aprender nuevas palabras.",
     ],
     maxGames: 25,
+    minCards: 5,
     icon: guesstheimage,
     settings: {
       duration: {
@@ -142,6 +155,11 @@ const gameInfo = {
         "Palabras vacías o que solo contengan caracteres no alfabéticos.",
       ],
     },
+    allowedCardTypes: [
+      "Texto y Texto",
+      "Texto e Imagen",
+    ],
+
     gameOverConditions: [
       "El juego termina si adivinas correctamente la palabra oculta.",
       "El juego termina si el dibujo del ahorcado se completa.",
@@ -154,6 +172,7 @@ const gameInfo = {
       "Si te atascas, intenta pensar en palabras de la longitud y el contexto del mazo.",
     ],
     maxGames: 25,
+    minCards: 5,
     icon: hangmanGame,
     settings: {
       duration: {
@@ -192,6 +211,9 @@ const gameInfo = {
         "Palabras vacías o que solo contengan caracteres no alfabéticos.",
       ],
     },
+    allowedCardTypes: [
+      "Texto y Texto"
+    ],
     gameOverConditions: [
       "El tiempo se ha agotado.",
       "Se han utilizado todos los intentos.",
@@ -205,7 +227,8 @@ const gameInfo = {
       "Practica con diferentes mazos para mejorar tu memoria y velocidad."
     ],
     maxGames: 25,
-    icon: hangmanGame,
+    minCards: 10,
+    icon: matchingGame,
     settings: {
       duration: {
         label: "Duración (segundos)",
@@ -220,8 +243,67 @@ const gameInfo = {
         max: 25,
       }
     }
-  }
-
+  },
+  LetterOrderGame: {
+    title: "Ordenar las Letras",
+    description: "Un juego interactivo donde debes ordenar las letras de la/s palabra/s correctamente antes de que se acabe el tiempo.",
+    rules: [
+      "Se mostrará una palabra con sus letras desordenadas.",
+      "El jugador debe reordenar las letras para formar la palabra correcta.",
+      "Cada palabra debe completarse antes de que termine el tiempo.",
+      "Se puede configurar el número de palabras por partida y la duración del juego.",
+      "Si el tiempo se agota antes de ordenar la/s palabras, perderás la partida.",
+    ],
+    wordProcessing: {
+      allowedWordTypes: [
+        "Palabras con espacios: Se limpian y se concatenan. Ejemplo: 'MI CASA' → 'MICASA'.",
+        "Palabras con acentos: Se eliminan los acentos. Ejemplo: 'CAFÉ' → 'CAFE'.",
+        "Palabras con caracteres especiales o números: Se eliminan. Ejemplo: 'CÓDIGO! 123' → 'CODIGO'.",
+        "Palabras en minúsculas y mayúsculas: Se convierten a mayúsculas. Ejemplo: 'Hola Mundo' → 'HOLAMUNDO'."
+      ],
+      notAllowedWordTypes: [
+        "Palabras que, tras el proceso de limpieza, no contengan letras. Ejemplo: '123!!!' → ''.",
+        "Palabras que queden vacías tras el proceso de limpieza. Ejemplo: '!!!' → ''.",
+        "Palabras con caracteres especiales o números que no sean válidos tras la limpieza."
+      ],
+    },
+    allowedCardTypes: [
+      "Texto y Texto",
+      "Texto e Imagen",
+    ],
+    gameOverConditions: [
+      "El tiempo se agota antes de completar la palabra.",
+      "El jugador completa todas las palabras de la partida.",
+    ],
+    tips: [
+      "Empieza buscando prefijos y sufijos comunes en las palabras.",
+      "Identifica rápidamente las vocales para facilitar la organización.",
+      "Practica con palabras cortas antes de aumentar la dificultad."
+    ],
+    maxGames: 25,
+    minCards: 8,
+    icon: letterOrder,
+    settings: {
+      maxWords: {
+        label: "Número de Palabras",
+        type: "number",
+        min: 1,
+        max: 3,
+      },
+      duration: {
+        label: "Duración (segundos)",
+        type: "number",
+        min: 5,
+        max: 300,
+      },
+      totalGames: {
+        label: "Total de Partidas",
+        type: "number",
+        min: 1,
+        max: 25,
+      }
+    }
+  },
 };
 
 export default function LobbyGames() {
@@ -256,6 +338,11 @@ export default function LobbyGames() {
         <ul style="margin-left: 20px;">${info.tips.map(tip => `<li>${tip}</li>`).join('')}</ul>
         <br>
         <p><strong>Máxima de Partidas:</strong> ${info.maxGames}</p>
+        <br>
+        <p><strong>Número Mínimo de Cartas:</strong> ${info.minCards}</p>
+        <br>
+        <p><strong>Tipos de Cartas Permitidos:</strong></p>
+        <ul style="margin-left: 20px;">${info.allowedCardTypes.map(type => `<li>${type}</li>`).join('')}</ul>
         <br>
         <p><strong>Ajustes:</strong></p>
         <ul style="margin-left: 20px;">

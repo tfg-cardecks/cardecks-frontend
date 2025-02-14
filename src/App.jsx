@@ -31,6 +31,7 @@ import WordSearchGame from "./pages/games/WordSearchGame";
 import HangmanGame from "./pages/games/HangmanGame";
 import GuessTheImageGame from "./pages/games/GuessTheImageGame";
 import MatchingGame from "./pages/games/MatchingGame";
+import LetterOrderGame from "./pages/games/LetterOrderGame";
 import ErrorPage from "./pages/ErrorPage";
 
 export default function App() {
@@ -69,6 +70,7 @@ export default function App() {
           <Route path="/hangmanGame/:hangmanGameId" element={<HangmanGame />} />
           <Route path="/guessTheImageGame/:guessTheImageGameId" element={<GuessTheImageGame />} />
           <Route path="/matchingGame/:matchingGameId" element={<MatchingGame />} />
+          <Route path="/letterOrderGame/:letterOrderGameId" element={<LetterOrderGame />} />
           {/* Ruta para manejar URLs no válidas */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>

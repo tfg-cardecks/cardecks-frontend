@@ -4,15 +4,10 @@ import axios from 'axios';
 import { API_URL } from '../config';
 import '../styles/UserDetailStyles.css';
 import wordsearch from '../icon/wordsearch.png';
-import guesstheword from '../icon/guesstheword.png';
 import guesstheimage from '../icon/guesstheimage.png';
-import guessthetext from '../icon/guesstheimage.png';
-import memoryGame from '../icon/guesstheimage.png';
-import strokeOrderGame from '../icon/guesstheimage.png';
-import matchingGame from '../icon/guesstheimage.png';
+import matchingGame from '../icon/matchingGame.jpg';
 import hangmanGame from '../icon/guesstheimage.png';
-import speedMemoryWordGame from '../icon/guesstheimage.png';
-import speedMemoryImageGame from '../icon/guesstheimage.png';
+import letterOrder from '../icon/letterOrder.jpg';
 
 export default function UserDetailStatistics() {
   const [user, setUser] = useState({});
@@ -24,15 +19,11 @@ export default function UserDetailStatistics() {
 
   const gameTypes = [
     { type: 'WordSearchGame', name: 'Sopa de Letras', icon: wordsearch },
-    { type: 'GuessTheWordGame', name: 'Adivina la Palabra', icon: guesstheword },
     { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
-    { type: 'GuessTheTextGame', name: 'Adivina el Texto', icon: guessthetext },
-    { type: 'MemoryGame', name: 'Juego de Memoria', icon: memoryGame },
-    { type: 'StrokeOrderGame', name: 'Orden de trazos', icon: strokeOrderGame },
     { type: 'MatchingGame', name: 'Juego de Relacionar', icon: matchingGame },
     { type: 'HangmanGame', name: 'Juego del Ahorcado', icon: hangmanGame },
-    { type: 'SpeedMemoryWordGame', name: 'Juego de Memorización Rápida de Palabra', icon: speedMemoryWordGame },
-    { type: 'SpeedMemoryImageGame', name: 'Juego de Memorización Rápida de Imagen', icon: speedMemoryImageGame },
+    { type: 'LetterOrderGame', name: 'Ordenar las Letras', icon: letterOrder },
+
   ];
 
   async function fetchUserData() {

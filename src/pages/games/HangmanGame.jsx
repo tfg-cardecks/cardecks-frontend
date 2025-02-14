@@ -87,7 +87,7 @@ export default function HangmanGame() {
           break;
       }
     } catch (error) {
-      setErrorMessage('Error al cargar la baraja');
+      setErrorMessage('Error al cargar el mazo');
     }
   }
 

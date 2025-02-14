@@ -70,7 +70,7 @@ export default function GuessTheImageGame() {
           break;
       }
     } catch (error) {
-      setErrorMessage('Error al cargar la baraja');
+      setErrorMessage('Error al cargar el mazo');
     }
   }
 
