@@ -177,7 +177,7 @@ export default function MatchingGame() {
                     setTimeout(() => {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Juego completado',
+                            title: 'Juego Completado',
                             text: data.message,
                         }).then(() => {
                             navigate('/lobby');

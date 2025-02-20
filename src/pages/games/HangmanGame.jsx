@@ -185,7 +185,7 @@ export default function HangmanGame() {
         case 200:
           Swal.fire({
             icon: 'success',
-            title: 'Juego completado',
+            title: 'Juego Completado',
             text: data.message,
           }).then(() => {
             navigate('/lobby');
@@ -294,7 +294,7 @@ export default function HangmanGame() {
   const handleGameCompletion = () => {
     Swal.fire({
       icon: 'success',
-      title: 'Juego completado',
+      title: 'Juego Completado',
       text: '¡Has completado todas las partidas del juego!',
     }).then(() => {
       navigate('/lobby');
