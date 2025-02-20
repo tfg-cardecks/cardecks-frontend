@@ -36,17 +36,19 @@ export default function LetterOrderGame() {
 
       switch (response.status) {
         case 200:
+          const uniqueWords = Array.from(new Set(data.words.map(wordObj => wordObj.word)));
+          const combinedWord = combineWords(uniqueWords);
           setLetterOrderGame(data);
-          setCurrentWords(data.words.map(wordObj => wordObj.word));
-          setLetters(data.words.map(wordObj => wordObj.grid));
-          setWordLines(data.words.map(wordObj => new Array(wordObj.grid.length).fill('')));
+          setCurrentWords(uniqueWords);
+          setLetters([shuffleArray(removeDuplicateLetters(combinedWord.split('')))]);
+          setWordLines(uniqueWords.map(word => new Array(word.length).fill('')));
           setAnswerSubmitted(new Map());
           setIsCorrect(false);
           setGameLost(false);
           setGameWon(false);
           setTimeLeft(data.duration);
           setRemainingAttempts(6);
-          setCompletedWords(new Array(data.words.length).fill(false));
+          setCompletedWords(new Array(uniqueWords.length).fill(false));
           break;
         case 401:
         case 404:
@@ -58,6 +60,22 @@ export default function LetterOrderGame() {
     } catch (error) {
       setErrorMessage('Error al cargar el juego de ordenar letras');
     }
+  }
+
+  function combineWords(words) {
+    return words.join('');
+  }
+
+  function removeDuplicateLetters(array) {
+    return Array.from(new Set(array));
+  }
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 
   async function fetchDeck() {
@@ -91,6 +109,24 @@ export default function LetterOrderGame() {
   useEffect(() => {
     if (letterOrderGame) {
       fetchDeck();
+    }
+  }, [letterOrderGame]);
+
+  useEffect(() => {
+    if (letterOrderGame) {
+      const words = letterOrderGame.words.map(wordObj => wordObj.word);
+      const combinedWord = Array.from(new Set(words.join(''))).join('');
+      const shuffledLetters = shuffleArray(combinedWord.split(''));
+
+      setCurrentWords(words);
+      setLetters([shuffledLetters]);
+      setWordLines(words.map(word => new Array(word.length).fill('')));
+      setAnswerSubmitted(new Map());
+      setIsCorrect(false);
+      setGameLost(false);
+      setGameWon(false);
+      setRemainingAttempts(6);
+      setCompletedWords(new Array(words.length).fill(false));
     }
   }, [letterOrderGame]);
 
@@ -174,12 +210,12 @@ export default function LetterOrderGame() {
           setTimeout(() => {
             Swal.fire({
               icon: 'success',
-              title: 'Juego completado',
+              title: 'Juego Completado',
               text: data.message,
             }).then(() => {
               navigate('/lobby');
             });
-          }, 1500);
+          }, 1000);
           break;
         case 401:
         case 404:
@@ -261,26 +297,12 @@ export default function LetterOrderGame() {
     }
   }
 
-  useEffect(() => {
-    if (letterOrderGame) {
-      setCurrentWords(letterOrderGame.words.map(wordObj => wordObj.word));
-      setLetters(letterOrderGame.words.map(wordObj => wordObj.grid));
-      setWordLines(letterOrderGame.words.map(wordObj => new Array(wordObj.grid.length).fill('')));
-      setAnswerSubmitted(new Map());
-      setIsCorrect(false);
-      setGameLost(false);
-      setGameWon(false);
-      setRemainingAttempts(6);
-      setCompletedWords(new Array(letterOrderGame.words.length).fill(false));
-    }
-  }, [letterOrderGame]);
-
   const handleDragStart = (letter, wordIndex) => {
     setDraggingLetter({ letter, wordIndex });
   };
 
   const handleDrop = (wordIndex, letterIndex) => {
-    if (draggingLetter !== null && draggingLetter.wordIndex === wordIndex) {
+    if (draggingLetter !== null) {
       const newWordLines = [...wordLines];
       newWordLines[wordIndex][letterIndex] = draggingLetter.letter;
       setWordLines(newWordLines);
@@ -290,21 +312,43 @@ export default function LetterOrderGame() {
 
   const handleSubmit = (wordIndex) => {
     const formedWord = wordLines[wordIndex].join('');
+    let isWordCorrect = false;
+
     if (formedWord === currentWords[wordIndex]) {
       const newCompletedWords = [...completedWords];
       newCompletedWords[wordIndex] = true;
       setCompletedWords(newCompletedWords);
-      setIsCorrect(true);
-
+      isWordCorrect = true;
+      if (currentWords.length > 1 && newCompletedWords.filter(word => !word).length === 1) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Correcto!',
+          text: `Has acertado la palabra: ${formedWord}`,
+        });
+        ;
+      }
       if (newCompletedWords.every(word => word)) {
         setGameWon(true);
       }
     } else {
-      setIsCorrect(false);
       setRemainingAttempts(remainingAttempts - 1);
       if (remainingAttempts - 1 === 0) {
         setGameLost(true);
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: '¡Has fallado!',
+          text: `Intentos restantes: ${remainingAttempts - 1}`,
+        });
       }
+    }
+
+    setIsCorrect(isWordCorrect);
+
+    if (!isWordCorrect) {
+      const newWordLines = [...wordLines];
+      newWordLines[wordIndex] = new Array(newWordLines[wordIndex].length).fill('');
+      setWordLines(newWordLines);
     }
   };
 
@@ -331,7 +375,7 @@ export default function LetterOrderGame() {
         {lineArray.map((line, index) => (
           <div
             key={index}
-            className="word-line p-2 border rounded-lg m-2"
+            className="word-line p-4 border rounded-lg m-2"
             onDragOver={(e) => e.preventDefault()}
             onDrop={() => handleDrop(wordIndex, index)}
           >

@@ -14,7 +14,7 @@ export default function SelectDeckGameLetterOrderGame() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [isCreating, setIsCreating] = useState(false);
-  const [maxWords, setMaxWords] = useState(2);
+  const [numWords, setNumWords] = useState(2);
   const [duration, setDuration] = useState(60);
   const [totalGames, setTotalGames] = useState(1);
   const [nameFilter, setNameFilter] = useState('');
@@ -66,7 +66,7 @@ export default function SelectDeckGameLetterOrderGame() {
         const token = localStorage.getItem('access_token');
         const response = await axios.post(
           `${API_URL}/api/letterOrderGames`,
-          { deckId: selectedDeck, settings: { maxWords, duration, totalGames } },
+          { deckId: selectedDeck, settings: { numWords, duration, totalGames } },
           {
             headers: {
               Authorization: `${token}`,
@@ -168,10 +168,10 @@ export default function SelectDeckGameLetterOrderGame() {
             <label className="mb-2">Número de Palabras:</label>
             <input
               type="number"
-              value={maxWords}
-              onChange={(e) => setMaxWords(Number(e.target.value))}
-              min="2"
-              max="4"
+              value={numWords}
+              onChange={(e) => setNumWords(Number(e.target.value))}
+              min="1"
+              max="3"
               className="border rounded px-2 py-1"
             />
           </div>
