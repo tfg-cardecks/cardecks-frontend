@@ -14,7 +14,7 @@ export default function SelectDeckGameLetterOrderGame() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [isCreating, setIsCreating] = useState(false);
-  const [numWords, setNumWords] = useState(2);
+  const [numWords, setNumWords] = useState(1);
   const [duration, setDuration] = useState(60);
   const [totalGames, setTotalGames] = useState(1);
   const [nameFilter, setNameFilter] = useState('');
@@ -22,7 +22,7 @@ export default function SelectDeckGameLetterOrderGame() {
   const [decksPerPage, setDecksPerPage] = useState(5);
 
   const gameTypes = [
-    { type: 'LetterOrderGame', name: 'Ordenar las letras', icon: letterOrder },
+    { type: 'LetterOrderGame', name: 'Ordenar las Letras', icon: letterOrder },
   ];
 
   async function fetchDecks() {

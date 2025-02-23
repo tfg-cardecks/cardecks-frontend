@@ -14,7 +14,7 @@ const gameTypes = [
   { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
   { type: 'HangmanGame', name: 'Juego del Ahorcado', icon: hangmanGame },
   { type: 'MatchingGame', name: 'Juego de Relacionar', icon: matchingGame },
-  { type: 'LetterOrderGame', name: 'Ordenar las letras', icon: letterOrder },
+  { type: 'LetterOrderGame', name: 'Ordenar las Letras', icon: letterOrder },
 ];
 
 const gameInfo = {
