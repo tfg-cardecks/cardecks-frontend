@@ -22,7 +22,7 @@ export default function SelectDeckGameMatchingGame() {
   const [decksPerPage, setDecksPerPage] = useState(5);
 
   const gameTypes = [
-    { type: 'MatchingGame', name: 'Juego de Relacionar', icon: matchingGame },
+    { type: 'MatchingGame', name: 'Juego de Relacionar Palabras', icon: matchingGame },
   ];
 
 
@@ -78,7 +78,7 @@ export default function SelectDeckGameMatchingGame() {
           Swal.fire({
             icon: 'success',
             title: 'Juego Creado',
-            text: 'El juego de relacionar se ha creado exitosamente.',
+            text: 'El Juego de Relacionar Palabras se ha creado exitosamente.',
           }).then(() => {
             navigate(`/matchingGame/${response.data.matchingGame._id}`);
           });

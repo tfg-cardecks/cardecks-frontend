@@ -73,7 +73,6 @@ export default function SelectDeckGameLetterOrderGame() {
             },
           }
         );
-        console.log("selectedDeck, duration, totalGames", selectedDeck, duration, totalGames);
 
         if (response.status === 201) {
           Swal.fire({

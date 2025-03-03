@@ -53,7 +53,7 @@ export default function MatchingGame() {
                     break;
             }
         } catch (error) {
-            setErrorMessage('Error al cargar el juego de relacionar');
+            setErrorMessage('Error al cargar el juego de Relacionar Palabras');
         }
     }
 
@@ -403,7 +403,7 @@ export default function MatchingGame() {
 
     return (
         <div className="container mx-auto p-4 flex flex-col items-center">
-            <h1 className="text-3xl font-bold mb-6 text-center">Juego de Relacionar</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center">Juego de Relacionar Palabras</h1>
             <h2 className="text-2xl font-semibold mb-6 text-center text-gray-700">
                 Mazo: {deckName}
             </h2>
