@@ -20,7 +20,7 @@ export default function UserDetailStatistics() {
   const gameTypes = [
     { type: 'WordSearchGame', name: 'Sopa de Letras', icon: wordsearch },
     { type: 'GuessTheImageGame', name: 'Adivina la Imagen', icon: guesstheimage },
-    { type: 'MatchingGame', name: 'Juego de Relacionar Palabras', icon: matchingGame },
+    { type: 'MatchingGame', name: 'Relacionar Palabras', icon: matchingGame },
     { type: 'HangmanGame', name: 'Juego del Ahorcado', icon: hangmanGame },
     { type: 'LetterOrderGame', name: 'Ordenar las Letras', icon: letterOrder },
 

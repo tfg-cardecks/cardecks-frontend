@@ -22,7 +22,7 @@ export default function SelectDeckGameMatchingGame() {
   const [decksPerPage, setDecksPerPage] = useState(5);
 
   const gameTypes = [
-    { type: 'MatchingGame', name: 'Juego de Relacionar Palabras', icon: matchingGame },
+    { type: 'MatchingGame', name: 'Relacionar Palabras', icon: matchingGame },
   ];
 
 

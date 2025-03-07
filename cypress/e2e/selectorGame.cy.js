@@ -148,7 +148,7 @@ describe("testing selector", () => {
 
     cy.visit("http://localhost:5173/lobby").wait(2000);
     cy.get(".game-type-list")
-      .find("img[alt='Juego de Relacionar Palabras']")
+      .find("img[alt='Relacionar Palabras']")
       .click()
       .wait(2000);
 

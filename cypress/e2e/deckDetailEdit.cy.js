@@ -43,34 +43,8 @@ describe("Edit Deck Functionality", () => {
       cy.get("button").contains("Iniciar").click().wait(2000);
       cy.get("button").contains("Si").click().wait(2000);
 
-      clickToNavElement("Cartas");
-      cy.get("a").contains("Crear Carta").click().wait(1500);
-      const cardTitle = generateRandomTextCard();
-
-      typeAndAssert("input[name='title']", cardTitle);
-      typeAndAssert("input[name='theme']", "Tema de prueba1");
-      cy.get("select#cardType").select("Texto e Imagen").wait(1500);
-
-      cy.get("button").contains("Crear Carta").click().wait(2000);
-
-      cy.get("button").contains("Añadir Texto").click().wait(1500);
-
-      cy.get("select").select("Trasera").wait(1500);
-
-      typeAndAssert(
-        "input[type='text']",
-        "https://img.freepik.com/vector-gratis/perro-lindo-alegre-sobre-fondo-blanco_1308-132745.jpg"
-      );
-
-      cy.get("button").contains("Cargar Imagen").click().wait(2000);
-
-      cy.get("button").contains("Crear Carta").click().wait(2000);
-
-      cy.visit(
-        `http://localhost:5173/user/${localStorage.getItem(
-          "userId"
-        )}/create-deck`
-      );
+      clickToNavElement("Mazos");
+      cy.get("a").contains("Crear Mazo").click().wait(1500);
       typeAndAssert("input[name='name']", generateRandomText());
       typeAndAssert("input[name='description']", "This is a test deck.");
       typeAndAssert("input[name='theme']", "Test Theme");
@@ -93,10 +67,6 @@ describe("Edit Deck Functionality", () => {
 
       cy.get("button").contains("Eliminar").click().wait(2000);
 
-      clickToNavElement("Cartas");
-      cy.get("a").contains("Mis Cartas").click().wait(2000);
-      cy.get("h2.text-xl.font-bold.mb-2").contains(cardTitle).first().click();
-      cy.get("button").contains("Eliminar").click().wait(2000);
 
       cy.get("header")
         .find("nav")
