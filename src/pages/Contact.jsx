@@ -14,14 +14,6 @@ export default function Contact() {
             <a href="mailto:cardeckstfg@gmail.es" className="text-blue-500 hover:underline">cardeckstfg@gmail.es</a>
           </p>
         </section>
-
-        <section>
-          <h2 className="text-2xl font-semibold mb-4 text-gray-700">Redes Sociales</h2>
-          <p className="text-lg text-gray-600">
-            Twitter: <a href="https://twitter.com" className="text-blue-500 hover:underline">@cardeck</a>
-          </p>
-        </section>
-
         <section className="md:col-span-2">
           <h2 className="text-2xl font-semibold mb-4 text-gray-700">Preguntas frecuentes</h2>
           <h3 className="text-xl font-semibold mb-3 text-gray-700">¿Cómo puedo solucionar un problema de cuenta de usuario?</h3>
