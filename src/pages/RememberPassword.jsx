@@ -75,7 +75,7 @@ export default function RememberPassword() {
           {errors.message && (
             <p className='text-red-500'>{errors.message}</p>
           )}
-          <h2 className="title">Solicitud para cambiar la contraseña</h2>
+          <h2 className="title">Solicitud para restablecer la contraseña</h2>
           <hr className="divider" />
           <form onSubmit={handleForgotPassword}>
             <div className="form-group">
