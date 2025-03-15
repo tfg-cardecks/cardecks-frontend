@@ -76,7 +76,7 @@ export default function SelectDeckGameHangman() {
           Swal.fire({
             icon: 'success',
             title: 'Juego Creado',
-            text: 'El juego de ahorcado se ha creado exitosamente.',
+            text: 'El juego del ahorcado se ha creado exitosamente.',
           }).then(() => {
             navigate(`/hangmanGame/${response.data.hangmanGame._id}`);
           });

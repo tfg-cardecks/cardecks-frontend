@@ -51,27 +51,40 @@ export default function CardDetail() {
 
   async function handleDelete() {
     try {
-      const token = localStorage.getItem('access_token');
-      const res = await fetch(`${API_URL}/api/card/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `${token}`,
-        },
+      const alert = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'Cancelar',
       });
 
-      if (res.status === 204) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Carta eliminada',
-          text: 'Se ha eliminado correctamente la carta.',
-          showConfirmButton: false,
-          timer: 1500,
+      if (alert.isConfirmed) {
+        const token = localStorage.getItem('access_token');
+        const res = await fetch(`${API_URL}/api/card/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`,
+          },
         });
-        navigate('/');
-      } else {
-        const data = await res.json();
-        setErrors(data);
+
+        if (res.status === 204) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Carta eliminada',
+            text: 'Se ha eliminado correctamente la carta.',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate('/');
+        } else {
+          const data = await res.json();
+          setErrors(data);
+        }
       }
     } catch (error) {
       setErrors('Error al eliminar la carta. Inténtalo de nuevo más tarde.');
@@ -139,7 +152,7 @@ export default function CardDetail() {
               onClick={handleUpdate}
               className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none"
             >
-              Actualizar
+              Editar Carta
             </button>
 
             <button

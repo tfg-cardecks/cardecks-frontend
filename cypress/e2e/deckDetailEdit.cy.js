@@ -61,9 +61,9 @@ describe("Edit Deck Functionality", () => {
 
       cy.get("button").contains("Crear Mazo").click().wait(2000);
 
-      cy.get("button").contains("Actualizar").click();
+      cy.get("button").contains("Editar Mazo").click();
 
-      cy.get("button").contains("Actualizar Mazo").click();
+      cy.get("button").contains("Editar Mazo").click();
 
       cy.get("button").contains("Eliminar").click().wait(2000);
 
@@ -139,11 +139,11 @@ describe("Edit Deck Validation", () => {
 
       cy.get("button").contains("Crear Mazo").click().wait(4000);
 
-      cy.get("button").contains("Actualizar").click();
+      cy.get("button").contains("Editar Mazo").click();
 
       cy.get('input[name="theme"]').clear();
 
-      cy.get("button").contains("Actualizar Mazo").click();
+      cy.get("button").contains("Editar Mazo").click();
       cy.get("p.text-red-600").should("contain", "El tema es obligatorio");
       cy.get("button").contains("Cancelar").click();
 

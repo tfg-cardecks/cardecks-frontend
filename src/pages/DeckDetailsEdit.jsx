@@ -108,7 +108,7 @@ export default function DeckDetailsEdit() {
           break;
       }
     } catch (error) {
-      setErrors({ message: 'Error al actualizar el mazo' });
+      setErrors({ message: 'Error al editar el mazo' });
     }
   }
 
@@ -175,12 +175,12 @@ export default function DeckDetailsEdit() {
                 />
               </div>
             </div>
-            <div className="flex space-x-4 mt-4">
+            <div className="flex justify-center space-x-4 mt-4">
               <button
                 type="submit"
                 className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none"
               >
-                Actualizar Mazo
+                Editar Mazo
               </button>
               <button
                 type="button"

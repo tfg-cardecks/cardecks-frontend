@@ -330,7 +330,7 @@ export default function MatchingGame() {
                     Swal.fire({
                         icon: 'error',
                         title: 'Respuesta incorrecta',
-                        text: 'Intenta de nuevo.',
+                        text: `Intentos restantes: ${remainingAttempts - 1}`,
                     });
                 }, 500);
 

@@ -84,7 +84,7 @@ export default function UserDetail() {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="container">
+      <div className="container" style={{ marginTop: '30px', marginBottom: '30px' }}>
         <div className="card">
           {errors.message && (
             <p className='text-blue-700'>{errors.message}</p>

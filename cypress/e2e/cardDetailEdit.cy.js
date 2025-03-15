@@ -63,7 +63,7 @@ describe("testing the edit card functionality", () => {
 
       cy.get("button").contains("Crear Carta").click().wait(2000);
 
-      cy.get("button").contains("Actualizar").click();
+      cy.get("button").contains("Editar Carta").click();
 
       cy.get("select").select("Trasera").wait(1500);
 
@@ -85,7 +85,7 @@ describe("testing the edit card functionality", () => {
         }
       );
 
-      cy.get("button").contains("Actualizar Carta").click().wait(2000);
+      cy.get("button").contains("Editar Carta").click().wait(2000);
 
       cy.get("button").contains("Eliminar").click().wait(2000);
     });
@@ -137,7 +137,7 @@ describe("testing the edit card functionality with errors", () => {
       cy.get("button").contains("Cargar Imagen").click().wait(2000);
       cy.get("button").contains("Crear Carta").click().wait(2000);
 
-      cy.get("button").contains("Actualizar").click();
+      cy.get("button").contains("Editar Carta").click();
 
       cy.get("select").select("Trasera").wait(1500);
 
@@ -145,7 +145,7 @@ describe("testing the edit card functionality with errors", () => {
 
       cy.get("button").contains("Eliminar Imagen").click().wait(2000);
 
-      cy.get("button").contains("Actualizar Carta").click().wait(2000);
+      cy.get("button").contains("Editar Carta").click().wait(2000);
       cy.get("pre.text-red-500.whitespace-pre-wrap.mb-4").should(
         "contain",
         "Para el tipo 'Texto e Imagen', el reverso debe tener una imagen."
@@ -201,7 +201,7 @@ describe("testing the edit card functionality with errors", () => {
       cy.get("button").contains("Cargar Imagen").click().wait(2000);
       cy.get("button").contains("Crear Carta").click().wait(2000);
 
-      cy.get("button").contains("Actualizar").click();
+      cy.get("button").contains("Editar Carta").click();
 
       cy.get("select").select("Trasera").wait(1500);
 
@@ -272,7 +272,7 @@ describe("testing the edit card functionality with errors", () => {
       cy.get("button").contains("Cargar Imagen").click().wait(2000);
       cy.get("button").contains("Crear Carta").click().wait(2000);
 
-      cy.get("button").contains("Actualizar").click();
+      cy.get("button").contains("Editar Carta").click();
 
       cy.get("select").select("Trasera").wait(1500);
 

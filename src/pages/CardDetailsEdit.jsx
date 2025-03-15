@@ -156,7 +156,7 @@ export default function CardDetailsEdit() {
           break;
       }
     } catch (error) {
-      setErrorMessage('Error al actualizar la carta. Inténtalo de nuevo más tarde.');
+      setErrorMessage('Error al editar la carta. Inténtalo de nuevo más tarde.');
     }
   };
 
@@ -199,7 +199,7 @@ export default function CardDetailsEdit() {
           {side === 'front' && (
             <div className="mb-4">
               <label className="block font-bold mb-2">Texto Delantero:</label>
-              <p className="text-sm text-gray-600 mb-2">Cambia el texto aquí para actualizarlo en la imagen de la carta.</p>
+              <p className="text-sm text-gray-600 mb-2">Cambia el texto aquí para editarlo en la imagen de la carta.</p>
               <textarea
                 type="text"
                 value={frontText?.content || ''}
@@ -222,7 +222,7 @@ export default function CardDetailsEdit() {
           {side === 'back' && card.cardType === 'txtImg' && (
             <div className="mb-4">
               <label className="block font-bold mb-2">URL de la Imagen:</label>
-              <p className="text-sm text-gray-600 mb-2">Introduce la URL de la imagen y haz clic en "Cargar Imagen" para actualizarla en la carta.</p>
+              <p className="text-sm text-gray-600 mb-2">Introduce la URL de la imagen y haz clic en "Cargar Imagen" para editarla en la carta.</p>
               <input
                 type="text"
                 value={imageUrl}
@@ -255,7 +255,7 @@ export default function CardDetailsEdit() {
               className="bg-gradient-to-r from-green-400 to-green-600 text-white px-8 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
               onClick={handleUpdateCard}
             >
-              Actualizar Carta
+              Editar Carta
             </button>
             <button
               className="bg-gradient-to-r from-gray-400 to-gray-600 text-white px-8 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none"
