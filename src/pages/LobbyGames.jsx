@@ -252,7 +252,6 @@ const gameInfo = {
       "El jugador debe reordenar las letras para formar la palabra correcta.",
       "Cada palabra debe completarse antes de que termine el tiempo.",
       "Se puede configurar el número de palabras por partida y la duración del juego.",
-      "Si el tiempo se agota antes de ordenar la/s palabras, perderás la partida.",
     ],
     wordProcessing: {
       allowedWordTypes: [
@@ -273,6 +272,7 @@ const gameInfo = {
     ],
     gameOverConditions: [
       "El tiempo se agota antes de completar la palabra.",
+      "El número de intentos llegue a 0.",
       "El jugador completa todas las palabras de la partida.",
     ],
     tips: [
