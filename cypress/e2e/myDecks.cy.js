@@ -72,10 +72,17 @@ describe("testing the my deck functionality", () => {
       cy.get("p").should("contain", "mazito");
 
       cy.get("button").contains("Eliminar").click().wait(1000);
+      cy.get(".swal2-confirm").click();
+
       clickToNavElement("Mazos");
       cy.get("a").contains("Mis Mazos").click().wait(1500);
 
       cy.get("p.text-gray-500").should("contain", "No hay mazos disponibles.");
+      cy.get("button").contains("Usuario").click().wait(2000);
+      cy.get("a").contains("Detalles").click().wait(1500);
+      cy.get("button").contains("Darse de baja").click().wait(2000);
+      cy.get(".swal2-confirm").click();
+  
     });
   });
 });

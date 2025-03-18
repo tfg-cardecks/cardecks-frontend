@@ -87,7 +87,9 @@ function completeOneGame() {
 
 function clickToCorrectAnswer(jsonContents) {
   cy.get(".letters-container .letter").then((letters) => {
-    const availableLetters = Array.from(letters).map((letter) => letter.innerText);
+    const availableLetters = Array.from(letters).map(
+      (letter) => letter.innerText
+    );
 
     const correctWord = jsonContents.find((word) => {
       const wordLetters = word.split("");
@@ -147,7 +149,9 @@ function completeOneIncorrectGame() {
 
 function clickToIncorrectAnswer(jsonContents) {
   cy.get(".letters-container .letter").then((letters) => {
-    const availableLetters = Array.from(letters).map((letter) => letter.innerText);
+    const availableLetters = Array.from(letters).map(
+      (letter) => letter.innerText
+    );
 
     const correctWord = jsonContents.find((word) => {
       const wordLetters = word.split("");
@@ -194,9 +198,17 @@ beforeEach(() => {
 describe("testing letterOrderGame positive", () => {
   it("can play one letterOrderGame and complete the game", () => {
     completeOneGame();
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
   it("display `¡Has perdido!` alert ", () => {
     completeOneIncorrectGame();
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 });
 
@@ -209,5 +221,9 @@ describe("testing the buttons", () => {
     clickToButtonText("Volver al Catálogo de Juegos");
 
     clickToButtonText("Cambiar de Mazo");
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 });

@@ -52,34 +52,46 @@ export default function DeckDetails() {
 
   async function handleDelete() {
     try {
-      const token = localStorage.getItem('access_token');
-      const res = await fetch(`${API_URL}/api/deck/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `${token}`,
-        },
+      const alert = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'Cancelar',
       });
-
-      if (res.status === 204) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Mazo eliminado',
-          text: 'Se ha eliminado correctamente el mazo.',
-          showConfirmButton: false,
-          timer: 1500,
+  
+      if (alert.isConfirmed) {
+        const token = localStorage.getItem('access_token');
+        const res = await fetch(`${API_URL}/api/deck/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`,
+          },
         });
-
-        navigate('/');
-      } else {
-        const data = await res.json();
-        setErrors(data);
+  
+        if (res.status === 204) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Mazo eliminado',
+            text: 'Se ha eliminado correctamente el mazo.',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate('/');
+        } else {
+          const data = await res.json();
+          setErrors(data);
+        }
       }
     } catch (error) {
-      setErrors({ message: 'Error al eliminar el mazo' });
+      setErrors('Error al eliminar el mazo. Inténtalo de nuevo más tarde.');
     }
   }
-
+  
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setErrors(null);

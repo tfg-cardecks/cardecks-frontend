@@ -78,12 +78,21 @@ describe("testing the first game", () => {
   it("can't play wordsearch game without a card", () => {
     createDeck();
     cy.get("button").contains("Importar Carta a Mazo").click().wait(2000);
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
+
   });
 
   it("can't play wordsearch game (not enought cards)", () => {
     createDeck();
     selectedFileToImportAndSubmit("cypress/e2e/json/cascada.json");
     createWordSearchGame();
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 
   it("can play wordsearch game", () => {
@@ -101,6 +110,11 @@ describe("testing the first game", () => {
         });
       });
     });
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
+
   });
 });
 
@@ -113,5 +127,10 @@ describe("testing the buttons", () => {
     clickToButtonText("Volver al Catálogo de Juegos");
 
     clickToButtonText("Cambiar de Mazo");
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
+
   });
 });

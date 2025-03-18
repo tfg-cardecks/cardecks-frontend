@@ -199,15 +199,27 @@ describe("testing guessTheImageGame invalid", () => {
     cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
     startGame();
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 });
 
 describe("testing guessTheImageGame positive", () => {
   it("can play one guessTheImageGame and complete the game", () => {
     completeOneGame();
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
   it("display `¡Has perdido!` alert ", () => {
     completeOneIncorrectGame();
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 });
 
@@ -220,5 +232,9 @@ describe("testing the buttons", () => {
     clickToButtonText("Volver al Catálogo de Juegos");
 
     clickToButtonText("Cambiar de Mazo");
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 });

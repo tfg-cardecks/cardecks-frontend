@@ -45,6 +45,12 @@ describe("testing the autocomplete theme suggestions card and deck funcionality"
       typeAndAssert("input[name='title']", generateRandomTextCard());
       typeAndAssert("input[name='theme']", "Tem");
       cy.get("ul").children().eq(0).click();
+
+      cy.get("button").contains("Usuario").click().wait(2000);
+      cy.get("a").contains("Detalles").click().wait(1500);
+      cy.get("button").contains("Darse de baja").click().wait(2000);
+
+      cy.get(".swal2-confirm").click();
     });
   });
 
@@ -80,6 +86,10 @@ describe("testing the autocomplete theme suggestions card and deck funcionality"
       typeAndAssert("input[name='description']", "This is a test deck.");
       typeAndAssert("input[name='theme']", "Ani");
       cy.get("ul").children().eq(0).click();
+      cy.get("button").contains("Usuario").click().wait(2000);
+      cy.get("a").contains("Detalles").click().wait(1500);
+      cy.get("button").contains("Darse de baja").click().wait(2000);
+      cy.get(".swal2-confirm").click();
     });
   });
 });

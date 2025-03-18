@@ -69,6 +69,11 @@ describe("testing the my card functionality", () => {
 
       cy.get('input[type="file"]').selectFile("cypress/e2e/json/nubes.json");
       cy.get("button").contains("Importar Carta").click().wait(2000);
+      cy.get("button").contains("Usuario").click().wait(2000);
+      cy.get("a").contains("Detalles").click().wait(1500);
+      cy.get("button").contains("Darse de baja").click().wait(2000);
+      cy.get(".swal2-confirm").click();
+  
     });
   });
 });

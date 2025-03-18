@@ -141,6 +141,10 @@ describe("testing hangmanGame", () => {
     createDeck();
     selectedFileToImportAndSubmit("cypress/e2e/json/cascada.json");
     createHangmanGame();
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 
   it("can play hangmanGame (show ¡Has perdido! alert)", () => {
@@ -154,11 +158,21 @@ describe("testing hangmanGame", () => {
     });
 
     cy.get(".swal2-confirm").click();
+    cy.get(".swal2-confirm").click();
+
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 
   it("can play hangmanGame (show Juego completado alert)", () => {
     setUpGame();
     guessWord();
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 });
 
@@ -171,5 +185,9 @@ describe("testing the buttons", () => {
     clickToButtonText("Volver al Catálogo de Juegos");
 
     clickToButtonText("Cambiar de Mazo");
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 });

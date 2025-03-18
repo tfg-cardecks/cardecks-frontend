@@ -64,6 +64,10 @@ describe("testing the export card functionality", () => {
       cy.get("button").contains("Exportar Carta").click();
 
       cy.get("button").contains("Eliminar").click().wait(2000);
+      cy.get("button").contains("Usuario").click().wait(2000);
+      cy.get("a").contains("Detalles").click().wait(1500);
+      cy.get("button").contains("Darse de baja").click().wait(2000);
+      cy.get(".swal2-confirm").click();
     });
   });
 });

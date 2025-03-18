@@ -35,6 +35,11 @@ describe("testing the user details", () => {
       cy.get("button").contains("Si").click().wait(2000);
       cy.get("button").contains("Usuario").click().wait(2000);
       cy.get("a").contains("Estadísticas").click().wait(1500);
+      cy.get("button").contains("Usuario").click().wait(2000);
+      cy.get("a").contains("Detalles").click().wait(1500);
+      cy.get("button").contains("Darse de baja").click().wait(2000);
+      cy.get(".swal2-confirm").click();
+  
     });
   });
 });

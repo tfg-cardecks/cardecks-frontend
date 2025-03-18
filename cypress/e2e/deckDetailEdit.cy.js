@@ -67,14 +67,13 @@ describe("Edit Deck Functionality", () => {
 
       cy.get("button").contains("Eliminar").click().wait(2000);
 
+      cy.get(".swal2-confirm").click();
 
-      cy.get("header")
-        .find("nav")
-        .next()
-        .find("button")
-        .contains("Cerrar sesión")
-        .click()
-        .wait(1500);
+      cy.get("button").contains("Usuario").click().wait(2000);
+      cy.get("a").contains("Detalles").click().wait(1500);
+      cy.get("button").contains("Darse de baja").click().wait(2000);
+      cy.get(".swal2-confirm").click();
+
     });
   });
 });
@@ -148,8 +147,15 @@ describe("Edit Deck Validation", () => {
       cy.get("button").contains("Cancelar").click();
 
       cy.get("button").contains("Eliminar").click().wait(2000);
+      cy.get(".swal2-confirm").click();
 
       clickToNavElement("Cartas");
+
+      cy.get("button").contains("Usuario").click().wait(2000);
+      cy.get("a").contains("Detalles").click().wait(1500);
+      cy.get("button").contains("Darse de baja").click().wait(2000);
+      cy.get(".swal2-confirm").click();
+
     });
   });
 });

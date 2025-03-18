@@ -41,14 +41,18 @@ describe("testing the import card functionality", () => {
       clickToNavElement("Mazos");
       cy.get("a").contains("Crear Mazo").click().wait(1500);
 
-      typeAndAssert("input[name='name']", "Mazo de prueba12");
+      typeAndAssert("input[name='name']", "Mazo de prueba1224");
       typeAndAssert("input[name='description']", "Descripción de prueba12");
       typeAndAssert("input[name='theme']", "Tema de prueba12");
       cy.get("button").contains("Crear Mazo").click().wait(2000);
 
-      cy.get("button").contains("Exportar Mazo").click();
+      cy.get("button").contains("Exportar Mazo").click(2000);
 
-      cy.get("button").contains("Eliminar").click().wait(2000);
+      cy.get("button").contains("Usuario").click().wait(2000);
+      cy.get("a").contains("Detalles").click().wait(1500);
+      cy.get("button").contains("Darse de baja").click().wait(2000);
+      cy.get(".swal2-confirm").click();
+
     });
   });
 });

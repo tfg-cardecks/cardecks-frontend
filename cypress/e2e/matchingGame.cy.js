@@ -186,8 +186,9 @@ function completeOneGame() {
   });
   clickToCorrectAnswer(jsonMeanings, jsonContents);
   cy.get(".swal2-confirm").click();
-  cy.wait(1000);
-  cy.get("button").contains("OK").click();
+  cy.wait(3500);
+  cy.get(".swal2-confirm").click();
+  
 }
 
 function completeOneIncorrectGame() {
@@ -219,7 +220,9 @@ function completeOneIncorrectGame() {
   });
 
   clickToIncorrectAnswer(jsonMeanings, jsonContents);
-  cy.wait(1500);
+  cy.wait(3500);
+  cy.get(".swal2-icon-error").get("button").contains("OK").click();
+  cy.wait(4500);
   cy.get(".swal2-icon-error").get("button").contains("OK").click();
 }
 
@@ -266,15 +269,28 @@ describe("testing matchingGame invalid", () => {
     cy.get(".container").children().next().find("h2").eq(0).click().wait(500);
 
     startGame();
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 });
 
 describe("testing matchingGame positive", () => {
   it("can play one matchingGame and complete the game", () => {
     completeOneGame();
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
   it("display `¡Has perdido!` alert ", () => {
     completeOneIncorrectGame();
+
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 });
 
@@ -287,5 +303,9 @@ describe("testing the buttons", () => {
     clickToButtonText("Volver al Catálogo de Juegos");
 
     clickToButtonText("Cambiar de Mazo");
+    cy.get("button").contains("Usuario").click().wait(2000);
+    cy.get("a").contains("Detalles").click().wait(1500);
+    cy.get("button").contains("Darse de baja").click().wait(2000);
+    cy.get(".swal2-confirm").click();
   });
 });
