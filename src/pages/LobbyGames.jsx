@@ -288,7 +288,7 @@ const gameInfo = {
         label: "Número de Palabras",
         type: "number",
         min: 1,
-        max: 3,
+        max: 2,
       },
       duration: {
         label: "Duración (segundos)",

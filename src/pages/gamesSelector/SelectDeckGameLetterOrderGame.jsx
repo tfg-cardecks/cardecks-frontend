@@ -170,7 +170,7 @@ export default function SelectDeckGameLetterOrderGame() {
               value={numWords}
               onChange={(e) => setNumWords(Number(e.target.value))}
               min="1"
-              max="3"
+              max="2"
               className="border rounded px-2 py-1"
             />
           </div>
