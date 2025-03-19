@@ -21,6 +21,7 @@ export default function MatchingGame() {
     const timerRef = useRef(null);
     const wordRefs = useRef({});
     const meaningRefs = useRef({});
+    const [isLandscape, setIsLandscape] = useState(window.innerWidth > window.innerHeight);
 
     async function fetchMatchingGame() {
         try {
@@ -400,6 +401,27 @@ export default function MatchingGame() {
             </div>
         );
     };
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLandscape(window.innerWidth > window.innerHeight);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    if (!isLandscape) {
+        return (
+            <div className="flex items-center justify-center h-screen bg-gray-100">
+                <p className="text-center text-xl font-bold text-gray-700">
+                    Por favor, gira tu dispositivo para jugar en modo horizontal.
+                </p>
+            </div>
+        );
+    }
 
     return (
         <div className="container mx-auto p-4 flex flex-col items-center">

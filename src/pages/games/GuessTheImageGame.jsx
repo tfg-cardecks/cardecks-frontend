@@ -313,39 +313,28 @@ export default function GuessTheImageGame() {
       ) : !guessTheImageGame ? (
         <p>Cargando...</p>
       ) : (
-        <div className="flex">
-          <div>
+        <div className="flex flex-col md:flex-row items-center md:items-start space-y-8 md:space-y-0 md:space-x-8">
+          <div className="w-full md:w-1/2">
             {renderImage()}
           </div>
-          <div className="ml-32 mt-8">
+          <div className="w-full md:w-1/2">
             {renderOptions()}
             <button
-              className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none mt-4 ml-8"
+              className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none mt-4 w-full md:w-auto lg:ml-36"
               onClick={handleSubmit}
               disabled={!selectedAnswer || answerSubmitted}
-              style={{ marginLeft: "160px" }}
             >
               Enviar Respuesta
             </button>
-            {gameLost || gameWon || answerSubmitted ? (
-              guessTheImageGame.game.currentGameCount < guessTheImageGame.game.totalGames ? (
-                <button onClick={() => handleNextGame(!gameLost)} className="hidden">Siguiente Juego</button>
-              ) : (
-                handleGameCompletion()
-              )
-            ) : null}
-
-            <div className="flex space-x-4 mt-4">
+            <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 mt-4">
               <button
-                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
-                style={{ width: "240px" }}
+                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-full md:w-auto"
                 onClick={() => navigate('/lobby')}
               >
                 Volver al Catálogo de Juegos
               </button>
               <button
-                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
-                style={{ width: "240px" }}
+                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-full md:w-auto"
                 onClick={() => navigate(`/selectDeckGame/GuessTheImageGame/${guessTheImageGame.user}`)}
               >
                 Cambiar de Mazo

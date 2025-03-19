@@ -170,10 +170,10 @@ export default function CardDetailsEdit() {
 
   return (
     <div className="container mx-auto px-4 py-8 flex justify-center items-center">
-      <div className="w-1/2">
+      <div className="w-full md:w-3/4 lg:w-1/2">
         <h1 className="text-3xl font-bold mb-8 text-center">Editar Carta</h1>
         {errorMessage && (
-          <pre className="text-red-500 whitespace-pre-wrap mb-4">{errorMessage}</pre>
+          <pre className="text-red-500 whitespace-pre-wrap mb-4 text-center">{errorMessage}</pre>
         )}
         <div className="bg-gray-100 p-4 rounded-lg shadow-md mb-8">
           <div className="mb-4">
@@ -232,17 +232,17 @@ export default function CardDetailsEdit() {
                 }}
                 className="border p-2 rounded w-full"
               />
-              <div className="flex justify-center mt-2">
+              <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 mt-4">
                 <button
                   onClick={handleImageUrlUpload}
-                  className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none"
+                  className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none w-full md:w-auto"
                 >
                   Cargar Imagen
                 </button>
                 {backElements.some(el => el.type === 'image') && (
                   <button
                     onClick={handleDeleteImage}
-                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition w-full md:w-auto"
                   >
                     Eliminar Imagen
                   </button>
@@ -250,15 +250,15 @@ export default function CardDetailsEdit() {
               </div>
             </div>
           )}
-          <div className="flex justify-center space-x-4">
+          <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 mt-4">
             <button
-              className="bg-gradient-to-r from-green-400 to-green-600 text-white px-8 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
+              className="bg-gradient-to-r from-green-400 to-green-600 text-white px-8 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none w-full md:w-auto"
               onClick={handleUpdateCard}
             >
               Editar Carta
             </button>
             <button
-              className="bg-gradient-to-r from-gray-400 to-gray-600 text-white px-8 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none"
+              className="bg-gradient-to-r from-gray-400 to-gray-600 text-white px-8 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-full md:w-auto"
               onClick={handleCancel}
             >
               Cancelar

@@ -1,16 +1,18 @@
 .create-card-container {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  flex-direction: column; /* Cambiar a columna para pantallas pequeñas */
+  align-items: center;
   padding: 20px;
+  gap: 20px; /* Espaciado entre los elementos */
 }
 
 .left-content {
-  width: 50%;
+  width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
+  max-width: 600px; /* Limitar el ancho máximo */
 }
 
 .canvas-container {
-  width: 50%;
+  width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,6 +21,7 @@
 .card-canvas {
   border: 2px solid #000;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  max-width: 100%; /* Asegura que el lienzo no se desborde */
 }
 
 .card-info {
@@ -42,6 +45,7 @@
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 20px;
+  gap: 10px; /* Espaciado entre los elementos */
 }
 
 .toolbar-group {
@@ -49,6 +53,7 @@
   flex-direction: column;
   align-items: flex-start;
   margin: 10px;
+  width: 100%; /* Asegura que los inputs ocupen todo el ancho */
 }
 
 .toolbar-group label {
@@ -62,6 +67,7 @@
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 100%; /* Inputs y botones ocupan todo el ancho */
 }
 
 .save-button {
@@ -75,4 +81,20 @@
 
 .save-button:hover {
   background-color: #45a049;
+}
+
+/* Media Queries para pantallas más grandes */
+@media (min-width: 768px) {
+  .create-card-container {
+    flex-direction: row; /* Cambiar a fila para pantallas grandes */
+    align-items: flex-start;
+  }
+
+  .left-content {
+    width: 50%; /* Ocupa la mitad del ancho */
+  }
+
+  .canvas-container {
+    width: 50%; /* Ocupa la mitad del ancho */
+  }
 }

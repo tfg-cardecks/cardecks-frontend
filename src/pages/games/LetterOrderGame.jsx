@@ -22,6 +22,28 @@ export default function LetterOrderGame() {
   const [wordLines, setWordLines] = useState([]);
   const [draggingLetter, setDraggingLetter] = useState(null);
   const [completedWords, setCompletedWords] = useState([]);
+  const [isLandscape, setIsLandscape] = useState(window.innerWidth > window.innerHeight);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLandscape(window.innerWidth > window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  if (!isLandscape) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <p className="text-center text-xl font-bold text-gray-700">
+          Por favor, gira tu dispositivo para jugar en modo horizontal.
+        </p>
+      </div>
+    );
+  }
 
   async function fetchLetterOrderGame() {
     try {
@@ -428,18 +450,16 @@ export default function LetterOrderGame() {
             ) : null}
           </div>
 
-          <div className="flex space-x-4 mt-4 mb-8 ml-16">
+          <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 mt-4">
             <button
-              className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
+              className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-full md:w-auto"
               onClick={() => navigate('/lobby')}
-              style={{ width: '250px' }}
             >
               Volver al Catálogo de Juegos
             </button>
             <button
-              className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
+              className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-full md:w-auto"
               onClick={() => navigate(`/selectDeckGame/LetterOrderGame/${letterOrderGame.user}`)}
-              style={{ width: '250px' }}
             >
               Cambiar de Mazo
             </button>

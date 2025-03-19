@@ -133,10 +133,10 @@ export default function DeckDetailsEdit() {
 
   return (
     deck ? (
-      <div className="container mx-auto p-4 w-4/5">
+      <div className="container mx-auto p-4 w-full md:w-4/5">
         <div className="flex flex-col items-center bg-white shadow-lg rounded-lg p-6">
-          <h1 className="text-3xl font-bold mb-4">{deck.name.replace(/(-[a-z0-9]{6,})+$/, '')}</h1>
-          {error && <p className="text-red-600">{error.message}</p>}
+          <h1 className="text-3xl font-bold mb-4 text-center">{deck.name.replace(/(-[a-z0-9]{6,})+$/, '')}</h1>
+          {error && <p className="text-red-600 text-center">{error.message}</p>}
           <form onSubmit={(e) => { e.preventDefault(); handleUpdate(); }} className="w-full">
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="theme">
@@ -175,17 +175,17 @@ export default function DeckDetailsEdit() {
                 />
               </div>
             </div>
-            <div className="flex justify-center space-x-4 mt-4">
+            <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 mt-4">
               <button
                 type="submit"
-                className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none"
+                className="bg-gradient-to-r from-blue-200 to-blue-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-blue-300 focus:outline-none w-full md:w-auto"
               >
                 Editar Mazo
               </button>
               <button
                 type="button"
                 onClick={handleCancel}
-                className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
+                className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none w-full md:w-auto"
               >
                 Cancelar
               </button>
@@ -195,8 +195,8 @@ export default function DeckDetailsEdit() {
       </div>
     )
       : (
-        <div className="container mx-auto p-4 w-4/5">
-          <h1 className="text-3xl font-bold mb-4">Cargando...</h1>
+        <div className="container mx-auto p-4 w-full md:w-4/5">
+          <h1 className="text-3xl font-bold mb-4 text-center">Cargando...</h1>
         </div>
       )
   );

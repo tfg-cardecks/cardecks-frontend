@@ -133,6 +133,12 @@ export default function HangmanGame() {
     } else {
       setWrongLetters([...wrongLetters, letter]);
       setRemainingAttempts(remainingAttempts - 1);
+      Swal.fire({
+        icon: 'error',
+        title: 'Letra incorrecta',
+        text: `Intentos restantes: ${remainingAttempts - 1}`,
+      });
+
     }
     setCurrentGuess('');
   }
@@ -291,16 +297,6 @@ export default function HangmanGame() {
     return <img src={images[imageIndex]} alt={`Hangman step ${imageIndex}`} className="hangman-image" />;
   };
 
-  const handleGameCompletion = () => {
-    Swal.fire({
-      icon: 'success',
-      title: 'Juego Completado',
-      text: '¡Has completado todas las partidas del juego!',
-    }).then(() => {
-      navigate('/lobby');
-    });
-  };
-
   return (
     <div className="container mx-auto p-4 flex flex-col items-center">
       <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-600">Juego del Ahorcado</h1>
@@ -313,72 +309,65 @@ export default function HangmanGame() {
       <h3 className="text-xl font-semibold mb-6 text-center text-green-600">
         Partida: {hangmanGame?.game.currentGameCount}/{hangmanGame?.game.totalGames}
       </h3>
+      <h3 className="text-xl font-semibold mb-6 text-center text-yellow-600">
+        Intentos restantes: {remainingAttempts}
+      </h3>
       {errorMessage ? (
         <p className="text-red-600">{errorMessage}</p>
       ) : !hangmanGame ? (
         <p>Cargando...</p>
       ) : (
-        <div className="flex">
-          <div>
+        <div className="flex flex-col md:flex-row items-center md:items-start space-y-8 md:space-y-0 md:space-x-8">
+          <div className="word mb-4 text-2xl font-bold md:text-left text-center">
             {renderImage()}
           </div>
-          <div className='ml-6'>
-            <div className="word">{renderWord()}</div>
-            <div className="guess-input mt-4 flex items-center">
+          <div className="w-full md:w-1/2">
+            <div className="word text-center mb-4">{renderWord()}</div>
+            <div className="guess-input mt-4 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
               <input
                 type="text"
                 value={currentGuess}
                 onChange={(e) => setCurrentGuess(e.target.value)}
                 maxLength="1"
-                className="border p-2 rounded-lg"
+                className="border p-2 rounded-lg w-full md:w-auto"
                 placeholder="Introduce una letra"
                 disabled={gameLost || gameWon}
               />
               <button
                 onClick={handleGuess}
-                className="ml-2 px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-green-400 to-green-600 text-white transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
+                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-green-400 to-green-600 text-white transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none w-full md:w-auto"
                 disabled={gameLost || gameWon}
               >
                 Confirmar
               </button>
             </div>
-            <p className="mt-4">Intentos restantes: {remainingAttempts}</p>
             <div className="used-letters mt-4">
-              <div className="guessed-letters">
+              <div className="guessed-letters mb-4">
                 <h2 className="text-xl font-bold">Letras adivinadas:</h2>
-                <div className="letters-box border p-2 rounded-lg">
+                <div className="letters-box border p-2 rounded-lg flex flex-wrap">
                   {guessedLetters.map((letter, index) => (
                     <span key={index} className="letter mr-2">{letter}</span>
                   ))}
                 </div>
               </div>
-              <div className="wrong-letters mt-4">
+              <div className="wrong-letters">
                 <h2 className="text-xl font-bold">Letras incorrectas:</h2>
-                <div className="letters-box border p-2 rounded-lg">
+                <div className="letters-box border p-2 rounded-lg flex flex-wrap">
                   {wrongLetters.map((letter, index) => (
                     <span key={index} className="letter mr-2">{letter}</span>
                   ))}
                 </div>
               </div>
             </div>
-            {gameLost || gameWon || cleanWord(hangmanGame.words[hangmanGame.currentWordIndex]).split('').every(letter => guessedLetters.includes(letter)) ? (
-              hangmanGame.game.currentGameCount < hangmanGame.game.totalGames ? (
-                <button onClick={() => handleNextGame(!gameLost)} className="hidden">Siguiente Juego</button>
-              ) : (
-                handleGameCompletion()
-              )
-            ) : null}
-            <div className="flex space-x-4 mt-4">
+            <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 mt-4">
               <button
-                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
-                style={{ width: "240px" }}
+                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-full md:w-auto"
                 onClick={() => navigate('/lobby')}
               >
                 Volver al Catálogo de Juegos
               </button>
               <button
-                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-48 duration-300"
-                style={{ width: "240px" }}
+                className="px-4 py-2 rounded-lg shadow-lg bg-gradient-to-r from-gray-200 to-gray-400 text-black transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-gray-300 focus:outline-none w-full md:w-auto"
                 onClick={() => navigate(`/selectDeckGame/HangmanGame/${hangmanGame.user}`)}
               >
                 Cambiar de Mazo

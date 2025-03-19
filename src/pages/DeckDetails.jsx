@@ -62,7 +62,7 @@ export default function DeckDetails() {
         confirmButtonText: 'Sí',
         cancelButtonText: 'Cancelar',
       });
-  
+
       if (alert.isConfirmed) {
         const token = localStorage.getItem('access_token');
         const res = await fetch(`${API_URL}/api/deck/${id}`, {
@@ -72,7 +72,7 @@ export default function DeckDetails() {
             'Authorization': `${token}`,
           },
         });
-  
+
         if (res.status === 204) {
           Swal.fire({
             icon: 'success',
@@ -91,7 +91,7 @@ export default function DeckDetails() {
       setErrors('Error al eliminar el mazo. Inténtalo de nuevo más tarde.');
     }
   }
-  
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setErrors(null);
@@ -217,15 +217,19 @@ export default function DeckDetails() {
           <hr className="my-4 w-full border-t-2 border-gray-300" />
 
           <h2 className="text-2xl font-bold mt-4 mb-2">Cartas</h2>
-          <div className="flex space-x-4 mt-4">
-            <input id="fileInput" type="file" onChange={handleFileChange} />
+          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mt-4">
+            <input
+              id="fileInput"
+              type="file"
+              onChange={handleFileChange}
+              className="w-full md:w-auto"
+            />
             <button
               onClick={handleImportCard}
-              className="bg-gradient-to-r from-green-400 to-green-600 text-black px-4 py-2 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none" style={{ marginBottom: '2%' }}
+              className="bg-gradient-to-r from-green-400 to-green-600 text-black px-4 py-2 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none w-full md:w-auto"
             >
               Importar Carta a Mazo
             </button>
-
           </div>
           <div className="w-full h-96 overflow-y-auto border p-4 rounded-lg">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

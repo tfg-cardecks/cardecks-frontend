@@ -252,8 +252,8 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
 
   return (
     <div className="create-card-container">
-      <div className="left-content ml-12">
-        <h1 className="text-3xl font-bold mb-8" style={{ marginLeft: "40%" }}>Crear Carta</h1>
+      <div className="left-content sm:w-1/2 sm:p-4 lg:ml-96">
+        <h1 className="text-3xl font-bold mb-8" style={{ marginLeft: "30%" }}>Crear Carta</h1>
         {errorMessage && (
           <pre className="text-red-500 whitespace-pre-wrap" style={{ marginBottom: "2%" }}>{errorMessage}</pre>
         )}
@@ -312,8 +312,8 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
             </div>
           )}
           {(cardType !== 'txtImg' || side !== 'back') && (
-            <div className="toolbar-group mb-4">
-              <label className="block font-bold mb-2">Tamaño de fuente:</label>
+            <div className="toolbar-group">
+              <label className="block font-bold">Tamaño de fuente:</label>
               <input
                 type="number"
                 value={fontSize}
@@ -326,8 +326,8 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
             </div>
           )}
           {(cardType !== 'txtImg' || side !== 'back') && (
-            <div className="toolbar-group mb-4">
-              <label className="block font-bold mb-2">Color:</label>
+            <div className="toolbar-group">
+              <label className="block font-bold">Color:</label>
               <input
                 type="color"
                 value={color}
@@ -339,8 +339,8 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
               />
             </div>
           )}
-          <div className="toolbar-group mb-4">
-            <label className="block font-bold mb-2">Parte:</label>
+          <div className="toolbar-group ">
+            <label className="block font-bold">Parte:</label>
             <select
               value={side}
               onChange={(e) => {
@@ -354,8 +354,8 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
             </select>
           </div>
           {cardType === 'txtImg' && side === 'back' && (
-            <div className="toolbar-group mb-4">
-              <label className="block font-bold mb-2">URL de la Imagen:</label>
+            <div className="toolbar-group">
+              <label className="block font-bold">URL de la Imagen:</label>
               <input
                 type="text"
                 value={imageUrl}
@@ -401,7 +401,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
         </div>
 
       </div>
-      <div className="canvas-container mt-12">
+      <div className="canvas-container mt-24">
         <Stage width={300} height={500} className="card-canvas">
           <Layer>
             {side === 'front' && (

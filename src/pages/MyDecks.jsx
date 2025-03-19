@@ -263,11 +263,16 @@ export default function MyDecks() {
           </button>
         </div>
       </div>
-      <div className="flex space-x-4 mb-4">
-        <input id="fileInput" type="file" onChange={handleFileChange} />
+      <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mb-4">
+        <input
+          id="fileInput"
+          type="file"
+          onChange={handleFileChange}
+          className="w-full md:w-auto"
+        />
         <button
           onClick={handleImportDeck}
-          className="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
+          className="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none w-full md:w-auto"
         >
           Importar Mazo
         </button>
