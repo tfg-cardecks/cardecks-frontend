@@ -99,25 +99,35 @@ export default function UserDetailStatistics() {
           )}
           <h2 className="title">Estadísticas del Usuario</h2>
           <hr className="divider" />
-          <div className="stats">
-            <p><strong>Total de Cartas Creadas:</strong> {user.cards && user.cards.length}</p>
-            <p><strong>Total de Mazos Creados:</strong> {user.decks && user.decks.length}</p>
-            <p><strong>Total de Partidas Completadas por Tipo:</strong></p>
-            <ul className="statsList list-none">
+          <div className="stats space-y-6">
+            <p className="text-lg text-gray-700">
+              <strong>Total de Cartas Creadas:</strong> {user.cards && user.cards.length}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Total de Mazos Creados:</strong> {user.decks && user.decks.length}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Total de Partidas Completadas por Tipo:</strong>
+            </p>
+            <ul className="list-disc pl-6 space-y-2">
               {gameStats.map(stat => (
-                <li key={stat.gameType}>
+                <li key={stat.gameType} className="text-gray-700">
                   {getGameName(stat.gameType)}: {stat.totalCompleted}
                 </li>
               ))}
             </ul>
-            <p><strong>Mazos Más Usados por Tipo de Juego:</strong></p>
-            <div className="grid grid-cols-3 gap-4">
+            <p className="text-lg text-gray-700">
+              <strong>Mazos Más Usados por Tipo de Juego:</strong>
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {Object.entries(groupedDecks).map(([gameType, decks]) => (
-                <div key={gameType} className="col-span-1">
-                  <h3>{getGameName(gameType)}</h3>
-                  <ul className="statsList list-none">
+                <div key={gameType} className="bg-gray-50 p-4 rounded-md shadow">
+                  <h3 className="text-lg font-bold text-gray-800 mb-2">
+                    {getGameName(gameType)}
+                  </h3>
+                  <ul className="list-disc pl-6 space-y-2">
                     {decks.slice(0, 3).map((stat, index) => (
-                      <li key={`${stat.gameType}-${stat.deckName}`}>
+                      <li key={`${stat.gameType}-${stat.deckName}`} className="text-gray-700">
                         {index + 1}º {stat.deckName.replace(/(-[a-z0-9]{6,})+$/, '')} ({stat.count} veces)
                       </li>
                     ))}

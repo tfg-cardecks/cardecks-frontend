@@ -37,6 +37,7 @@ export default function Footer() {
               </li>
             </nav>
           </div>
+          <div className="w-full border-t border-gray-300 mb-2 sm:hidden"></div>
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
             <nav className="list-none mb-2 mt-8">
               <li>

@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
+
 // local imports
 import { useAuthContext } from "../context/authContext";
 import { API_URL } from "../config";
 import MainButton from "../components/mainButton.jsx";
 import SecondaryButton from "../components/secondaryButton.jsx";
+import FormTextInput from "../components/FormTextInput.jsx";
 
 export default function Login() {
   const { login } = useAuthContext();
@@ -82,7 +84,8 @@ export default function Login() {
 
   return (
     <div className="flex flex-col justify-center bg-fixed home-container">
-      <div className="w-1/2 h-1/2 p-11 mx-auto my-11 rounded-md shadow-lg flex flex-col justify-between bg-black bg-opacity-50 border-2 border-black backdrop-blur-sm overflow-auto">
+      <div className="w-3/4 lg:w-1/2 h-1/2 p-11 mx-auto my-11 rounded-md shadow-lg flex flex-col justify-between bg-black bg-opacity-50 border-2 border-black backdrop-blur-sm overflow-auto">
+      
         <h2
           className="text-4xl font-bold text-center mb-4 text-white"
           style={{ marginTop: "0px", marginBottom: "15px", marginRight: "5%" }}
@@ -105,67 +108,29 @@ export default function Login() {
           </p>
         </div>
 
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div
-            className="flex"
-            style={{ marginBottom: "1rem", marginTop: "3%" }}
-          >
-            <label
-              htmlFor="emailOrUsername"
-              className="block text-lg font-bold text-white self-center text-center"
-              style={{
-                marginBottom: "1rem",
-                marginRight: "2rem",
-                marginLeft: "4rem",
-              }}
-            >
-              Usuario
-            </label>
-            <div className="flex-grow" style={{ marginRight: "10.2rem" }}>
-              <input
-                type="text"
-                className="leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                style={{ width: "100%", padding: "0.5rem 0.75rem", marginLeft: "2.2rem" }}
-                placeholder="Escribe tu nombre de usuario"
-                name="emailOrUsername"
-                value={emailOrUsername}
-                onChange={(e) => onInputChange(e)}
-              />
-              {errors.emailOrUsername && (
-                <p className="text-yellow-200 text-xs italic">
-                  {errors.emailOrUsername}
-                </p>
-              )}
-            </div>
-          </div>
-          <div className="flex" style={{ marginBottom: "1rem" }}>
-            <label
-              htmlFor="Password"
-              className="block text-lg font-bold text-white self-center"
-              style={{ marginRight: "2rem", marginLeft: "4rem" }}
-            >
-              Contraseña
-            </label>
-            <div
-              className="flex-grow"
-              style={{ marginRight: "8rem", marginLeft: "0.25rem" }}
-            >
-              <input
-                type="password"
-                className="leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                style={{ width: "100%", padding: "0.5rem 0.75rem" }}
-                placeholder="Introduce tu contraseña"
-                name="password"
-                value={password}
-                onChange={(e) => onInputChange(e)}
-              />
-              {errors.password && (
-                <p className="text-yellow-200 text-xs italic">
-                  {errors.password}
-                </p>
-              )}
-            </div>
-          </div>
+        <form onSubmit={(e) => handleSubmit(e)} className="space-y-6">
+          <FormTextInput
+            labelFor="emailOrUsername"
+            labelText="Usuario"
+            placeholder="Escribe tu nombre de usuario"
+            name="emailOrUsername"
+            value={emailOrUsername}
+            onChange={(e) => onInputChange(e)}
+            errors={errors}
+            isMandatory
+          />
+          <FormTextInput
+            labelFor="password"
+            labelText="Contraseña"
+            placeholder="Introduce tu contraseña"
+            name="password"
+            value={password}
+            onChange={(e) => onInputChange(e)}
+            type="password"
+            errors={errors}
+            isMandatory
+          />
+
           {errors.errors && errors.errors[0] && errors.errors[0].detail && (
             <p className="text-yellow-200">{errors.errors[0].detail}</p>
           )}

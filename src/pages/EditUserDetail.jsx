@@ -85,7 +85,7 @@ export default function EditUserDetail() {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="container">
+      <div className="container" style={{ marginTop: '30px', marginBottom: '30px' }}>
         <div className="card">
           {errors.message && (
             <p className='text-red-500'>{errors.message}</p>
@@ -122,14 +122,14 @@ export default function EditUserDetail() {
             <div className="flex justify-center mt-4 space-x-4">
               <button
                 type="submit"
-                className="bg-gradient-to-r from-green-200 to-green-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
+                className="bg-gradient-to-r from-green-200 to-green-400 text-black px-5 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-green-300 focus:outline-none"
               >
                 Guardar Cambios
               </button>
               <button
                 type="button"
                 onClick={() => navigate('/user/details')}
-                className="bg-gradient-to-r from-red-200 to-red-400 text-black px-6 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
+                className="bg-gradient-to-r from-red-200 to-red-400 text-black px-5 py-3 rounded-xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl active:scale-95 focus:ring focus:ring-red-300 focus:outline-none"
               >
                 Cancelar
               </button>

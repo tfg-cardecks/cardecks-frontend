@@ -111,7 +111,7 @@ export default function Register() {
 
   return (
     <div className=" flex flex-col justify-center bg-fixed home-container">
-      <div className="w-1/2 h-1/2 p-11 mx-auto my-11 rounded-md shadow-lg flex flex-col justify-between bg-black bg-opacity-50 border-2 border-black backdrop-blur-sm">
+      <div className="w-3/4 lg:w-1/2 h-auto p-11 mx-auto my-11 rounded-md shadow-lg flex flex-col justify-between bg-black bg-opacity-50 border-2 border-black backdrop-blur-sm">
         <h2
           className="text-4xl font-bold text-center mb-4 text-white"
           style={{ marginTop: "0px", marginBottom: "13px" }}
@@ -121,7 +121,7 @@ export default function Register() {
         {errors.message && <p className="text-yellow-200">{errors.message}</p>}
         <form
           onSubmit={(e) => handleSubmit(e)}
-          className="flex flex-wrap -mx-3"
+          className="flex flex-wrap -mx-8"
         >
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <FormTextInput

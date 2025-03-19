@@ -51,7 +51,7 @@ export default function Home() {
             </h2>
           ) : null}
         </div>
-        <div className="mt-12 p-6 bg-white border border-black rounded-lg shadow-lg" style={{ marginBottom: '10%', width: '90%' }}>
+        <div className="mt-12 p-6 bg-white border border-black rounded-lg shadow-lg hidden sm:block" style={{ marginBottom: '10%', width: '90%' }}>
           <Slider {...settings}>
             <div className="flex flex-col items-start justify-between">
               <div className="flex flex-row w-full p-4">
@@ -82,34 +82,40 @@ export default function Home() {
             </div>
           </Slider>
         </div>
-        <div className="flex flex-row w-11/12 p-4">
-          <div className="w-1/2 p-2">
-            <br />
+        <div className="flex flex-col sm:flex-row w-11/12 p-4">
+          <div className="w-full sm:w-1/2 p-2">
             <h3 className="text-4xl font-bold">¿Qué es una Flashcard?</h3>
             <br />
-            <p className="text-lg">Las flashcards son tarjetas de estudio que tienen una pregunta o concepto en un lado y la respuesta o explicación en el otro.</p>
+            <p className="text-lg">
+              Las flashcards son tarjetas de estudio que tienen una pregunta o concepto en un lado y la respuesta o explicación en el otro.
+            </p>
             <br />
-            <p className="text-lg">Estas tarjetas te permiten practicar lo que sabes y repasar lo que necesitas mejorar. Al revisar las tarjetas varias veces y en diferentes momentos, tu cerebro recuerda mejor la información. Es como tener una forma divertida y organizada de estudiar, lo que te ayuda a aprender más rápido y recordar lo que has estudiado por más tiempo.</p>
+            <p className="text-lg">
+              Estas tarjetas te permiten practicar lo que sabes y repasar lo que necesitas mejorar. Al revisar las tarjetas varias veces y en diferentes momentos, tu cerebro recuerda mejor la información. Es como tener una forma divertida y organizada de estudiar, lo que te ayuda a aprender más rápido y recordar lo que has estudiado por más tiempo.
+            </p>
           </div>
-          <div className="w-1/2 p-2 flex flex-row justify-center items-center">
-            <img src={imagen1} alt="Característica 3" className="w-3/4 h-10/12" style={{ marginTop: "-5%" }} />
+          <div className="w-full sm:w-1/2 p-2 flex justify-center items-center">
+            <img src={imagen1} alt="Característica 3" className="w-3/4 sm:w-3/4 lg:w-2/3 h-auto max-w-lg" />
           </div>
         </div>
 
-        <div className="flex flex-row w-11/12 p-4">
-          <div className="w-1/2 p-2 flex flex-row justify-center items-center">
-            <img src={imagen2} alt="Característica 3" className="h-10/12" style={{ width: '45%', marginTop: "-2%" }} />
+        <div className="flex flex-col sm:flex-row w-11/12 p-4">
+          <div className="w-full sm:w-1/2 p-2 flex justify-center items-center order-last sm:order-first">
+            <img src={imagen2} alt="Característica 3" className="w-3/4 sm:w-3/4 lg:w-2/3 h-auto max-w-lg" />
           </div>
-
-          <div className="w-1/2 p-2">
-            <br />
+          <div className="w-full sm:w-1/2 p-2" style={{ marginTop: "10%" }}>
             <h3 className="text-4xl font-bold">¿Qué es un Juego Educativo?</h3>
             <br />
-            <p className="text-lg">Los juegos educativos en nuestra aplicación están diseñados para hacer que el aprendizaje sea una experiencia más divertida e interactiva. En lugar de estudiar de manera tradicional, los usuarios pueden aprender jugando, lo que les ayuda a mantenerse motivados y retener la información de manera más efectiva.</p>
+            <p className="text-lg">
+              Los juegos educativos en nuestra aplicación están diseñados para hacer que el aprendizaje sea una experiencia más divertida e interactiva. En lugar de estudiar de manera tradicional, los usuarios pueden aprender jugando, lo que les ayuda a mantenerse motivados y retener la información de manera más efectiva.
+            </p>
             <br />
-            <p className="text-lg">En nuestra aplicación, los juegos educativos utilizan cartas personalizadas para ofrecer una experiencia de aprendizaje única y dinámica.</p>
+            <p className="text-lg">
+              En nuestra aplicación, los juegos educativos utilizan cartas personalizadas para ofrecer una experiencia de aprendizaje única y dinámica.
+            </p>
           </div>
         </div>
+
       </div>
     </div>
   );
