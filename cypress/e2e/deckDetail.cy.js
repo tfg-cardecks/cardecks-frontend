@@ -6,6 +6,7 @@ import {
   typeAndAssert,
   goToHomePage,
   generateRandomUser,
+  generateRandomText,
 } from "./utils";
 
 beforeEach(() => {
@@ -41,7 +42,7 @@ describe("testing the import card functionality", () => {
       clickToNavElement("Mazos");
       cy.get("a").contains("Crear Mazo").click().wait(1500);
 
-      typeAndAssert("input[name='name']", "Mazo de prueba1224");
+      typeAndAssert("input[name='name']", generateRandomText());
       typeAndAssert("input[name='description']", "Descripción de prueba12");
       typeAndAssert("input[name='theme']", "Tema de prueba12");
       cy.get("button").contains("Crear Mazo").click().wait(2000);
@@ -52,7 +53,6 @@ describe("testing the import card functionality", () => {
       cy.get("a").contains("Detalles").click().wait(1500);
       cy.get("button").contains("Darse de baja").click().wait(2000);
       cy.get(".swal2-confirm").click();
-
     });
   });
 });

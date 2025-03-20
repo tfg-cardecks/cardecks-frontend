@@ -96,8 +96,19 @@ function guessWord() {
     };
 
     for (let i = 0; i < 6; i++) {
-      cy.get("input").type(guessedLetters[i]);
-      cy.get("button").contains("Confirmar").click().wait(1000);
+      cy.get(".swal2-container").should("not.exist");
+      cy.get('input[placeholder="Introduce una letra"]').type(
+        guessedLetters[i]
+      );
+      cy.get("button").contains("Confirmar").click().wait(2500);
+
+      cy.get("body").then(($body) => {
+        if ($body.find(".swal2-container").length > 0) {
+          cy.get(".swal2-confirm").click();
+        } else {
+          cy.log("El modal no apareció, continuando...");
+        }
+      });
     }
 
     cy.get(".word").then(($updatedWord) => {
@@ -123,7 +134,9 @@ function guessWord() {
       }
 
       for (let i = 0; i < remainingLetters.length; i++) {
-        cy.get("input").type(remainingLetters[i]);
+        cy.get('input[placeholder="Introduce una letra"]').type(
+          remainingLetters[i]
+        );
         cy.get("button").contains("Confirmar").click().wait(1000);
       }
     });
@@ -153,13 +166,10 @@ describe("testing hangmanGame", () => {
     const guessedLetters = ["z", "g", "w", "x", "y", "f"];
 
     guessedLetters.forEach((letter) => {
-      cy.get("input").type(letter);
-      cy.get("button").contains("Confirmar").click().wait(500);
+      cy.get('input[placeholder="Introduce una letra"]').type(letter);
+      cy.get("button").contains("Confirmar").click().wait(1500);
+      cy.get(".swal2-confirm").click();
     });
-
-    cy.get(".swal2-confirm").click();
-    cy.get(".swal2-confirm").click();
-
     cy.get("button").contains("Usuario").click().wait(2000);
     cy.get("a").contains("Detalles").click().wait(1500);
     cy.get("button").contains("Darse de baja").click().wait(2000);
