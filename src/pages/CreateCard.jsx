@@ -252,7 +252,7 @@ export default function CreateCard({ title, theme, cardType, userId, cardWidth =
 
   return (
     <div className="create-card-container">
-      <div className="left-content sm:w-1/2 sm:p-4 lg:ml-96">
+      <div className="left-content sm:w-1/2 sm:p-4 lg:ml-52">
         <h1 className="text-3xl font-bold mb-8" style={{ marginLeft: "30%" }}>Crear Carta</h1>
         {errorMessage && (
           <pre className="text-red-500 whitespace-pre-wrap" style={{ marginBottom: "2%" }}>{errorMessage}</pre>

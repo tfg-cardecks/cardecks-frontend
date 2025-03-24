@@ -152,7 +152,19 @@ export default function HangmanGame() {
       }).then(() => {
         setGameLost(true);
         clearTimeout(timerRef.current);
+        if (hangmanGame.game.currentGameCount >= hangmanGame.game.totalGames) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Juego completado',
+            text: 'Has completado todas las partidas del juego del ahorcado.',
+          }).then(() => {
+            navigate('/lobby');
+          });
+        } else {
+          handleNextGame();
+        }
       });
+  
     }
   }, [remainingAttempts, hangmanGame]);
 
