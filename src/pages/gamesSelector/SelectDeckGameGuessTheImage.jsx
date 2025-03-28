@@ -4,7 +4,7 @@ import { useAuthContext } from '../../context/authContext';
 import { API_URL } from '../../config';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import guesstheimage from '../../icon/guesstheimage.png';
+import guesstheimage from '../../assets/guesstheimage.png';
 
 export default function SelectDeckGameGuessTheImage() {
   const { authenticated } = useAuthContext();

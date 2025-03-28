@@ -4,13 +4,13 @@ import axios from 'axios';
 import { API_URL } from '../../config';
 import Swal from 'sweetalert2';
 
-import img0 from '../../images/imagesHangman/0.png';
-import img1 from '../../images/imagesHangman/1.png';
-import img2 from '../../images/imagesHangman/2.png';
-import img3 from '../../images/imagesHangman/3.png';
-import img4 from '../../images/imagesHangman/4.png';
-import img5 from '../../images/imagesHangman/5.png';
-import img6 from '../../images/imagesHangman/6.png';
+import img0 from '../../assets/imagesHangman/0.png';
+import img1 from '../../assets/imagesHangman/1.png';
+import img2 from '../../assets/imagesHangman/2.png';
+import img3 from '../../assets/imagesHangman/3.png';
+import img4 from '../../assets/imagesHangman/4.png';
+import img5 from '../../assets/imagesHangman/5.png';
+import img6 from '../../assets/imagesHangman/6.png';
 
 const images = [img0, img1, img2, img3, img4, img5, img6];
 

@@ -4,7 +4,7 @@ import { useAuthContext } from '../../context/authContext';
 import { API_URL } from '../../config';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import hangmanGame from '../../icon/hangman.png';
+import hangmanGame from '../../assets/hangman.png';
 
 export default function SelectDeckGameHangman() {
   const { authenticated } = useAuthContext();

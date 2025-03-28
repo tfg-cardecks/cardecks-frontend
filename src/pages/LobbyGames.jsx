@@ -2,11 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../context/authContext';
 import '../styles/LobbyGames.css';
-import wordsearch from '../icon/wordsearch.png';
-import guesstheimage from '../icon/guesstheimage.png';
-import hangmanGame from '../icon/hangman.png';
-import matchingGame from '../icon/matchingGame.jpg';
-import letterOrder from '../icon/letterOrder.jpg';
+import wordsearch from '../assets/wordsearch.png';
+import guesstheimage from '../assets/guesstheimage.png';
+import hangmanGame from '../assets/hangman.png';
+import matchingGame from '../assets/matchingGame.jpg';
+import letterOrder from '../assets/letterOrder.jpg';
 import Swal from 'sweetalert2';
 
 const gameTypes = [

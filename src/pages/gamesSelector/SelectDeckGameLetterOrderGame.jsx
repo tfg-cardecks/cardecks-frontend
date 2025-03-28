@@ -4,7 +4,7 @@ import { useAuthContext } from '../../context/authContext';
 import { API_URL } from '../../config';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import letterOrder from '../../icon/letterOrder.jpg';
+import letterOrder from '../../assets/letterOrder.jpg';
 
 export default function SelectDeckGameLetterOrderGame() {
   const { authenticated } = useAuthContext();

@@ -4,7 +4,7 @@ import { useAuthContext } from '../../context/authContext';
 import { API_URL } from '../../config';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import wordsearch from '../../icon/wordsearch.png';
+import wordsearch from '../../assets/wordsearch.png';
 
 export default function SelectDeckGameWordSearch() {
   const { authenticated } = useAuthContext();

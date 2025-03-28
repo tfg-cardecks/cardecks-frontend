@@ -3,11 +3,11 @@ import { useAuthContext } from '../context/authContext';
 import axios from 'axios';
 import { API_URL } from '../config';
 import '../styles/UserDetailStyles.css';
-import wordsearch from '../icon/wordsearch.png';
-import guesstheimage from '../icon/guesstheimage.png';
-import matchingGame from '../icon/matchingGame.jpg';
-import hangmanGame from '../icon/guesstheimage.png';
-import letterOrder from '../icon/letterOrder.jpg';
+import wordsearch from '../assets/wordsearch.png';
+import guesstheimage from '../assets/guesstheimage.png';
+import matchingGame from '../assets/matchingGame.jpg';
+import hangmanGame from '../assets/guesstheimage.png';
+import letterOrder from '../assets/letterOrder.jpg';
 
 export default function UserDetailStatistics() {
   const [user, setUser] = useState({});

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../images/Logo.jpg';
 import { useAuthContext } from '../context/authContext';
 import Swal from 'sweetalert2';
 
@@ -126,9 +125,9 @@ export default function Header() {
           className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
         >
           <img
-            src={Logo}
+            src="/Logo.jpg"
             alt="Logo"
-            className="w-20 h-20 rounded-full"
+            className="w-24 h-24"
           />
           <span className="ml-3 text-xl">Cardecks</span>
         </Link>

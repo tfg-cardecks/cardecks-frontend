@@ -6,8 +6,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import imagen1 from '../images/imagen1.png';
-import imagen2 from '../images/imagen2.png';
+import imagen1 from '../assets/imagen1.png';
+import imagen2 from '../assets/imagen2.png';
 
 
 export default function Home() {
