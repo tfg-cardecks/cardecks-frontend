@@ -6,7 +6,7 @@ export default function CardDetailsEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [card, setCard] = useState(null);
-  const [theme, setTheme] = useState('');
+  const [theme, setTheme] = useState(null);
   const [frontText, setFrontText] = useState(null);
   const [backText, setBackText] = useState(null);
   const [backElements, setBackElements] = useState([]);
@@ -25,7 +25,7 @@ export default function CardDetailsEdit() {
       });
       const data = await response.json();
       setCard(data);
-      setTheme(data.theme);
+      setTheme(data.theme || null);
       setFrontText(data.frontSide.text[0] || null);
       setBackText(data.backSide.text[0] || null);
       setBackElements([...data.backSide.text, ...data.backSide.images]);
@@ -81,6 +81,10 @@ export default function CardDetailsEdit() {
   };
   function handleTextChange(e) {
     const newText = e.target.value;
+    if (e.target.name === "theme") {
+      setTheme(newText);
+      return;
+    }
     if (side === 'back' && !validateParagraph(newText, 25, 200)) {
       setErrorMessage('El párrafo tiene líneas que exceden el número máximo de caracteres permitidos 25');
       return;
@@ -106,7 +110,7 @@ export default function CardDetailsEdit() {
       const updatedCardData = {
         _id: card._id,
         title: card.title,
-        theme,
+        theme: theme,
         cardType: card.cardType,
         frontSide: {
           text: frontText ? [{
@@ -180,6 +184,7 @@ export default function CardDetailsEdit() {
             <label className="block font-bold mb-2">Tema:</label>
             <input
               type="text"
+              name="theme"
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
               className="border p-2 rounded w-full"
