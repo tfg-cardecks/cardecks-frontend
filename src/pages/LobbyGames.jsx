@@ -92,9 +92,6 @@ const gameInfo = {
     wordProcessing: {
       allowedWordTypes: [
         "Palabras con caracteres especiales o números: Se eliminan. Ejemplo: 'CÓDIGO! 123' → 'CODIGO'.",
-        "Palabras con acentos: Se eliminan los acentos. Ejemplo: 'CAFÉ' → 'CAFE'.",
-        "Palabras con espacios: Se limpian y concatenan. Ejemplo: 'MI CASA' → 'MICASA'.",
-        "Palabras en mayúsculas: Se convierten a mayúsculas para la comparación. Ejemplo: 'Hola' → 'HOLA'.",
       ],
       notAllowedWordTypes: [
         "Palabras que, tras el proceso de limpieza, no contengan letras. Ejemplo: '123!!!' → ''.",
