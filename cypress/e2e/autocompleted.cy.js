@@ -43,7 +43,7 @@ describe("testing the autocomplete theme suggestions card and deck funcionality"
       cy.get("a").contains("Crear Carta").click().wait(1500);
 
       typeAndAssert("input[name='title']", generateRandomTextCard());
-      typeAndAssert("input[name='theme']", "Tem");
+      typeAndAssert("input[name='theme']", "Ani");
       cy.get("ul").children().eq(0).click();
 
       cy.get("button").contains("Usuario").click().wait(2000);
