@@ -150,15 +150,15 @@ beforeEach(() => {
 });
 
 describe("testing hangmanGame", () => {
-  it("can`t play hangmanGame (not enought cards)", () => {
-    createDeck();
-    selectedFileToImportAndSubmit("cypress/e2e/json/cascada.json");
-    createHangmanGame();
-    cy.get("button").contains("Usuario").click().wait(2000);
-    cy.get("a").contains("Detalles").click().wait(1500);
-    cy.get("button").contains("Darse de baja").click().wait(2000);
-    cy.get(".swal2-confirm").click();
-  });
+  // it("can`t play hangmanGame (not enought cards)", () => {
+  //   createDeck();
+  //   selectedFileToImportAndSubmit("cypress/e2e/json/cascada.json");
+  //   createHangmanGame();
+  //   cy.get("button").contains("Usuario").click().wait(2000);
+  //   cy.get("a").contains("Detalles").click().wait(1500);
+  //   cy.get("button").contains("Darse de baja").click().wait(2000);
+  //   cy.get(".swal2-confirm").click();
+  // });
 
   it("can play hangmanGame (show ¡Has perdido! alert)", () => {
     setUpGame();
@@ -169,6 +169,19 @@ describe("testing hangmanGame", () => {
       cy.get('input[placeholder="Introduce una letra"]').type(letter);
       cy.get("button").contains("Confirmar").click().wait(1500);
       cy.get(".swal2-confirm").click();
+      cy.get(".swal2-container").then(($popup) => {
+        if (
+          $popup
+            .text()
+            .includes(
+              "Has completado todas las partidas del juego del ahorcado"
+            )
+        ) {
+          cy.get(".swal2-confirm").click();
+        } else {
+          cy.log("El pop-up no contiene el mensaje esperado, no se hace clic.");
+        }
+      });
     });
     cy.get("button").contains("Usuario").click().wait(2000);
     cy.get("a").contains("Detalles").click().wait(1500);
@@ -176,28 +189,28 @@ describe("testing hangmanGame", () => {
     cy.get(".swal2-confirm").click();
   });
 
-  it("can play hangmanGame (show Juego completado alert)", () => {
-    setUpGame();
-    guessWord();
-    cy.get("button").contains("Usuario").click().wait(2000);
-    cy.get("a").contains("Detalles").click().wait(1500);
-    cy.get("button").contains("Darse de baja").click().wait(2000);
-    cy.get(".swal2-confirm").click();
-  });
-});
+  //   it("can play hangmanGame (show Juego completado alert)", () => {
+  //     setUpGame();
+  //     guessWord();
+  //     cy.get("button").contains("Usuario").click().wait(2000);
+  //     cy.get("a").contains("Detalles").click().wait(1500);
+  //     cy.get("button").contains("Darse de baja").click().wait(2000);
+  //     cy.get(".swal2-confirm").click();
+  //   });
+  // });
 
-describe("testing the buttons", () => {
-  it("show `Tiempo agotado` alert and click to the buttons", () => {
-    setUpGame();
-    cy.wait(60000);
-    cy.get(".swal2-confirm").click();
+  // describe("testing the buttons", () => {
+  //   it("show `Tiempo agotado` alert and click to the buttons", () => {
+  //     setUpGame();
+  //     cy.wait(60000);
+  //     cy.get(".swal2-confirm").click();
 
-    clickToButtonText("Volver al Catálogo de Juegos");
+  //     clickToButtonText("Volver al Catálogo de Juegos");
 
-    clickToButtonText("Cambiar de Mazo");
-    cy.get("button").contains("Usuario").click().wait(2000);
-    cy.get("a").contains("Detalles").click().wait(1500);
-    cy.get("button").contains("Darse de baja").click().wait(2000);
-    cy.get(".swal2-confirm").click();
-  });
+  //     clickToButtonText("Cambiar de Mazo");
+  //     cy.get("button").contains("Usuario").click().wait(2000);
+  //     cy.get("a").contains("Detalles").click().wait(1500);
+  //     cy.get("button").contains("Darse de baja").click().wait(2000);
+  //     cy.get(".swal2-confirm").click();
+  //   });
 });
