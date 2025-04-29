@@ -275,16 +275,6 @@ export default function GuessTheImageGame() {
     );
   };
 
-  const handleGameCompletion = () => {
-    Swal.fire({
-      icon: 'success',
-      title: 'Juego Completado',
-      text: '¡Has completado todas las partidas del juego!',
-    }).then(() => {
-      navigate('/lobby');
-    });
-  };
-
   const handleSubmit = () => {
     setAnswerSubmitted(true);
     if (selectedAnswer === guessTheImageGame.correctAnswer) {
