@@ -330,7 +330,7 @@ export default function WordSearchGame() {
       ) : (
         <>
           <div>
-            <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-600">
+            <h1 className="text-4xl font-extrabold mb-6 text-center">
               Sopa de Letras
             </h1>
             <h2 className="text-2xl font-semibold mb-6 text-center text-gray-700">

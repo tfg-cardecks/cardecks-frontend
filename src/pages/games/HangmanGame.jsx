@@ -311,7 +311,7 @@ export default function HangmanGame() {
 
   return (
     <div className="container mx-auto p-4 flex flex-col items-center">
-      <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-600">Juego del Ahorcado</h1>
+      <h1 className="text-4xl font-extrabold mb-6 text-center">Juego del Ahorcado</h1>
       <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">
         Mazo: {deckName}
       </h2>
