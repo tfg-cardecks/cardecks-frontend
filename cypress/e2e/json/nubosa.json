@@ -1,0 +1,38 @@
+{
+  "frontSide": {
+    "text": [
+      {
+        "content": "Nubosa",
+        "fontSize": 20,
+        "color": "#000000",
+        "left": 50,
+        "top": 100,
+        "_id": "67031ca6e57cb3a177eb7a18"
+      }
+    ]
+  },
+  "backSide": {
+    "text": [],
+    "images": [
+      {
+        "url": "https://services.meteored.com/img/article/-por-que-las-nubes-no-se-caen--7332-1_512.jpg",
+        "left": 55,
+        "top": 160,
+        "width": 200,
+        "height": 200,
+        "_id": "67031ca6e57cb3a177eb7a19"
+      }
+    ]
+  },
+  "_id": "67031ca6e57cb3a177eb7a47",
+  "title": "nubes",
+  "cardWidth": 300,
+  "cardHeight": 500,
+  "theme": "naturaleza",
+  "cardType": "txtImg",
+  "frontImageUrl": "/images/nubosa_front.png",
+  "backImageUrl": "/images/nubosa_back.png",
+  "createdAt": "2024-10-06T23:26:30.311Z",
+  "updatedAt": "2024-10-06T23:26:30.311Z",
+  "__v": 0
+}

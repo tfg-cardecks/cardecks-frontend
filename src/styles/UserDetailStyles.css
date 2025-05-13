@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 80%;
+  max-width: 850px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px black;
+}
+
+.title {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.divider {
+  border: none;
+  height: 2px;
+  background-color: #90EE90;
+  margin-bottom: 20px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.statsList {
+  list-style-type: disc;
+  margin-left: 20px;
+}

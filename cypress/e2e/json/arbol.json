@@ -1,0 +1,38 @@
+{
+  "frontSide": {
+    "text": [
+      {
+        "content": "Arbol",
+        "fontSize": 20,
+        "color": "#000000",
+        "left": 50,
+        "top": 100,
+        "_id": "674a3f6bfcec11f2a75fe256"
+      }
+    ]
+  },
+  "backSide": {
+    "text": [],
+    "images": [
+      {
+        "url": "https://www.ecured.cu/images/5/5a/%C3%81rboll.jpg",
+        "left": 55,
+        "top": 160,
+        "width": 200,
+        "height": 200,
+        "_id": "674a3f6bfcec11f2a75fe257"
+      }
+    ]
+  },
+  "_id": "674a3f6bfcec11f2a75fe255",
+  "title": "arbol",
+  "cardWidth": 300,
+  "cardHeight": 500,
+  "theme": "naturaleza",
+  "cardType": "txtImg",
+  "frontImageUrl": "/images/arbol_1732919147797_front.png",
+  "backImageUrl": "/images/arbol_1732919147797_back.png",
+  "createdAt": "2024-11-29T22:25:47.796Z",
+  "updatedAt": "2024-11-29T22:25:47.796Z",
+  "__v": 0
+}

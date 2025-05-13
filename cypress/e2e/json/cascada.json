@@ -1,0 +1,38 @@
+{
+  "frontSide": {
+    "text": [
+      {
+        "content": "Cascade",
+        "fontSize": 20,
+        "color": "#000000",
+        "left": 50,
+        "top": 100,
+        "_id": "67031d94e57cb3a177eb7aa1"
+      }
+    ]
+  },
+  "backSide": {
+    "text": [],
+    "images": [
+      {
+        "url": "https://www.clarin.com/2016/09/26/Sk4P_k6F4l_1256x620.jpg",
+        "left": 55,
+        "top": 160,
+        "width": 200,
+        "height": 200,
+        "_id": "67031d94e57cb3a177eb7aa2"
+      }
+    ]
+  },
+  "_id": "67031d94e57cb3a177eb7aa0",
+  "title": "cascade",
+  "cardWidth": 300,
+  "cardHeight": 500,
+  "theme": "naturaleza",
+  "cardType": "txtImg",
+  "frontImageUrl": "/images/cascade_front.png",
+  "backImageUrl": "/images/cascade_back.png",
+  "createdAt": "2024-10-06T23:30:28.505Z",
+  "updatedAt": "2024-10-06T23:30:28.505Z",
+  "__v": 0
+}
